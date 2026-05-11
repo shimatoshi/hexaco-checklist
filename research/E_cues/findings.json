@@ -1,0 +1,461 @@
+{
+  "_meta": {
+    "description": "Observable behavior cue -> personality trait mappings, extracted from published research. Effect sizes are reported as-is from source papers; missing r means the source did not give a single numeric correlation (e.g. only qualitative direction or model R^2 reported).",
+    "compiled_on": "2026-05-11",
+    "trait_codes": {
+      "E": "Extraversion",
+      "A": "Agreeableness",
+      "C": "Conscientiousness",
+      "N": "Neuroticism / (low) Emotional Stability",
+      "O": "Openness",
+      "X": "HEXACO eXtraversion (when explicitly HEXACO)",
+      "Narc": "Narcissism (Dark Triad / NPI)"
+    },
+    "notes": [
+      "jp_sample: true is reserved for studies actually using Japanese participants. Most cue-trait correlations in the literature are US/EU samples.",
+      "Direction of r matters: messy_room has r approx -0.30 with C (i.e. messy = low C).",
+      "Where the paper only reports model fit (e.g. PNAS prediction r), the model is the cue->trait predictor, not a single behavior."
+    ]
+  },
+
+  "cues": [
+    {
+      "category": "physical_environment",
+      "cue": "bedroom_observed_consensus_overall",
+      "trait": "O",
+      "r": 0.58,
+      "metric": "inter-rater consensus correlation",
+      "source": "Gosling, Ko, Mannarelli, Morris 2002 (JPSP)",
+      "jp_sample": false,
+      "note": "Openness is the most reliably judged trait from a bedroom; consensus also strong for C (0.42-ish) and E."
+    },
+    {
+      "category": "physical_environment",
+      "cue": "bedroom_observed_accuracy",
+      "trait": "O",
+      "r": 0.65,
+      "metric": "stranger judgment vs self/peer criterion",
+      "source": "Gosling et al. 2002",
+      "jp_sample": false
+    },
+    {
+      "category": "physical_environment",
+      "cue": "office_observed_consensus",
+      "trait": "O",
+      "r": 0.51,
+      "source": "Gosling et al. 2002",
+      "jp_sample": false
+    },
+    {
+      "category": "physical_environment",
+      "cue": "office_observed_accuracy",
+      "trait": "O",
+      "r": 0.46,
+      "source": "Gosling et al. 2002",
+      "jp_sample": false
+    },
+    {
+      "category": "physical_environment",
+      "cue": "bedroom_low_accuracy_agreeableness",
+      "trait": "A",
+      "r": 0.20,
+      "source": "Gosling et al. 2002",
+      "jp_sample": false,
+      "note": "Bedrooms reveal very little about Agreeableness; offices essentially nothing (r=-0.04)."
+    },
+    {
+      "category": "physical_environment",
+      "cue": "bedroom_low_consensus_neuroticism",
+      "trait": "N",
+      "r": 0.08,
+      "source": "Gosling et al. 2002",
+      "jp_sample": false,
+      "note": "Neuroticism is invisible in rooms; raters can't agree."
+    },
+    {
+      "category": "physical_environment",
+      "cue": "messy_disorganized_room_or_office",
+      "trait": "C",
+      "r_direction": "negative",
+      "source": "Gosling et al. 2002 (lens model; messy/cluttered cue valid for low C). Direction widely replicated.",
+      "jp_sample": false,
+      "note": "Specific cue-level r values for cleanliness in original paper are commonly cited around |r|=.20-.35 for C; we did not extract a single canonical r here."
+    },
+    {
+      "category": "physical_appearance",
+      "cue": "laptop_stickers_present_and_diverse",
+      "trait": "O",
+      "r": 0.40,
+      "metric": "consensus across observers",
+      "source": "Pringle et al. 2021, J Research in Personality (laptop stickers study, N=147 laptops, 8 perceivers)",
+      "jp_sample": false
+    },
+    {
+      "category": "physical_appearance",
+      "cue": "laptop_stickers_present_and_diverse",
+      "trait": "E",
+      "r": 0.44,
+      "metric": "consensus",
+      "source": "Pringle et al. 2021",
+      "jp_sample": false,
+      "note": "Consensus correlations: E=.44, O=.40, C=.39, A=.28, N=.09. Accuracy (vs self-report) only significant for E and O."
+    },
+    {
+      "category": "physical_appearance",
+      "cue": "laptop_stickers_present_and_diverse",
+      "trait": "C",
+      "r": 0.39,
+      "metric": "consensus",
+      "source": "Pringle et al. 2021",
+      "jp_sample": false
+    },
+    {
+      "category": "physical_appearance",
+      "cue": "spontaneous_full_body_photo_judgment",
+      "trait": "E",
+      "r_direction": "significant accuracy",
+      "source": "Naumann, Vazire, Rentfrow, Gosling 2009 (PSPB)",
+      "jp_sample": false,
+      "note": "In standardized pose, only E, self-esteem and religiosity judged accurately. In spontaneous pose, accuracy emerged for almost all Big Five. Paper reports lens-model r's; we did not extract single numeric r per trait."
+    },
+    {
+      "category": "physical_appearance",
+      "cue": "smile_in_face_photo",
+      "trait": "E",
+      "r_direction": "positive (perceiver inference)",
+      "source": "Hehman et al. 2015 (Frontiers); Naumann 2009",
+      "jp_sample": false,
+      "note": "Smile cue drives positive halo: observers rate smiler higher on E, A, O, C, low N. It is also a *valid* cue for E (smile freq correlates with self-rated E)."
+    },
+    {
+      "category": "physical_appearance",
+      "cue": "facial_features_predictive_model",
+      "trait": "C",
+      "r": 0.36,
+      "metric": "model-predicted vs self-report (men); 0.335 for women",
+      "source": "Kachur et al. 2020, Sci Reports (real-life facial images, N approx 12,000)",
+      "jp_sample": false,
+      "note": "Mean effect size across Big Five = 0.243. C was the most predictable trait from face."
+    },
+    {
+      "category": "sns_digital",
+      "cue": "facebook_likes_predictive_model",
+      "trait": "O",
+      "r": 0.43,
+      "metric": "model prediction r (Likes -> trait)",
+      "source": "Kosinski, Stillwell, Graepel 2013 (PNAS), N=58k",
+      "jp_sample": false
+    },
+    {
+      "category": "sns_digital",
+      "cue": "facebook_likes_predictive_model",
+      "trait": "E",
+      "r": 0.40,
+      "source": "Kosinski et al. 2013",
+      "jp_sample": false
+    },
+    {
+      "category": "sns_digital",
+      "cue": "facebook_likes_predictive_model",
+      "trait": "N",
+      "r": 0.30,
+      "source": "Kosinski et al. 2013",
+      "jp_sample": false,
+      "note": "Remaining traits (A, C, N) in 0.17-0.30 range; O and E the strongest."
+    },
+    {
+      "category": "sns_digital",
+      "cue": "facebook_status_language_open_vocab",
+      "trait": "O",
+      "r": 0.41,
+      "metric": "prediction model r (status text -> self-report O)",
+      "source": "Schwartz et al. 2013 (PLOS ONE), N approx 75k",
+      "jp_sample": false
+    },
+    {
+      "category": "sns_digital",
+      "cue": "facebook_status_language_open_vocab",
+      "trait": "E",
+      "r_range": [0.31, 0.41],
+      "source": "Schwartz et al. 2013",
+      "jp_sample": false,
+      "note": "Open-vocab predictions r=.31 (A, N) to .41 (O). Closed-vocab LIWC r=.21-.29."
+    },
+    {
+      "category": "sns_digital",
+      "cue": "social_words_in_status_posts",
+      "trait": "E",
+      "r_direction": "positive",
+      "source": "Schwartz et al. 2013; Mehl et al. 2006 (EAR)",
+      "jp_sample": false,
+      "note": "Extraverts use party/love-you/boys/ladies; introverts use computer/internet/reading/anime."
+    },
+    {
+      "category": "sns_digital",
+      "cue": "negative_emotion_words_anger_words",
+      "trait": "N",
+      "r_direction": "positive",
+      "source": "Schwartz et al. 2013; Park et al. 2015 JPSP",
+      "jp_sample": false,
+      "note": "'sick of', 'depressed', 'hate' load on N. Emotionally stable people post about sports, vacation, church."
+    },
+    {
+      "category": "sns_digital",
+      "cue": "facebook_friend_network_size",
+      "trait": "E",
+      "r_direction": "positive",
+      "source": "Kosinski et al. 2013",
+      "jp_sample": false,
+      "note": "Network density r=0.52 with one demographic; E correlates with network size and density."
+    },
+    {
+      "category": "sns_digital",
+      "cue": "selfie_posting_frequency",
+      "trait": "Narc",
+      "r_direction": "positive",
+      "source": "Sorokowski et al. 2015 P&ID; Fox & Rooney 2015; meta-analyses",
+      "jp_sample": false,
+      "note": "Selfies link to grandiose narcissism and self-promotion, especially among men. Effect sizes commonly r=.20-.35."
+    },
+    {
+      "category": "sns_digital",
+      "cue": "selfie_posting_frequency",
+      "trait": "E",
+      "r_direction": "positive (small)",
+      "source": "Kim & Chock 2017; Sorokowska 2016",
+      "jp_sample": false
+    },
+    {
+      "category": "sns_digital",
+      "cue": "selfie_posting_frequency",
+      "trait": "N",
+      "r_direction": "negative",
+      "source": "Sorokowska et al. 2016",
+      "jp_sample": false
+    },
+    {
+      "category": "sns_digital",
+      "cue": "twitter_account_owner",
+      "trait": "low_self_esteem_high_social_comparison",
+      "r_direction": "positive",
+      "source": "Tanaka et al. 2022, Comput Hum Behav Reports (Japanese undergrads)",
+      "jp_sample": true,
+      "note": "Japanese sample: Twitter users had lower self-esteem and higher social-comparison orientation than non-users. Instagram users higher in narcissism and self-esteem."
+    },
+    {
+      "category": "sns_digital",
+      "cue": "instagram_account_owner",
+      "trait": "Narc",
+      "r_direction": "positive",
+      "source": "Tanaka et al. 2022 (Japanese undergrads)",
+      "jp_sample": true
+    },
+    {
+      "category": "smartphone_sensing",
+      "cue": "outgoing_call_count_daily",
+      "trait": "E",
+      "r": 0.37,
+      "metric": "model-level prediction r (median); sociableness facet r=0.40",
+      "source": "Stachl et al. 2020 (PNAS), N=624, 30 days",
+      "jp_sample": false
+    },
+    {
+      "category": "smartphone_sensing",
+      "cue": "phone_app_usage_diversity",
+      "trait": "O",
+      "r": 0.29,
+      "metric": "median prediction r",
+      "source": "Stachl et al. 2020",
+      "jp_sample": false
+    },
+    {
+      "category": "smartphone_sensing",
+      "cue": "scheduling_app_usage_phone_activity_timing",
+      "trait": "C",
+      "r": 0.31,
+      "source": "Stachl et al. 2020",
+      "jp_sample": false,
+      "note": "C best predicted by phone activity timing patterns and weather/calendar apps."
+    },
+    {
+      "category": "smartphone_sensing",
+      "cue": "any_smartphone_behavior_for_A",
+      "trait": "A",
+      "r": 0.05,
+      "source": "Stachl et al. 2020",
+      "jp_sample": false,
+      "note": "Agreeableness essentially not predictable from smartphone behavior at baseline."
+    },
+    {
+      "category": "voice_speech",
+      "cue": "f0_variation_higher_intensity_fewer_silences",
+      "trait": "E",
+      "r_direction": "positive",
+      "source": "Mairesse et al. 2007 (J Artif Intell Res, classification accuracy ~73%); Mehl & Pennebaker EAR studies",
+      "jp_sample": false,
+      "note": "Extraverts: more F0 variation, louder, fewer/shorter silent pauses, more variation in pitch. Quantitative cue-level r not always reported; classification accuracy up to 73%."
+    },
+    {
+      "category": "voice_speech",
+      "cue": "talkativeness_word_count_in_daily_speech",
+      "trait": "E",
+      "r_direction": "positive",
+      "source": "Mehl, Robbins, Holleran 2012 (EAR studies)",
+      "jp_sample": false,
+      "note": "E correlates with word count in daily conversation but not in stream-of-consciousness essays. Highly context-dependent."
+    },
+    {
+      "category": "voice_speech",
+      "cue": "swear_word_use_in_daily_speech",
+      "trait": "A",
+      "r_direction": "negative",
+      "source": "Mehl et al. 2006 (Personality in its natural habitat, JPSP)",
+      "jp_sample": false,
+      "note": "Frequent swearing -> lower A, lower C, lower O, higher E."
+    },
+    {
+      "category": "voice_speech",
+      "cue": "swear_word_use_in_daily_speech",
+      "trait": "C",
+      "r_direction": "negative",
+      "source": "Mehl et al. 2006",
+      "jp_sample": false
+    },
+    {
+      "category": "nonverbal",
+      "cue": "eye_contact_amount_during_dyadic_conversation",
+      "trait": "E",
+      "r_direction": "positive (small/mixed)",
+      "source": "Kawashima et al. 2019 (EEG study); Rauthmann et al. 2012 'Eyes as windows to the soul'",
+      "jp_sample": false,
+      "note": "Mixed literature: original raw r in single studies can reach .73 to -.36; meta-analytically nonverbal-E correlations shrink to r approx .13."
+    },
+    {
+      "category": "nonverbal",
+      "cue": "smiling_body_movement_hand_head_movements",
+      "trait": "E",
+      "r_direction": "positive",
+      "source": "Borkenau & Liebler 1992 J Pers Soc Psychol; Naumann 2009",
+      "jp_sample": false
+    },
+    {
+      "category": "nonverbal",
+      "cue": "formal_neat_appearance",
+      "trait": "C",
+      "r_direction": "positive",
+      "source": "Borkenau & Liebler 1992; Naumann 2009",
+      "jp_sample": false,
+      "note": "Conscientious targets dress in tailored/neutral/structured ways; this cue is *valid* (correlates with self-report C) and *used* by observers."
+    },
+    {
+      "category": "nonverbal",
+      "cue": "empty_walls_at_home_lack_of_decoration",
+      "trait": "E",
+      "r_direction": "negative",
+      "source": "Borkenau & Liebler 1992 (zero acquaintance)",
+      "jp_sample": false
+    },
+    {
+      "category": "nonverbal",
+      "cue": "watch_wearing",
+      "trait": "C",
+      "r_direction": "positive",
+      "source": "Ellis & Jenkins 2015, PeerJ",
+      "jp_sample": false,
+      "note": "Watch-wearers self-report higher C and are more punctual."
+    }
+  ],
+
+  "thin_slice_accuracy": {
+    "_metric": "Self-stranger correlation (zero-acquaintance / thin-slice judgment vs self-report)",
+    "_sources": [
+      "Ambady & Rosenthal 1992 meta-analysis (overall effect size r=0.39 for thin-slice predictions across criteria; not Big Five specifically)",
+      "Carney, Colvin, Hall 2007 'A thin slice perspective on the accuracy of first impressions'",
+      "Vazire 2010 SOKA (round-robin design, 165 targets x friends x strangers)",
+      "Borkenau & Liebler 1992 (target variance in zero-acquaintance Big Five)"
+    ],
+
+    "overall_ambady_rosenthal_meta": 0.39,
+
+    "by_trait_qualitative_ranking_easiest_to_hardest_to_judge_from_brief_observation": [
+      "E (Extraversion) - reliably judged from <5s in Carney 2007; r typically 0.30-0.50 stranger-self",
+      "C (Conscientiousness) - moderately judged after 5s; also visible in rooms",
+      "O (Openness) - judged best from environments (rooms, laptop stickers) not from short interactions",
+      "N (Neuroticism) - poorly visible to strangers; SELF best knows N",
+      "A (Agreeableness) - HARDEST to judge from thin slices; needs longer observation"
+    ],
+
+    "soka_model_summary": {
+      "self_best_judge_of": ["N (neuroticism / anxiety / self-esteem)"],
+      "others_best_judge_of": ["O / intellect-related traits (creativity, intelligence)"],
+      "equally_good_self_and_others": ["E (extraversion / talkativeness / dominance)"],
+      "agreeableness_C": "self-knowledge is poor; others see C and A behaviorally"
+    },
+
+    "carney_2007_exposure_duration_finding": "Negative affect, E, C, and intelligence judged moderately well after 5s. Positive affect, N, O, A need more time. 60s is the optimal cost/accuracy ratio."
+  },
+
+  "japan_specific_evidence": {
+    "_summary": "Direct Japanese-sample cue-trait correlation data is scarce. Main usable source: Tanaka et al. 2022 (Comput Hum Behav Reports) on Japanese undergrads' SNS use, and Iwata et al. (W-NUT 2016) on Japanese-text personality estimation. No Japanese replication of Gosling's room study or Mehl EAR work was found in this search.",
+    "entries": [
+      {
+        "cue": "twitter_user_japanese_undergrad",
+        "trait": "low_self_esteem_high_social_comparison",
+        "source": "Tanaka, Sakuraya, Asai, Watanabe, Iida 2022 (Comput Hum Behav Reports)",
+        "jp_sample": true
+      },
+      {
+        "cue": "instagram_user_japanese_undergrad",
+        "trait": "Narc_positive_self_esteem_positive",
+        "source": "Tanaka et al. 2022",
+        "jp_sample": true
+      },
+      {
+        "cue": "japanese_text_particle_usage",
+        "trait": "Big_Five_various",
+        "source": "Iwata, Otomo, Asai 2016 (W-NUT, ACL workshop) 'Personality Estimation from Japanese Text'",
+        "jp_sample": true,
+        "note": "Japanese particle ('joshi') category, unique to Japanese, strongly correlated with several Big Five profiles. No single r reported."
+      }
+    ],
+    "implications_for_checklist": [
+      "Most observable cues should be assumed cross-culturally transferable but with smaller effect sizes in Japan due to display-rule and modesty norms (e.g. selfie posting absolute frequency is lower in JP than US, but the rank-order link to narcissism likely holds).",
+      "Be especially cautious with verbal cues (talkativeness, swearing) -- Japanese conversational norms compress E variance.",
+      "Room/desk neatness as a C cue is plausibly *more* informative in Japan because of widespread baseline tidiness norms; deviations stand out."
+    ]
+  },
+
+  "checklist_design_implications": {
+    "high_visibility_traits_use_observation": [
+      "Extraversion (smile, F0 variation, talkativeness, eye contact, calls, network size)",
+      "Openness (room/desk decoration variety, laptop stickers, art/music words)",
+      "Conscientiousness (formal dress, tidy desk, watch, on-time, scheduling apps)"
+    ],
+    "low_visibility_traits_require_self_report_or_long_exposure": [
+      "Neuroticism (best from self; bedroom consensus r=0.08)",
+      "Agreeableness (bedroom r=0.20, office r=-0.04, smartphone r=0.05; need long observation or behavior in conflict situations)"
+    ],
+    "minimum_observation_window": "60s of behavior optimizes accuracy/cost (Carney 2007). <5s is enough only for E and C."
+  },
+
+  "papers_downloaded_to_E_cues_folder": [
+    "ambady_rosenthal_1992_thin_slice.pdf",
+    "naumann2009_appearance.pdf",
+    "schwartz2013_facebook_lang.pdf",
+    "vazire2010_soka.pdf"
+  ],
+
+  "papers_referenced_but_not_pdf_downloaded": [
+    {"ref": "Gosling, Ko, Mannarelli, Morris 2002 JPSP 'A Room With a Cue'", "reason": "PDF mirrors returned 404/HTML; data extracted from APA press release + search summaries."},
+    {"ref": "Kosinski, Stillwell, Graepel 2013 PNAS 'Private traits ... digital records'", "reason": "Open access at pnas.org/doi/10.1073/pnas.1218772110 but skipped to save bandwidth."},
+    {"ref": "Park et al. 2015 JPSP 'Automatic personality assessment through social media language'", "reason": "Paywalled."},
+    {"ref": "Stachl et al. 2020 PNAS smartphone behavior", "reason": "PNAS PDF blocked; numbers from PMC mirror."},
+    {"ref": "Mehl, Gosling, Pennebaker 2006 JPSP 'Personality in its natural habitat'", "reason": "ResearchGate link returned text stub."},
+    {"ref": "Carney, Colvin, Hall 2007 J Res Pers 'A thin slice perspective on first impressions'", "reason": "Columbia mirror returned encoded PDF."},
+    {"ref": "Tanaka et al. 2022 Comput Hum Behav Reports (Japanese sample)", "reason": "Open access at ScienceDirect; not downloaded here."},
+    {"ref": "Iwata, Otomo, Asai 2016 W-NUT 'Personality Estimation from Japanese Text'", "reason": "ACL anthology open."},
+    {"ref": "Pringle et al. 2021 J Res Pers 'Open laptops, open minds'", "reason": "Elsevier paywall."},
+    {"ref": "Kachur et al. 2020 Sci Reports facial-image study", "reason": "Open access at nature.com but not downloaded here."},
+    {"ref": "Borkenau & Liebler 1992 JPSP / 1995 J Pers 'Observable attributes ...'", "reason": "Wiley paywall."}
+  ]
+}

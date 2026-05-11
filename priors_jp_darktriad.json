@@ -1,0 +1,128 @@
+{
+  "source": {
+    "citation": "下司忠大・川本哲也・小塩真司 (2017). Dark Triadの年齢差—年齢横断的な発達軌跡の検討. 日本心理学会大会発表論文集 81, 3B-004.",
+    "doi": "10.4992/pacjpa.81.0_3B-004",
+    "url": "https://www.jstage.jst.go.jp/article/pacjpa/81/0/81_3B-004/_pdf",
+    "instrument": "SD3 (Short Dark Triad, Jones & Paulhus 2014) 邦訳版, 27項目 5件法",
+    "score_form": "T-score (M=50, SD=10) で報告",
+    "sample": {
+      "total": 1948,
+      "men": 967,
+      "women": 981,
+      "age_range": "20-69",
+      "age_mean": 44.82,
+      "age_sd": 12.74
+    }
+  },
+  "note": "セル別の平均/SD表は提示されていない。下記は階層的重回帰のT-score単位係数。性別 (Gender) は男性=1, 女性=0 の符号化と推定 (本文の解釈と整合)。年齢は中心化 (mean age ≈ 44.82 を基準)。",
+  "regression_T_score": {
+    "Machiavellianism": {
+      "intercept_at_mean_age_female": 49.086,
+      "gender_main_male_vs_female": 1.786,
+      "age_linear_per_year": -0.223,
+      "gender_x_age": 0.09,
+      "R2": 0.061,
+      "interpretation": "年齢↑で線形に低下。男性 > 女性 (約 0.18 SD)"
+    },
+    "Psychopathy": {
+      "intercept_at_mean_age_female": 48.647,
+      "gender_main_male_vs_female": 4.443,
+      "age_linear_per_year": -0.16,
+      "gender_x_age": 0.086,
+      "age_squared": -0.009,
+      "gender_x_age_squared": 0.007,
+      "R2": 0.108,
+      "interpretation": "年齢↑で低下。女性は二次関数的に低下が加速。男性 > 女性 (約 0.44 SD, 大)",
+      "simple_slopes": {
+        "male_linear": -0.075,
+        "female_linear": -0.16,
+        "male_age2": -0.002,
+        "female_age2": -0.009
+      }
+    },
+    "Narcissism": {
+      "intercept_at_mean_age_female": 48.138,
+      "gender_main_male_vs_female": 2.837,
+      "age_linear_per_year": 0.035,
+      "gender_x_age": 0.014,
+      "age_squared": 0.0,
+      "gender_x_age_squared": 0.006,
+      "R2": 0.044,
+      "interpretation": "年齢主効果なし。男性 > 女性 (約 0.28 SD)。男性のみ二次曲線で中年期以降に上昇",
+      "simple_slopes": {
+        "male_age2": 0.006,
+        "female_age2": -0.0
+      }
+    }
+  },
+  "predicted_T_by_cell_helper": {
+    "formula": "T = intercept_female + (gender_male) * (1.786|4.443|2.837) + (age - 44.82) * age_linear + ((age - 44.82) ** 2) * age_squared + interactions",
+    "use": "実装時は年代中央値 (25, 35, 45, 55, 65) を age に代入してセル予測値を算出"
+  },
+  "qualitative_summary": {
+    "Machiavellianism": "若年層 (20-30代) で高い。中高年で低下。男性わずかに高い (d≈0.18)",
+    "Psychopathy": "若年層で最大。年齢とともに大きく低下。男性で顕著に高い (d≈0.44)",
+    "Narcissism": "年齢では大きく変動しない。男性で中程度に高い (d≈0.28)。男性は中年期以降にやや上昇"
+  },
+  "missing_data_gaps": [
+    "セル別 mean/SD 表は提供されていない (回帰係数からの予測値で代替可)",
+    "後続論文 Kawamoto+2020 (P&A 35:91-96) は paywalled。Dirty Dozen 12項目版データを追加",
+    "30代以下のサンプル比率はBig Five研究より高め (N=1948中の年齢分布は均一寄り)"
+  ],
+  "predicted_T_by_sex_age": {
+    "M": {
+      "20s": {
+        "Machiavellianism_T": 53.51,
+        "Psychopathy_T": 53.77,
+        "Narcissism_T": 52.36
+      },
+      "30s": {
+        "Machiavellianism_T": 52.18,
+        "Psychopathy_T": 53.62,
+        "Narcissism_T": 51.07
+      },
+      "40s": {
+        "Machiavellianism_T": 50.85,
+        "Psychopathy_T": 53.08,
+        "Narcissism_T": 50.98
+      },
+      "50s": {
+        "Machiavellianism_T": 49.52,
+        "Psychopathy_T": 52.13,
+        "Narcissism_T": 52.1
+      },
+      "60s": {
+        "Machiavellianism_T": 48.19,
+        "Psychopathy_T": 50.78,
+        "Narcissism_T": 54.41
+      }
+    },
+    "F": {
+      "20s": {
+        "Machiavellianism_T": 53.51,
+        "Psychopathy_T": 48.28,
+        "Narcissism_T": 47.44
+      },
+      "30s": {
+        "Machiavellianism_T": 51.28,
+        "Psychopathy_T": 49.35,
+        "Narcissism_T": 47.79
+      },
+      "40s": {
+        "Machiavellianism_T": 49.05,
+        "Psychopathy_T": 48.62,
+        "Narcissism_T": 48.14
+      },
+      "50s": {
+        "Machiavellianism_T": 46.82,
+        "Psychopathy_T": 46.09,
+        "Narcissism_T": 48.49
+      },
+      "60s": {
+        "Machiavellianism_T": 44.59,
+        "Psychopathy_T": 41.75,
+        "Narcissism_T": 48.84
+      }
+    }
+  }
+}

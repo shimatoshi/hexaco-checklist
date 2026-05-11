@@ -1,0 +1,221 @@
+{
+  "topic": "Japanese clinical/pathological personality trait normative data",
+  "collected_date": "2026-05-11",
+  "scope_note": "General-population pathology-side proxies for HEXACO-based checklist. Severe-illness epidemiology is reference only.",
+  "sources": [
+    {
+      "id": "horie2022_pid5bfj",
+      "type": "PID-5 Japanese version validation",
+      "title": "日本版 Personality Inventory for DSM-5 短縮版 (PID-5-BF-J) の開発及び信頼性・妥当性の検討",
+      "authors": "Horie K., Shichita C., Kuroki T.",
+      "year": 2022,
+      "journal": "九州大学総合臨床心理研究 (Bulletin of Center for Clinical Psychology and Human Development, Kyushu University)",
+      "volume_pages": "13, pp.17-23",
+      "doi": "10.15017/4777939",
+      "open_access": true,
+      "local_pdf": "/home/kobayashi-takeru/work/hexaco-checklist/research/D_clinical/pid5bfj_kyushu_2021.pdf",
+      "sample": {
+        "n_main": 254,
+        "n_retest": 52,
+        "population": "Japanese university students",
+        "mean_age": 20.8,
+        "sd_age": 2.50,
+        "sex": "92 male, 160 female, 2 unknown"
+      },
+      "instrument": {
+        "name": "PID-5-BF-J",
+        "items": 25,
+        "scale": "0-3 (4-point: 非常に当てはまらない/ほとんどしない … 非常に当てはまる/よくそうする)",
+        "domains": ["Negative Affectivity 否定的感情", "Detachment 離脱", "Antagonism 対立", "Disinhibition 脱抑制", "Psychoticism 精神病性"],
+        "translation_method": "Forward translation by 1 psychiatrist + 2 clinical psychology researchers; back-translation; confirmed with original author Krueger"
+      },
+      "domain_means": {
+        "negative_affectivity": {"M": 1.18, "SD": 0.57, "alpha": 0.67},
+        "detachment": {"M": 0.97, "SD": 0.51, "alpha": 0.62},
+        "antagonism": {"M": 1.03, "SD": 0.49, "alpha": 0.49},
+        "disinhibition": {"M": 1.23, "SD": 0.52, "alpha": 0.66},
+        "psychoticism": {"M": 1.17, "SD": 0.59, "alpha": 0.69}
+      },
+      "test_retest_r_2wk": {
+        "negative_affectivity": 0.773,
+        "detachment": 0.818,
+        "antagonism": 0.651,
+        "disinhibition": 0.788,
+        "psychoticism": 0.806
+      },
+      "cfa_fit": {"chi2_df_263": 625.6, "GFI": 0.830, "AGFI": 0.790, "RMSEA": 0.074, "note": "適合度は十分とは言えず"},
+      "criterion_validity_NEO_FFI": {
+        "neg_aff_x_neuroticism": 0.616,
+        "detachment_x_extraversion": -0.514,
+        "antagonism_x_agreeableness": -0.509,
+        "disinhibition_x_conscientiousness": -0.555,
+        "psychoticism_x_openness": 0.278
+      },
+      "criterion_validity_SCID_5_PD": {
+        "antagonism_x_narcissistic_PD": 0.706,
+        "neg_aff_x_borderline_PD": 0.606,
+        "psychoticism_x_schizotypal_PD": 0.610,
+        "detachment_x_avoidant_PD": 0.539
+      },
+      "limitations": [
+        "Antagonism α=.49 (low) — single-item-cluster issue, not generalizable to community/clinical",
+        "CFA fit inadequate — factor structure not fully replicated",
+        "ASPD items excluded (ethical/criminal-history concerns)",
+        "Student sample only, N<300"
+      ],
+      "usefulness_for_checklist": "Best available Japanese PID-5 reference. Domain Ms cluster around 1.0 on the 0-3 scale; SDs ~0.5. Useful as soft cutoff: domain mean > 1.5 (~1 SD above) suggests salient pathology-side trait. Antagonism reliability too poor to use single-domain — combine with HEXACO low-H+low-A instead."
+    },
+    {
+      "id": "shimotsukasa2017_sd3j",
+      "type": "Dark Triad Japanese version",
+      "title": "日本語版 Short Dark Triad (SD3-J) の作成",
+      "authors": "Shimotsukasa T., Oshio A.",
+      "year": 2017,
+      "journal": "パーソナリティ研究 (Japanese Journal of Personality)",
+      "volume_pages": "26(1), 12-22",
+      "doi": "10.2132/personality.26.1.2",
+      "open_access": true,
+      "local_pdf": "/home/kobayashi-takeru/work/hexaco-checklist/research/D_clinical/sd3j_full.pdf",
+      "sample": {
+        "n_main": 436,
+        "population": "Japanese university students",
+        "mean_age": 19.95,
+        "sd_age": 1.49,
+        "sex": "163 male, 273 female"
+      },
+      "instrument": {
+        "name": "SD3-J",
+        "items": 27,
+        "scale": "1-5 (5-point)",
+        "subscales": ["Machiavellianism (9)", "Narcissism (9)", "Psychopathy (9)"]
+      },
+      "subscale_means_full_sample": {
+        "machiavellianism": {"M": 3.53, "SD": 0.54, "alpha": 0.72},
+        "narcissism": {"M": 2.27, "SD": 0.56, "alpha": 0.73},
+        "psychopathy": {"M": 2.43, "SD": 0.55, "alpha": 0.65}
+      },
+      "sex_difference_d": {
+        "machiavellianism": {"t": -3.60, "d": -0.36, "direction": "male > female"},
+        "psychopathy": {"t": -4.10, "d": -0.41, "direction": "male > female"},
+        "narcissism": "n.s."
+      },
+      "usefulness_for_checklist": "Best Japanese subclinical psychopathy/Machiavellianism reference. Note Mach M=3.53 on 1-5 scale is HIGH for student sample (above midpoint) — Japanese baseline is not low. Use SD3-J Ms as anchors when flagging dark traits via HEXACO low-H."
+    },
+    {
+      "id": "tamura2015_dtddj",
+      "type": "Dark Triad Japanese brief version",
+      "title": "日本語版 Dark Triad Dirty Dozen (DTDD-J) 作成の試み",
+      "authors": "Tamura A., Oshio A., Tanaka K., Masui K., Jonason P.K.",
+      "year": 2015,
+      "journal": "パーソナリティ研究",
+      "volume_pages": "24(1), 26-37",
+      "open_access": true,
+      "local_pdf": "/home/kobayashi-takeru/work/hexaco-checklist/research/D_clinical/dtddj_full.pdf",
+      "sample": {
+        "n": 246,
+        "population": "Tokyo university students",
+        "mean_age": 21.0,
+        "sd_age": 4.5,
+        "sex": "83 male, 157 female, 6 unknown"
+      },
+      "instrument": {"name": "DTDD-J", "items": 12, "scale": "1-5"},
+      "subscale_means": {
+        "total_dt": {"M": 34.20, "SD": 7.63},
+        "machiavellianism": {"M": 10.69, "SD": 3.57, "alpha": 0.78},
+        "psychopathy": {"M": 10.14, "SD": 2.83, "alpha": 0.55, "note": "low reliability flagged"},
+        "narcissism": {"M": 13.32, "SD": 3.51, "alpha": 0.79}
+      },
+      "sex_difference": "Male > Female significant on Psychopathy and Narcissism; Mach n.s."
+    },
+    {
+      "id": "yoshino2022_bfi2j",
+      "type": "Normal-range Big Five Japanese norm (reference axis)",
+      "title": "A validation of the Japanese adaptation of the Big Five Inventory-2",
+      "authors": "Yoshino S., Shimotsukasa T., Oshio A., Hashimoto Y., Ueno Y., Mieda T., Migiwa I., Sato T., Kawamoto S., Soto C.J., John O.P.",
+      "year": 2022,
+      "journal": "Frontiers in Psychology",
+      "doi": "10.3389/fpsyg.2022.924351",
+      "open_access": true,
+      "local_pdf": "/home/kobayashi-takeru/work/hexaco-checklist/research/D_clinical/bfi2j_validation.pdf",
+      "sample": {
+        "student_n": 487,
+        "student_mean_age": 20.01,
+        "community_n": 500,
+        "community_mean_age": 44.94,
+        "community_sd_age": 14.07
+      },
+      "domain_means_community": {
+        "extraversion": {"M": 2.72, "SD": 0.68},
+        "agreeableness": {"M": 3.26, "SD": 0.50},
+        "conscientiousness": {"M": 3.18, "SD": 0.58},
+        "negative_emotionality": {"M": 3.06, "SD": 0.69},
+        "open_mindedness": {"M": 3.08, "SD": 0.57}
+      },
+      "scale": "1-5 (5-point)",
+      "alpha_range": "0.80-0.89 at domain level",
+      "usefulness": "Use as Japanese community baseline for normal-range traits. Note Japanese Agreeableness M=3.26 (50th percentile), Negative Emotionality M=3.06 (slightly above midpoint — Japanese sample is on average mildly elevated on neuroticism vs Western samples)."
+    }
+  ],
+  "epidemiology_references": {
+    "winsberg2019_global_meta": {
+      "title": "The prevalence of personality disorders in the community: a global systematic review and meta-analysis",
+      "authors": "Volkert J., Gablonski T.C., Rabung S.",
+      "year": 2018,
+      "journal": "British Journal of Psychiatry, 213(6), 709-715",
+      "url": "https://www.cambridge.org/core/journals/the-british-journal-of-psychiatry/article/prevalence-of-personality-disorders-in-the-community-a-global-systematic-review-and-metaanalysis/360C242E0AE8E6010D43AC2941964DE4",
+      "open_access": "abstract only",
+      "global_prevalence": {
+        "any_PD": "7.8% (95%CI 6.1-9.5)",
+        "cluster_A": "3.8% (3.2-4.4)",
+        "cluster_B": "2.8% (1.6-3.7)",
+        "cluster_C": "5.0% (4.2-5.9)",
+        "OCPD": "3.2%",
+        "avoidant": "2.7%",
+        "paranoid": "2.3%",
+        "histrionic": "0.6%",
+        "schizotypal": "0.8%"
+      },
+      "asia_note": "No Asia subgroup; HIC vs LMIC only. Four of five comparative studies found lower PD prevalence in Asian samples (Huang et al. 2014 review)."
+    },
+    "wmh_japan_kawakami2016": {
+      "title": "Lifetime and 12-month prevalence ... World Mental Health Japan Survey",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC5144586/",
+      "open_access": true,
+      "note": "Did NOT assess personality disorders. Reports anxiety 12mo 4.9%, mood 2.3%, impulse control 0.7%, substance 1.0%. Sample N=4130 community. Useful only as comorbidity reference.",
+      "limitation": "No Japanese national survey of DSM-5 PD prevalence exists as of 2026-05."
+    },
+    "japanese_clinical_observation_moriya1993": {
+      "title": "Diagnosis and clinical features of BPD in the East and West",
+      "year": 1993,
+      "note": "Female outpatient (Japan, 18-30, N=85): 38% met BPD criteria via Diagnostic Interview for Borderlines. Strictly clinical sample — not community prevalence."
+    },
+    "kato2012_adolescent_suicide": {
+      "title": "Frequency and clinical features of BPD in adolescent suicide attempts in Japan",
+      "authors": "Kato K., Mikami K., Nishino R., et al.",
+      "year": 2012,
+      "url": "https://pubmed.ncbi.nlm.nih.gov/23174450/",
+      "note": "Adolescent serious suicide attempters had higher BPD diagnosis rate than adult attempters (χ2=4.42, p<.05); especially female adolescents. Sub-clinical proxy: emotional instability + interpersonal conflict in young women."
+    }
+  },
+  "hexaco_dark_triad_link": {
+    "source": "Lee & Ashton (multiple), meta-analyses",
+    "key_finding": "Honesty-Humility ↔ Dark Triad correlations approach convergent-validity levels (especially with Machiavellianism). Low-H + Low-A profile captures Cluster B traits (NPD/ASPD axis) without clinical instrument.",
+    "japanese_note": "Japanese HEXACO-PI psychometric properties confirmed (Lee & Ashton, 2007; sample N~679 students). No published Japanese community norm for H-H means/SDs found in this search — pending check.",
+    "application_for_checklist": "Recommended composite: low Honesty-Humility (Modesty, Greed-Avoidance facets) + low Agreeableness (Gentleness, Forgiveness facets) ≈ Antagonism domain of PID-5. Cross-validate by spot-checking PID-5-BF-J Antagonism items (#22 自分の欲しいものを得るために人を使う / #25 他人を騙すことは私にとって簡単なことである) against target's behavior."
+  },
+  "checklist_design_implications": [
+    "PID-5-BF-J Japanese-student baseline domain Ms are all ~1.0 on 0-3 scale (SD ~0.5). +1 SD = ~1.5, +2 SD = ~2.0. Use 1.5 as 'noticeably elevated', 2.0 as 'concerning'.",
+    "Antagonism (PID-5) is poorly measured by short forms in Japan (α=.49). For Cluster-B proxy, prefer HEXACO low-H + low-A composite, sanity-checked with SD3-J Machiavellianism items.",
+    "Japanese sample shows Mach M=3.53/5 (above midpoint) — do NOT assume Japanese baseline is low. Cultural collectivism does not protect against strategic interpersonal calculation.",
+    "Sex differences (SD3-J): males higher Mach (d=-0.36) and Psychopathy (d=-0.41). Narcissism no sex diff. Apply mild sex correction.",
+    "No reliable Japanese community-prevalence numbers for BPD/NPD/ASPD. Cite global meta (~7.8% any PD, Cluster B ~2.8%) as soft prior, then weight down ~30% for Asia subgroup tendency. Avoid quoting Japanese-specific numbers — none exist.",
+    "Negative Emotionality (BFI-2-J community M=3.06/5) is slightly above scale midpoint — Japanese baseline anxiety/worry is normatively elevated vs Western. Do not over-flag this dimension."
+  ],
+  "gaps_to_note": [
+    "No Japanese community PID-5 (220-item full) validation as of 2026-05; only PID-5-BF-J student sample.",
+    "No Japanese national epidemiologic survey of DSM-5 personality disorders. WMH-Japan excluded PD.",
+    "No published age/sex-stratified PID-5-BF-J norms (single 20yo student cohort).",
+    "Antagonism domain in PID-5-BF-J has unstable α — treat with caution.",
+    "MMPI-3 Japanese version: no recent open-access validation found in this search."
+  ]
+}

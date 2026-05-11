@@ -1,0 +1,296 @@
+{
+  "scope": "Extended demographic moderators on Big Five / HEXACO in Japanese samples (education, income/SES, marital status, occupation, region). Built on top of Kawamoto et al. 2015 sex x age prior (TIPI-J, N=4588).",
+  "extraction_date": "2026-05-11",
+  "papers": [
+    {
+      "id": "kawamoto2016_hexaco_age",
+      "citation": "Kawamoto, T. (2016). Cross-sectional age differences in the HEXACO personality: Results from a Japanese sample. Journal of Research in Personality, 62, 1-5. doi:10.1016/j.jrp.2016.03.001",
+      "relevance": "PRIMARY - uses education/income/marital status as covariates of HEXACO",
+      "download_status": "paywall_abstract_only (Elsevier/JRP). No preprint on ResearchGate/OSF located.",
+      "local_file": null,
+      "sample": {"N": 2000, "women": 1000, "age_mean": 40.94, "age_sd": 5.35, "age_range": "30-49", "country": "Japan", "mode": "web survey"},
+      "measure": "HEXACO (Japanese)",
+      "key_findings_qualitative": [
+        "After controlling for education, annual income, marital status, gender: Emotionality NEGATIVELY associated with age",
+        "Honesty-Humility POSITIVELY associated with age",
+        "Extraversion, Agreeableness, Conscientiousness, Openness: NOT associated with age (after controls)"
+      ],
+      "key_numerical": {
+        "regression_coefficients_for_education_income_marital": "data: not_accessible (paywall; abstract gives directions only)"
+      }
+    },
+    {
+      "id": "kawamoto2015_age_gender_tipi",
+      "citation": "川本哲也・小塩真司・阿部晋吾・坪田祐基・平島太郎・伊藤大幸・谷伊織 (2015). ビッグ・ファイブ・パーソナリティ特性の年齢差と性差：大規模横断調査による検討. 発達心理学研究, 26(2), 107-122.",
+      "relevance": "BASELINE prior (already in user hand) - confirmed open-access PDF",
+      "download_status": "downloaded",
+      "local_file": "Kawamoto2015_AgeGenderBigFiveJapan.pdf",
+      "sample": {"N": 4588, "men": 2112, "women": 2476, "age_mean": 53.5, "age_sd": 12.9, "age_range": "23-79"},
+      "measure": "TIPI-J (2 items / domain, 7-pt scale, score 2-14)",
+      "descriptive_stats_overall": {
+        "Extraversion": {"M": 8.15, "SD": 2.55},
+        "Agreeableness": {"M": 10.04, "SD": 1.85},
+        "Conscientiousness": {"M": 8.12, "SD": 2.14},
+        "Neuroticism": {"M": 7.95, "SD": 2.05},
+        "Openness": {"M": 7.79, "SD": 2.10}
+      },
+      "descriptive_stats_by_age_sex_table3": {
+        "note": "M (SD), TIPI-J sum-of-2-items (range 2-14)",
+        "Male": {
+          "20s_n81": {"E": [7.62, 2.92], "A": [9.30, 2.21], "C": [6.98, 2.32], "N": [7.96, 2.33], "O": [8.10, 2.07]},
+          "30s_n222": {"E": [7.97, 2.55], "A": [9.57, 1.91], "C": [7.48, 2.26], "N": [8.08, 2.18], "O": [8.11, 2.15]},
+          "40s_n469": {"E": [8.22, 2.60], "A": [9.62, 1.94], "C": [7.93, 2.10], "N": [7.67, 2.02], "O": [8.34, 2.03]},
+          "50s_n506": {"E": [7.72, 2.58], "A": [9.98, 1.85], "C": [8.09, 2.04], "N": [7.88, 2.04], "O": [8.00, 2.07]},
+          "60s_n566": {"E": [7.83, 2.43], "A": [10.21, 1.83], "C": [8.51, 1.96], "N": [7.58, 1.87], "O": [7.94, 2.05]},
+          "70s_n268": {"E": [7.79, 2.30], "A": [10.18, 1.71], "C": [9.01, 2.17], "N": [7.57, 1.89], "O": [8.15, 1.92]}
+        },
+        "Female_20s_n95": {"E": [8.29, 2.68]}
+      },
+      "key_regression_findings": [
+        "Agreeableness: linear age effect significant (positive) - older = more agreeable",
+        "Conscientiousness: linear age effect significant (positive) - older = more conscientious",
+        "Extraversion: only sex effect significant (B=0.466, SE=0.075, p<.001; female > male)",
+        "Openness: only sex effect significant (female lower than male)",
+        "Neuroticism: linear age effect + age x sex interaction significant; young women > young men, converges in older age"
+      ]
+    },
+    {
+      "id": "yoshino_oshio2021_regional",
+      "citation": "吉野伸哉・小塩真司 (2021). 日本におけるBig Fiveパーソナリティの地域差の検討 ― 3つの大規模調査のデータセットを用いて ―. 環境心理学研究, 9(1), 19-33.",
+      "relevance": "PRIMARY for region differences",
+      "download_status": "downloaded (open access J-STAGE)",
+      "local_file": "Yoshino_Oshio2021_RegionalDifferencesBigFiveJapan.pdf",
+      "samples": [
+        {"label": "Survey 1 (Osaka Univ. COE Preference Survey 2012)", "N": 4469, "women": 2405, "age_mean": 52.35, "age_sd": 12.84, "method": "drop-off/pickup"},
+        {"label": "Survey 2 (DSPJ 2017)", "N": 5619, "women": 2249, "age_mean": 48.98, "age_sd": 10.94, "method": "web"},
+        {"label": "Survey 3 (DSPJ-2 2019)", "N": 4330, "women": 1480, "age_mean": 51.72, "age_sd": 11.04, "method": "web"}
+      ],
+      "measure": "TIPI-J",
+      "morans_I_japan_average": {
+        "Extraversion": {"value": 0.27, "p": "<.01", "interpretation": "significant spatial clustering"},
+        "Agreeableness": {"value": 0.09, "p": "0.48"},
+        "Conscientiousness": {"value": 0.00, "p": "0.14"},
+        "Neuroticism": {"value": -0.02, "p": "0.62"},
+        "Openness": {"value": -0.06, "p": "0.42"}
+      },
+      "comparison_morans_I_usa_Rentfrow2013": {
+        "Extraversion": [0.07, 0.36],
+        "Agreeableness": [0.10, 0.60],
+        "Conscientiousness": [0.10, 0.61],
+        "Neuroticism": [0.22, 0.66],
+        "Openness": [0.02, 0.47],
+        "note": "USA shows much stronger spatial clustering than Japan; Japan effect sizes generally small"
+      },
+      "regions_high_low": {
+        "Extraversion": {"high": ["首都圏 (東京・千葉・埼玉)", "大阪府", "福岡県", "沖縄県"], "low": ["岩手県", "奈良県", "鳥取県", "山口県"]},
+        "Agreeableness": {"high": ["東京", "大阪", "和歌山", "岡山", "福岡", "大分", "宮崎", "沖縄"], "low": ["富山", "石川", "静岡", "愛知", "香川", "佐賀", "鹿児島"]},
+        "Conscientiousness": {"high": ["群馬", "神奈川", "岐阜", "大阪", "福岡"], "low": ["北海道", "岩手", "宮城", "富山", "熊本"]},
+        "Neuroticism": {"high": ["岩手", "秋田", "福島", "愛知", "鳥取", "島根", "山口", "鹿児島"], "low": ["茨城", "群馬", "東京", "神奈川", "京都", "福岡", "宮崎", "沖縄"]},
+        "Openness": {"high": ["北海道", "山形", "東京", "神奈川", "和歌山", "広島", "福岡", "大分"], "low": ["岐阜", "静岡", "滋賀", "鳥取", "山口"]}
+      },
+      "key_takeaways": [
+        "Japan regional differences are SMALL in absolute terms (Moran's I << USA)",
+        "Only Extraversion shows significant nationwide spatial clustering",
+        "Metropolitan area (Tokyo/Kanagawa) higher Extraversion & Openness (matches selective migration hypothesis)",
+        "Tohoku district lower Conscientiousness, higher Neuroticism (harsh living environment hypothesis)",
+        "Okinawa: high Extraversion + Agreeableness, low Neuroticism (interpersonal warmth pattern)",
+        "Hokkaido: low Agreeableness across 3 datasets (consistent with Kitayama 2006 frontier hypothesis)"
+      ],
+      "open_data": "https://osf.io/2nw7m/"
+    },
+    {
+      "id": "lee_ohtake2016_agreeableness_income",
+      "citation": "Lee, S.Y., & Ohtake, F. (2016). Is being agreeable a key to success or failure in the labor market? ISER Discussion Paper No. 960, Osaka University.",
+      "relevance": "PRIMARY for education attainment + income x personality in Japan (with US comparison)",
+      "download_status": "downloaded (open access DP)",
+      "local_file": "Lee_Ohtake2016_AgreeablenessIncomeJapanUS.pdf",
+      "sample": {"Japan_N_schooling": 3199, "Japan_male": 1522, "Japan_female": 1844, "age_range": "30-65", "measure": "TIPI 7-pt scale 1-7, single average per domain", "data_source": "Osaka Univ COE Preference & Life Satisfaction Survey 2012"},
+      "descriptive_stats_japan_whole_sample": {
+        "Extraversion": {"M": 4.09, "SD": 1.29},
+        "Agreeableness": {"M": 4.99, "SD": 0.93},
+        "Conscientiousness": {"M": 3.99, "SD": 1.06},
+        "EmotionalStability": {"M": 4.01, "SD": 1.03},
+        "Openness": {"M": 3.89, "SD": 1.07},
+        "years_of_schooling_M": 13.39, "years_of_schooling_SD": 2.00,
+        "pct_college_grad": 0.27, "pct_grad_school": 0.02
+      },
+      "by_sex_japan": {
+        "Male": {"E": [3.96, 1.29], "A": [4.92, 0.95], "C": [4.00, 1.05], "ES": [4.11, 1.01], "O": [4.03, 1.04]},
+        "Female": {"E": [4.20, 1.28], "A": [5.04, 0.91], "C": [3.97, 1.07], "ES": [3.92, 1.04], "O": [3.78, 1.07]}
+      },
+      "education_regression_japan_table2": {
+        "note": "DV = Years of Schooling (OLS), without parental education. Coefficient (SE). *p<.1 **p<.05 ***p<.01",
+        "Male_n1522": {
+          "Extraversion": {"B": -0.0280, "SE": 0.051, "sig": "ns"},
+          "Agreeableness": {"B": 0.2033, "SE": 0.066, "sig": "p<.01"},
+          "Conscientiousness": {"B": 0.0852, "SE": 0.062, "sig": "ns"},
+          "EmotionalStability": {"B": 0.0927, "SE": 0.064, "sig": "ns"},
+          "Openness": {"B": 0.1132, "SE": 0.063, "sig": "p<.1"},
+          "R2": 0.030
+        },
+        "Female_n1844": {
+          "Extraversion": {"B": 0.0111, "SE": 0.033, "sig": "ns"},
+          "Agreeableness": {"B": 0.0955, "SE": 0.044, "sig": "p<.05"},
+          "Conscientiousness": {"B": -0.0125, "SE": 0.040, "sig": "ns"},
+          "EmotionalStability": {"B": 0.0255, "SE": 0.041, "sig": "ns"},
+          "Openness": {"B": 0.0753, "SE": 0.039, "sig": "p<.1"},
+          "R2": 0.054
+        }
+      },
+      "education_regression_japan_with_parental_edu": {
+        "Male_n1445": {
+          "Agreeableness": {"B": 0.1982, "SE": 0.062, "sig": "p<.01"},
+          "Openness": {"B": 0.0629, "SE": 0.061, "sig": "ns"},
+          "R2": 0.162
+        },
+        "Female_n1754": {
+          "Agreeableness": {"B": 0.0368, "SE": 0.042, "sig": "ns"},
+          "Openness": {"B": 0.0717, "SE": 0.037, "sig": "p<.1"},
+          "R2": 0.194
+        }
+      },
+      "income_regression_japan_men_key": "Agreeableness positive predictor of log(annual income) for Japanese men; agreeableness premium concentrated in large firms (≥1000 employees); contrast with US where agreeableness is income penalty for men.",
+      "occupation_distribution_japan_male": {
+        "office_admin": 0.14, "sales": 0.09, "management_business": 0.21, "professional": 0.21,
+        "service": 0.16, "construction": 0.18, "farming": 0.02
+      },
+      "key_takeaways": [
+        "Agreeableness has the LARGEST and most significant effect on education in Japan (esp. male B=0.20)",
+        "Openness positive but weaker, small effect",
+        "Conscientiousness NOT significant for years of schooling in this Japanese sample (contrasts Western findings)",
+        "Agreeableness premium for income in Japanese men (esp. large firms) - opposite sign to US"
+      ]
+    },
+    {
+      "id": "yoshino_oshio2022_bfi2",
+      "citation": "Yoshino, S., & Oshio, A. (2022). A validation of the Japanese adaptation of the Big Five Inventory-2. Frontiers in Psychology, 13, 924351.",
+      "relevance": "SECONDARY - sex/age effects in BFI-2-J, partial education distribution",
+      "download_status": "downloaded (open access)",
+      "local_file": "Yoshino_Oshio2022_BFI2-J_Validation.pdf",
+      "samples": [
+        {"label": "Students", "N": 487, "age_mean": 20.01, "age_sd": 3.92, "female": 287, "male": 186},
+        {"label": "Community", "N": 500, "age_mean": 44.94, "age_sd": 14.07, "female": 250, "male": 250,
+         "education": {"university_or_more": 237, "vocational": 83, "junior_high": 150, "high_school": 17, "unreported": 13}}
+      ],
+      "measure": "BFI-2-J (60 items, 5-pt Likert, 12 items/domain)",
+      "key_findings": [
+        "Older (≥45) > younger on Conscientiousness, Agreeableness, Open-Mindedness",
+        "Older < younger on Negative Emotionality",
+        "Sex: males higher Assertiveness facet (d=0.42); females higher Aesthetic Sensitivity, Sociability (d=0.17)",
+        "Overall sex differences SMALL"
+      ],
+      "education_or_income_breakdown": "not reported in tables"
+    },
+    {
+      "id": "kogawa2025_hypertension_bigfive_japan",
+      "citation": "Predicting hypertension through Big Five personality traits: a four-year longitudinal study in Japan. BMC Psychology (2025) 13:130. doi:10.1186/s40359-025-03130-z.",
+      "relevance": "Recent Japanese cohort with marital/edu/income controls; only summary level",
+      "download_status": "open_access_fetched_summary_only",
+      "local_file": null,
+      "sample": {"N": 7321, "male": 4069, "female": 3252, "age_mean": 51.98, "age_sd": 13.47, "panel_years": "2019-2022"},
+      "measure": "TIPI-J (sum-of-2-items)",
+      "descriptive_stats_overall_means": {
+        "Extraversion": 7.22, "Agreeableness": 9.41, "Conscientiousness": 8.12,
+        "Neuroticism": 7.96, "Openness": 7.72
+      },
+      "demographic_breakdown_by_personality": "not reported in main text - controls only"
+    },
+    {
+      "id": "specht2011_overseas",
+      "citation": "Specht, J., Egloff, B., & Schmukle, S. C. (2011). Stability and change of personality across the life course: The impact of age and major life events on mean-level and rank-order stability of the Big Five. Journal of Personality and Social Psychology, 101, 862-882.",
+      "relevance": "_overseas reference for marital status effect on personality (Germany N=14,718)",
+      "download_status": "paywall (APA)",
+      "local_file": null,
+      "key_qualitative": [
+        "Personality predicts occurrence of major life events (selection effects)",
+        "Personality changes in response to events (socialization effects)",
+        "Marriage/divorce shown to relate to Big Five changes (small effects)",
+        "Conscientiousness shows monotonic rank-order stability increase across adulthood"
+      ]
+    },
+    {
+      "id": "cobbclark_schurer2012_overseas",
+      "citation": "Cobb-Clark, D. A., & Schurer, S. (2012). The stability of big-five personality traits. Economics Letters, 115(1), 11-15.",
+      "relevance": "_overseas - argues working-age personality is largely stable to income/employment shocks",
+      "download_status": "paywall (Elsevier)",
+      "local_file": null,
+      "key_qualitative": [
+        "Mean population Big Five changes are SMALL and constant across age groups over 4 years",
+        "Intra-individual change largely unrelated to adverse life events",
+        "Important caveat for causal inference: demographic variables may PREDICT personality cross-sectionally but rarely CAUSE personality change in adulthood"
+      ]
+    }
+  ],
+  "consolidated_priors_for_checklist": {
+    "education": {
+      "evidence_strength": "moderate (1 Japanese paper with explicit B, 1 abstract-only)",
+      "direction": {
+        "Agreeableness": "POSITIVE in Japan, especially men (B≈0.20 per TIPI-pt → years of schooling); CONTRAST with US where ns/negative",
+        "Openness": "weak POSITIVE in Japan (B≈0.07-0.11, p<.10)",
+        "Conscientiousness": "NOT significant in Japan TIPI sample (B≈0.09 ns), unlike Western meta-analyses",
+        "EmotionalStability": "ns in Japan",
+        "Extraversion": "ns in Japan"
+      },
+      "caveat": "Lee&Ohtake uses 2-item TIPI; reverse causality plausible (Cobb-Clark&Schurer)"
+    },
+    "income": {
+      "evidence_strength": "moderate for Agreeableness in Japan",
+      "direction": {
+        "Agreeableness": "POSITIVE for Japanese men, especially at large firms (≥1000 employees); opposite of US pattern",
+        "Conscientiousness": "Generally positive across countries (US data); Japan-specific Bs not extracted",
+        "EmotionalStability": "positive cross-culturally",
+        "Extraversion": "positive (especially leadership/sales contexts)",
+        "Openness": "weak/mixed"
+      }
+    },
+    "marital_status": {
+      "evidence_strength": "WEAK in Japan-specific data",
+      "direction_overseas": "Marriage selection: more agreeable/conscientious/extraverted more likely to marry; marriage socialization: small increase in conscientiousness/agreeableness, decrease in neuroticism (Specht 2011 Germany)",
+      "japan_specific": "Kawamoto 2016 controlled FOR marital status but did not publish marginal effects in accessible abstract. data: not_accessible"
+    },
+    "occupation": {
+      "evidence_strength": "WEAK Japan-specific",
+      "direction": {
+        "by_occupation_overseas": "Healthcare/teaching: high Agreeableness; Engineering/research: high Openness; Sales/management: high Extraversion; Office-admin: high Conscientiousness",
+        "japan_distribution_men_lee_ohtake": "21% professional, 21% management/business, 18% construction, 16% service, 14% office-admin, 9% sales, 2% farming"
+      }
+    },
+    "region": {
+      "evidence_strength": "moderate (3-dataset replication Yoshino&Oshio 2021)",
+      "magnitude": "SMALL - prefecture mean z-scores typically |z| < 1.96; only Extraversion shows nationwide Moran's I significant (.27)",
+      "directional_priors": {
+        "首都圏_Tokyo_Kanagawa": "+Extraversion, +Openness",
+        "Okinawa": "+Extraversion, +Agreeableness, -Neuroticism",
+        "Hokkaido": "-Agreeableness, +Openness",
+        "Tohoku": "-Conscientiousness, +Neuroticism",
+        "Chugoku": "-Extraversion, +Neuroticism",
+        "九州北部_Fukuoka": "+Openness, +Conscientiousness",
+        "Hokuriku": "-Agreeableness"
+      },
+      "usage_note": "Regional priors should be applied with weak weight given small absolute effect sizes"
+    }
+  },
+  "papers_not_accessible_paywalled": [
+    {
+      "citation": "Kawamoto, T. (2016). Cross-sectional age differences in the HEXACO personality. JRP 62, 1-5.",
+      "reason": "Elsevier paywall; no preprint on ResearchGate or OSF found",
+      "importance": "HIGH - direct demographic-control coefficients for HEXACO in Japan"
+    },
+    {
+      "citation": "Specht, Egloff, & Schmukle (2011). JPSP 101, 862-882.",
+      "reason": "APA paywall",
+      "importance": "MEDIUM - overseas comparator for marital status x Big Five"
+    },
+    {
+      "citation": "Cobb-Clark & Schurer (2012). Economics Letters 115, 11-15.",
+      "reason": "Elsevier paywall",
+      "importance": "MEDIUM - methodological caveat (personality stable to income shocks)"
+    }
+  ],
+  "search_gaps": [
+    "Direct Japan-specific regression coefficients for marital_status → HEXACO/Big Five",
+    "Japan-specific occupation x Big Five mean tables (only meta-occupation patterns from overseas data)",
+    "Income-decile means for Big Five in Japan (only Agreeableness x income via Lee&Ohtake)",
+    "Urban/rural binary (only prefecture-level regional differences available)"
+  ]
+}

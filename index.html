@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HEXACO Field Checklist</title>
+<link rel="manifest" href="./manifest.json">
+<meta name="theme-color" content="#333333">
+<link rel="icon" type="image/png" sizes="192x192" href="./icon-192.png">
+<link rel="apple-touch-icon" sizes="180x180" href="./icon-180.png">
+<style>
+
+* { box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Noto Sans JP", sans-serif;
+       max-width: 1100px; margin: 0 auto; padding: 16px;
+       background: #f7f7f9; color: #222; line-height: 1.5; }
+h1 { font-size: 1.4em; border-bottom: 2px solid #333; padding-bottom: 6px; margin: 12px 0; }
+h2 { font-size: 1.15em; background: #333; color: #fff; padding: 6px 10px; margin: 18px 0 8px; border-radius: 3px; }
+h3 { font-size: 1.0em; margin: 12px 0 6px; border-left: 4px solid #555; padding-left: 8px; }
+h4 { font-size: 0.92em; margin: 10px 0 4px; color: #555; }
+section { background: #fff; padding: 12px; margin: 12px 0; border-radius: 4px; border: 1px solid #ddd; }
+.row { display: flex; flex-wrap: wrap; gap: 12px; margin: 6px 0; }
+.row > label { display: flex; gap: 4px; align-items: center; }
+input[type=text], textarea, select { font: inherit; padding: 4px 6px;
+  border: 1px solid #aaa; border-radius: 3px; background: #fff; }
+textarea { width: 100%; min-height: 60px; }
+button { font: inherit; padding: 6px 14px; border: 1px solid #555;
+  background: #fff; cursor: pointer; border-radius: 3px; }
+button.primary { background: #333; color: #fff; }
+button:hover { background: #eee; }
+button.primary:hover { background: #555; }
+details { margin: 4px 0; border: 1px solid #ddd; border-radius: 3px; background: #fafafa; }
+details > summary { padding: 6px 10px; cursor: pointer; user-select: none;
+  font-weight: 600; background: #efefef; }
+details[open] > summary { background: #ddd; }
+.cue-grid { padding: 8px 12px; }
+.cue-item { display: flex; align-items: flex-start; gap: 6px;
+  padding: 3px 0; font-size: 0.9em; }
+.cue-item label { flex: 1; cursor: pointer; }
+.cue-item .conf { font-size: 0.75em; color: #888; margin-left: 4px; }
+.cue-item .conf.high { color: #2a7; }
+.cue-item .conf.low { color: #d62; }
+.cue-item .deltas { font-size: 0.75em; color: #888; font-family: monospace; }
+.bar { display: inline-block; height: 14px; background: linear-gradient(to right, #4a8, #fc4);
+  vertical-align: middle; border-radius: 2px; }
+.bar-bg { display: inline-block; width: 200px; height: 14px; background: #eee;
+  vertical-align: middle; border-radius: 2px; position: relative; }
+.bar-bg .marker { position: absolute; width: 2px; height: 14px; background: #333; }
+.profile-row { display: flex; align-items: center; gap: 8px; padding: 3px 0;
+  font-family: monospace; font-size: 0.9em; }
+.profile-row .label { width: 60px; }
+.profile-row .value { width: 60px; text-align: right; }
+.profile-row .ci { color: #888; font-size: 0.85em; }
+table { border-collapse: collapse; width: 100%; margin: 6px 0; font-size: 0.92em; }
+th, td { padding: 5px 8px; border: 1px solid #ddd; vertical-align: top; text-align: left; }
+th { background: #f0f0f0; }
+.recommend { color: #2a6; }
+.avoid { color: #c33; }
+.warning { background: #fee; border: 1px solid #d33; padding: 8px;
+  border-radius: 3px; margin: 8px 0; }
+.char-sheet { background: #fafafa; padding: 10px; border-left: 4px solid #36a; }
+.char-sheet h4 { color: #36a; margin-top: 8px; }
+.cluster-rank { display: flex; gap: 12px; flex-wrap: wrap; margin: 8px 0; }
+.cluster-card { padding: 8px 12px; border: 1px solid #ccc; border-radius: 3px;
+  background: #f9f9f9; min-width: 200px; flex: 1; }
+.cluster-card.top { border-color: #36a; background: #eef4ff; }
+.cluster-card .dist { color: #888; font-size: 0.85em; }
+ul { margin: 4px 0; padding-left: 20px; }
+li { margin: 2px 0; }
+.btn-row { display: flex; gap: 8px; flex-wrap: wrap; }
+.note { color: #666; font-size: 0.85em; font-style: italic; }
+.hidden { display: none; }
+@media (max-width: 700px) {
+  .cluster-card { min-width: 100%; }
+  .bar-bg { width: 140px; }
+}
+
+</style>
+</head>
+<body>
+
+<h1>HEXACO 対人分析チェックリスト</h1>
+<p class="note">HEXACO-PI-R 100 + Dark Triad + 日本人 prior + Tokiwa 2024 7クラスタ。完全オフライン動作。</p>
+
+<section>
+  <h2>Layer 1: 対象ステータス</h2>
+  <div class="row">
+    <label>被験者ID <input type="text" id="subject_id" placeholder="anon-001" size="14"></label>
+    <label>モード:
+      <label><input type="radio" name="mode" value="pre" checked>接触前</label>
+      <label><input type="radio" name="mode" value="post">接触済み</label>
+    </label>
+  </div>
+  <div class="row">
+    <label>性別:
+      <select id="sex">
+        <option value="F">女性</option>
+        <option value="M">男性</option>
+      </select>
+    </label>
+    <label>年代:
+      <select id="age_band">
+        <option>20s</option><option>30s</option><option>40s</option>
+        <option>50s</option><option>60s</option><option>70s</option>
+      </select>
+    </label>
+    <label>関係性:
+      <select id="relation">
+        <option value="none">接触履歴なし</option>
+        <option value="first">初回接触</option>
+        <option value="few">数回程度</option>
+        <option value="long">長期</option>
+      </select>
+    </label>
+  </div>
+  <h3>環境タグ (成功率補正)</h3>
+  <div class="row">
+    <label><input type="checkbox" class="env-tag" value="満員電車">満員電車</label>
+    <label><input type="checkbox" class="env-tag" value="行列">行列・待ち時間</label>
+    <label><input type="checkbox" class="env-tag" value="趣味イベント">趣味イベント</label>
+    <label><input type="checkbox" class="env-tag" value="趣味コミュSNS">趣味コミュ SNS</label>
+    <label><input type="checkbox" class="env-tag" value="職場">職場/学校</label>
+    <label><input type="checkbox" class="env-tag" value="友人紹介">友人紹介</label>
+    <label><input type="checkbox" class="env-tag" value="パーティー">パーティー</label>
+    <label><input type="checkbox" class="env-tag" value="飲み会">飲み会</label>
+    <label><input type="checkbox" class="env-tag" value="カフェ">カフェ</label>
+    <label><input type="checkbox" class="env-tag" value="勉強会・専門会議">勉強会・専門会議</label>
+    <label><input type="checkbox" class="env-tag" value="SNS">SNS 上</label>
+  </div>
+  <h3>メモ (計算には使わない、参照用)</h3>
+  <textarea id="notes" placeholder="日時/場所/特記事項など自由記述"></textarea>
+</section>
+
+<section>
+  <h2>Layer 2: 観察 cue チェックリスト</h2>
+  <p class="note">該当する cue にチェック。confidence: <span class="conf high">[high]</span>=研究backed / [mid]=推論+文献 / <span class="conf low">[low]</span>=推論のみ。delta は HEXACO 1-5 スケール (Dark Triad は T-score)。</p>
+  <div id="cue-container"></div>
+</section>
+
+<div class="btn-row" style="margin: 16px 0;">
+  <button class="primary" id="run">▶ 計算</button>
+  <button id="clear">入力クリア</button>
+  <button id="export">JSON エクスポート</button>
+  <button id="import-btn">JSON 読込</button>
+  <input type="file" id="import-file" accept=".json" style="display:none">
+  <button id="save-local">ローカル保存</button>
+</div>
+
+<section>
+  <h3>ローカル保存履歴</h3>
+  <ul id="saved-list"></ul>
+</section>
+
+<div id="output"></div>
+
+<section class="note">
+  <h3>方法論メモ</h3>
+  <ul>
+    <li>Prior: Kawamoto 2015 (TIPI-J Big Five) を HEXACO 5 因子に近似換算 / Honesty-Humility は flat (日本人年代別データ無し) / Dark Triad は Shimotsukasa 2017 回帰係数</li>
+    <li>Cue → 因子 Δ: Gosling 2002, Park 2015, Tanaka 2022 JP 等の文献値 (高信頼) + HEXACO ファセット定義からの推論 (中・低信頼)</li>
+    <li>クラスタ: Tokiwa 2024 (Research Square, N=13,668 日本人 HEXACO-PI-R-60) の7クラスタ raw Likert 中心点を距離計算</li>
+    <li>合成: Layer A (クラスタテンプレ) + Layer B (因子モディファイア dev > 0.5SD) + Layer C (Dark Triad T > 60 オーバーレイ)</li>
+    <li>精度の現実: 接触前モードでは Self-Observer 相関 0.15〜0.35 程度。出力は決定論的だが、入力の解釈ノイズが大きい。複数回観察+異なる文脈での再評価を推奨</li>
+  </ul>
+</section>
+
+<script>
+
+const DATA = {"hexaco_items":{"version":"hexaco-pi-r-100","source":"hexaco.org","references":{"authors":["Kibeom Lee","Michael C. Ashton"],"ja_translator":"Akio Wakabayashi","scoring_key_pdf":"ScoringKeys_100.pdf"},"scale":{"anchors":{"1":"strongly disagree","2":"disagree","3":"neutral","4":"agree","5":"strongly agree"},"reverse_map":{"5":1,"4":2,"3":3,"2":4,"1":5}},"factors":{"H":"Honesty-Humility","E":"Emotionality","X":"Extraversion","A":"Agreeableness","C":"Conscientiousness","O":"Openness","Altruism":"Altruism (interstitial)"},"items":[{"number":1,"factor":"O","facet":"Aesthetic Appreciation","reverse":true,"en_self":"I would be quite bored by a visit to an art gallery.","en_observer":"He/she would be quite bored by a visit to an art gallery.","ja_self":"美術館に行くと，とても退屈してしまう。"},{"number":2,"factor":"C","facet":"Organization","reverse":false,"en_self":"I clean my office or home quite frequently.","en_observer":"He/she cleans his/her office or home quite frequently.","ja_self":"私は，自分の家の部屋やオフィス（仕事場）を頻繁に掃除する。"},{"number":3,"factor":"A","facet":"Forgiveness","reverse":false,"en_self":"I rarely hold a grudge, even against people who have badly wronged me.","en_observer":"He/she rarely holds a grudge, even against people who have badly wronged him/her.","ja_self":"たとえひどく不当な扱いをされた相手に対しても，めったに悪意を抱くことはない。"},{"number":4,"factor":"X","facet":"Social Self-Esteem","reverse":false,"en_self":"I feel reasonably satisfied with myself overall.","en_observer":"He/she feels reasonably satisfied with himself/herself overall.","ja_self":"私は全体的に自分自身にほどよく満足していると感じている。"},{"number":5,"factor":"E","facet":"Fearfulness","reverse":false,"en_self":"I would feel afraid if I had to travel in bad weather conditions.","en_observer":"He/she would feel afraid if he/she had to travel in bad weather conditions.","ja_self":"悪天候のときに旅行をしなければならないとしたら，怖れを感じる。"},{"number":6,"factor":"H","facet":"Sincerity","reverse":true,"en_self":"If I want something from a person I dislike, I will act very nicely toward that person in order to get it.","en_observer":"If he/she wants something from a person he/she dislikes, he/she will act very nicely toward that person in order to get it.","ja_self":"もし自分が嫌いな人に何かをしてほしいときには，そのために，その人に対して愛想よく行動するだろう。"},{"number":7,"factor":"O","facet":"Inquisitiveness","reverse":false,"en_self":"I'm interested in learning about the history and politics of other countries.","en_observer":"He/she is interested in learning about the history and politics of other countries.","ja_self":"他の国の歴史や政治について学ぶことに興味がある。"},{"number":8,"factor":"C","facet":"Diligence","reverse":false,"en_self":"When working, I often set ambitious goals for myself.","en_observer":"When working, he/she often sets ambitious goals for himself/herself.","ja_self":"仕事をするときには，しばしば自分からみて野心的な(高い)目標を設定する。"},{"number":9,"factor":"A","facet":"Gentleness","reverse":true,"en_self":"People sometimes tell me that I am too critical of others.","en_observer":"People sometimes say that he/she is too critical of others.","ja_self":"人からときどき，他人に対して批判的すぎると言われる。"},{"number":10,"factor":"X","facet":"Social Boldness","reverse":true,"en_self":"I rarely express my opinions in group meetings.","en_observer":"He/she rarely expresses his/her opinions in group meetings.","ja_self":"集団での話し合いでは，自分の意見を言うことはめったにない。"},{"number":11,"factor":"E","facet":"Anxiety","reverse":false,"en_self":"I sometimes can't help worrying about little things.","en_observer":"He/she worries about little things.","ja_self":"ちょっとしたことが心配になって，それを抑えることができないことがある。"},{"number":12,"factor":"H","facet":"Fairness","reverse":true,"en_self":"If I knew that I could never get caught, I would be willing to steal a million dollars.","en_observer":"If he/she knew that he/she could never get caught, he/she would be willing to steal a million dollars.","ja_self":"もし決して捕まらないとわかっているのなら，私は1億円を盗もうと思う。"},{"number":13,"factor":"O","facet":"Creativity","reverse":true,"en_self":"I would like a job that requires following a routine rather than being creative.","en_observer":"He/she would like a job that requires following a routine rather than being creative.","ja_self":"創造性を求められるよりも，決まったとおりにやることを求められる仕事をしたい。"},{"number":14,"factor":"C","facet":"Perfectionism","reverse":false,"en_self":"I often check my work over repeatedly to find any mistakes.","en_observer":"He/she often checks his/her work over repeatedly to find any mistakes.","ja_self":"一つも間違いがないように，しばしば何度も自分の仕事をチェックする。"},{"number":15,"factor":"A","facet":"Flexibility","reverse":true,"en_self":"People sometimes tell me that I'm too stubborn.","en_observer":"People sometimes think that he/she is too stubborn.","ja_self":"ときどき人から，私は頑固すぎると言われる。"},{"number":16,"factor":"X","facet":"Sociability","reverse":true,"en_self":"I avoid making \"small talk\" with people.","en_observer":"He/she avoids making \"small talk\" with people.","ja_self":"人と雜談をすることを避けている。"},{"number":17,"factor":"E","facet":"Dependence","reverse":false,"en_self":"When I suffer from a painful experience, I need someone to make me feel comfortable.","en_observer":"When he/she suffers from a painful experience, he/she needs someone to make him/her feel comfortable.","ja_self":"苦痛な体験に苦しんでいるときには，慰めを与えてくれる人が必要である。"},{"number":18,"factor":"H","facet":"Greed-Avoidance","reverse":false,"en_self":"Having a lot of money is not especially important to me.","en_observer":"Having a lot of money is not especially important to him/her.","ja_self":"大金を持つことは，自分にとって特に重要なことではない。"},{"number":19,"factor":"O","facet":"Unconventionality","reverse":true,"en_self":"I think that paying attention to radical ideas is a waste of time.","en_observer":"He/she thinks that paying attention to radical ideas is a waste of time.","ja_self":"とても斬新で慣習にとらわれない考えを考慮することは，時間の無駄だと思う。"},{"number":20,"factor":"C","facet":"Prudence","reverse":true,"en_self":"I make decisions based on the feeling of the moment rather than on careful thought.","en_observer":"He/she makes decisions based on the feeling of the moment rather than on careful thought.","ja_self":"私は，よく考えた上でよりも，そのときの気持ち次第で物事を決める（ことがある）。"},{"number":21,"factor":"A","facet":"Patience","reverse":true,"en_self":"People think of me as someone who has a quick temper.","en_observer":"People think of him/her as someone who has a quick temper.","ja_self":"他の人は，私のことを短気な人間だと思っている。"},{"number":22,"factor":"X","facet":"Liveliness","reverse":false,"en_self":"I am energetic nearly all the time.","en_observer":"He/she is energetic nearly all the time.","ja_self":"ほとんどいつでもエネルギッシュ（活動的）である。"},{"number":23,"factor":"E","facet":"Sentimentality","reverse":false,"en_self":"I feel like crying when I see other people crying.","en_observer":"He/she feels like crying when he/she sees other people crying.","ja_self":"他の人が泣いているのをみると，私も泣きたくなる。"},{"number":24,"factor":"H","facet":"Modesty","reverse":false,"en_self":"I am an ordinary person who is no better than others.","en_observer":"He/she thinks that he/she is an ordinary person who is no better than others.","ja_self":"私は，他の人より特に優れているわけではない普通の人間である。"},{"number":25,"factor":"O","facet":"Aesthetic Appreciation","reverse":true,"en_self":"I wouldn't spend my time reading a book of poetry.","en_observer":"He/she wouldn't spend his/her time reading a book of poetry.","ja_self":"詩集を読むことに時間を使うことはない。"},{"number":26,"factor":"C","facet":"Organization","reverse":false,"en_self":"I plan ahead and organize things, to avoid scrambling at the last minute.","en_observer":"He/she plans ahead and organizes things, to avoid scrambling at the last minute.","ja_self":"最後になってあわてないために，前もって計画を立ててものごとの準備をする。"},{"number":27,"factor":"A","facet":"Forgiveness","reverse":false,"en_self":"My attitude toward people who have treated me badly is \"forgive and forget\".","en_observer":"His/her attitude toward people who have treated him/her badly is \"forgive and forget\".","ja_self":"私にひどいことをした人に対する私の態度は，「許して忘れる」ことである。"},{"number":28,"factor":"X","facet":"Social Self-Esteem","reverse":false,"en_self":"I think that most people like some aspects of my personality.","en_observer":"He/she thinks that most people like some aspects of his/her personality.","ja_self":"ほとんどの人が私の性格のうちのいくつかの要素を好きだと私は思っている。"},{"number":29,"factor":"E","facet":"Fearfulness","reverse":true,"en_self":"I don’t mind doing jobs that involve dangerous work.","en_observer":"He/she doesn't mind doing jobs that involve dangerous work.","ja_self":"危険な作業がある仕事をすることは心配にならない。"},{"number":30,"factor":"H","facet":"Sincerity","reverse":false,"en_self":"I wouldn't use flattery to get a raise or promotion at work, even if I thought it would succeed.","en_observer":"He/she wouldn't use flattery to get a raise or promotion at work, even if he/she thought it would succeed.","ja_self":"たとえそうすればうまくいくと思っても，仕事の上で昇進するためにお世辞を言ったりしようとは思わない。"},{"number":31,"factor":"O","facet":"Inquisitiveness","reverse":false,"en_self":"I enjoy looking at maps of different places.","en_observer":"He/she enjoys looking at maps of different places.","ja_self":"いろいろな場所の地図を見ることは楽しい。"},{"number":32,"factor":"C","facet":"Diligence","reverse":false,"en_self":"I often push myself very hard when trying to achieve a goal.","en_observer":"He/she often pushes himself/herself very hard when trying to achieve a goal.","ja_self":"目標を達成しようとするときは，しばしば自分をとても激しく追い詰める。"},{"number":33,"factor":"A","facet":"Gentleness","reverse":false,"en_self":"I generally accept people’s faults without complaining about them.","en_observer":"He/she generally accepts people’s faults without complaining about them.","ja_self":"たいていは，文句を言わずに人の失敗を受け入れる。"},{"number":34,"factor":"X","facet":"Social Boldness","reverse":false,"en_self":"In social situations, I'm usually the one who makes the first move.","en_observer":"In social situations, he/she is usually the one who makes the first move.","ja_self":"社会的（対人）場面では，たいてい私がはじめに行動する人間である。"},{"number":35,"factor":"E","facet":"Anxiety","reverse":true,"en_self":"I worry a lot less than most people do.","en_observer":"He/she worries a lot less than most people do.","ja_self":"他の人ほどは心配性ではない。"},{"number":36,"factor":"H","facet":"Fairness","reverse":true,"en_self":"I would be tempted to buy stolen property if I were financially tight.","en_observer":"He/she would be tempted to buy stolen property if he/she were financially tight.","ja_self":"お金に余裕がない場合は，盗品とはわかっていても購入したいという誘惑を感じることがある。"},{"number":37,"factor":"O","facet":"Creativity","reverse":false,"en_self":"I would enjoy creating a work of art, such as a novel, a song, or a painting.","en_observer":"He/she would enjoy creating a work of art, such as a novel, a song, or a painting.","ja_self":"小説を書いたり，曲を作ったり，絵を描いたりといった，芸術作品を創作することは楽しい。"},{"number":38,"factor":"C","facet":"Perfectionism","reverse":true,"en_self":"When working on something, I don't pay much attention to small details.","en_observer":"When working on something, he/she doesn't pay much attention to small details.","ja_self":"何かの仕事をするとき，細かい点にはあまり注意を払わない。"},{"number":39,"factor":"A","facet":"Flexibility","reverse":false,"en_self":"I am usually quite flexible in my opinions when people disagree with me.","en_observer":"He/she is usually quite flexible in his/her opinions when people disagree with him/her.","ja_self":"人が私に同調しないときは，私はたいてい自分の意見について，かなり柔軟である。"},{"number":40,"factor":"X","facet":"Sociability","reverse":false,"en_self":"I enjoy having lots of people around to talk with.","en_observer":"He/she enjoys having lots of people around to talk with.","ja_self":"周囲に多くの話し相手がいる時は楽しい。"},{"number":41,"factor":"E","facet":"Dependence","reverse":true,"en_self":"I can handle difficult situations without needing emotional support from anyone else.","en_observer":"He/she can handle difficult situations without needing emotional support from anyone else.","ja_self":"誰かの感情的な支えがないとしても，困難な状況に対処することができる。"},{"number":42,"factor":"H","facet":"Greed-Avoidance","reverse":true,"en_self":"I would like to live in a very expensive, high-class neighborhood.","en_observer":"He/she would like to live in a very expensive, high-class neighborhood.","ja_self":"非常に地価が高く，近隣に社会的地位の高い人が住んでいる場所に住みたい。"},{"number":43,"factor":"O","facet":"Unconventionality","reverse":false,"en_self":"I like people who have unconventional views.","en_observer":"He/she likes people who have unconventional views.","ja_self":"私は，型にはまらない見方をする人が好きである。"},{"number":44,"factor":"C","facet":"Prudence","reverse":true,"en_self":"I make a lot of mistakes because I don't think before I act.","en_observer":"He/she makes a lot of mistakes because he/she doesn't think before he/she acts.","ja_self":"行動する前に考えないので，たくさんの失敗をしてしまう。"},{"number":45,"factor":"A","facet":"Patience","reverse":false,"en_self":"I rarely feel anger, even when people treat me quite badly.","en_observer":"He/she rarely feels anger, even when people treat him/her quite badly.","ja_self":"たとえ人から明らかにひどい扱いを受けたときでも，めったに怒りは感じない。"},{"number":46,"factor":"X","facet":"Liveliness","reverse":false,"en_self":"On most days, I feel cheerful and optimistic.","en_observer":"On most days, he/she feels cheerful and optimistic.","ja_self":"たいていは，元気で楽天的である。"},{"number":47,"factor":"E","facet":"Sentimentality","reverse":false,"en_self":"When someone I know well is unhappy, I can almost feel that person's pain myself.","en_observer":"When someone he/she knows well is unhappy, he/she can almost feel that person's pain himself/herself.","ja_self":"自分がよく知っている人が悲しんでいるときには，その人の苦痛をほとんど自分のことのように感じることがある。"},{"number":48,"factor":"H","facet":"Modesty","reverse":false,"en_self":"I wouldn’t want people to treat me as though I were superior to them.","en_observer":"He/she wouldn’t want people to treat him/her as though he/she were superior to them.","ja_self":"自分が他の人よりも優れているかのように周囲の人から扱われることを望まない。"},{"number":49,"factor":"O","facet":"Aesthetic Appreciation","reverse":false,"en_self":"If I had the opportunity, I would like to attend a classical music concert.","en_observer":"If he/she had the opportunity, he/she would like to attend a classical music concert.","ja_self":"もし機会があれば，クラシック音楽の演奏会に行きたい。"},{"number":50,"factor":"C","facet":"Organization","reverse":true,"en_self":"People often joke with me about the messiness of my room or desk.","en_observer":"People often joke with him/her about the messiness of his/her room or desk.","ja_self":"私の部屋や机の上の散らかり具合のことで，人によくからかわれる。"},{"number":51,"factor":"A","facet":"Forgiveness","reverse":true,"en_self":"If someone has cheated me once, I will always feel suspicious of that person.","en_observer":"If someone has cheated him/her once, he/she will always feel suspicious of that person.","ja_self":"もし一度でも誰かにだまされたら，いつでもその人に疑いを持つだろう。"},{"number":52,"factor":"X","facet":"Social Self-Esteem","reverse":true,"en_self":"I feel that I am an unpopular person.","en_observer":"He/she feels that he/she is an unpopular person.","ja_self":"自分は人気がない人間だと感じている。"},{"number":53,"factor":"E","facet":"Fearfulness","reverse":false,"en_self":"When it comes to physical danger, I am very fearful.","en_observer":"When it comes to physical danger, he/she is very fearful.","ja_self":"身体的な危険が迫ると，とても怖い。"},{"number":54,"factor":"H","facet":"Sincerity","reverse":true,"en_self":"If I want something from someone, I will laugh at that person's worst jokes.","en_observer":"If he/she wants something from someone, he/she will laugh at that person's worst jokes.","ja_self":"もし，何かをある人から手に入れようと思っているときには，その人がくだらない冗談を言っても笑うだろう。"},{"number":55,"factor":"O","facet":"Inquisitiveness","reverse":true,"en_self":"I would be very bored by a book about the history of science and technology.","en_observer":"He/she would be very bored by a book about the history of science and technology.","ja_self":"科学技術の歴史についての本は，私にとってはとても退屈である。"},{"number":56,"factor":"C","facet":"Diligence","reverse":true,"en_self":"Often when I set a goal, I end up quitting without having reached it.","en_observer":"Often when he/she sets a goal, he/she ends up quitting without having reached it.","ja_self":"目標を設定しても，しばしば，それを達成せずにやめてしまう。"},{"number":57,"factor":"A","facet":"Gentleness","reverse":false,"en_self":"I tend to be lenient in judging other people.","en_observer":"He/she tends to be lenient in judging other people.","ja_self":"他の人を判断するときには，甘い(手加減する)傾向がある。"},{"number":58,"factor":"X","facet":"Social Boldness","reverse":false,"en_self":"When I'm in a group of people, I'm often the one who speaks on behalf of the group.","en_observer":"When he/she is in a group of people, he/she is often the one who speaks on behalf of the group.","ja_self":"集団の中にいるとき，しばしばその集団を代表して話をする人間である。"},{"number":59,"factor":"E","facet":"Anxiety","reverse":true,"en_self":"I rarely, if ever, have trouble sleeping due to stress or anxiety.","en_observer":"He/she rarely, if ever, has trouble sleeping due to stress or anxiety.","ja_self":"ストレスや不安で眠れなくなったことは，めったにない。"},{"number":60,"factor":"H","facet":"Fairness","reverse":false,"en_self":"I would never accept a bribe, even if it were very large.","en_observer":"He/she would never accept a bribe, even if it were very large.","ja_self":"たとえどんなに大金でも，賄賂は決して受け取らない。"},{"number":61,"factor":"O","facet":"Creativity","reverse":false,"en_self":"People have often told me that I have a good imagination.","en_observer":"He/she has a good imagination.","ja_self":"ࠀࠂࠊࠌࠜࡺࡼࡾࢎ࢖ࢠࣆࣈ࣐࣒࣊࣌ࣘࣾ쿖믈Ʞ醞瞊恮㝏ᔯ佨衤ᘀ졨詳䌀ᅊ伀͊倀͊儀͊帀Ɋ愀ᅊ洀ै漐Ĩ䡳ဉᔠ佨衤ᘀ졨詳䌀၊倀J愀၊洀ै猐ैᔛ豨䈽ᘀㅨ謐倀͊渀ᅈ漄Ĩ䡴Бᔐ졨鉒ᘀㅨ謐䌀⡊̤jᔀ졨鉒ᘀㅨ謐䌀ᑊ唀Ĉ䡭Ѐ䡮Ѐࡵᔌ졨鉒ᘀㅨ謐ᔘ塨唣ᘀ୨䌀⁊洀ፈ猄ፈᔐ㝨⡞ᘀ୨䌀⁊ᔐ╨灷ᘀ୨䌀⁊ᘕ୨䌀⁊洀ፈ漄Ĩ䡳Гᔘ╨灷ᘀ୨䌀⁊洀ፈ猄ፈᘍ୨䌀⁊漀Ĩᘍㅨ謐䌀⁊漀Ĩᔐ졨鉒ᘀㅨ謐䌀⁊̚jᘀŨ唀Ĉ䡭Ѐ䡮Ѐࡵᘆㅨ謐ᔛ㡨㬍ᘀㅨ謐倀͊渀ᅈ漄Ĩ䡴Бሀࠀࠂࠄࠆࠈࠊࠎࠐࠒࠔࠖ࠘ࠚࠜࡼࡾࣈ࣐࣒࣊࣎ࣖࣘऀù÷÷÷÷÷÷ò÷òÞ�ÕᘀĤ晉摧珈"},{"number":62,"factor":"C","facet":"Perfectionism","reverse":false,"en_self":"I always try to be accurate in my work, even at the expense of time.","en_observer":"He/she always tries to be accurate in his/her work, even at the expense of time.","ja_self":"たとえ時間がかかっても，自分の仕事ではいつも正確であるようにしている。"},{"number":63,"factor":"A","facet":"Flexibility","reverse":true,"en_self":"When people tell me that I’m wrong, my first reaction is to argue with them.","en_observer":"When people tell him/her that he/she is wrong, his/her first reaction is to argue with them.","ja_self":"人から私が間違っていると言われたとき，私の最初の反応は，相手に同意しないことである。"},{"number":64,"factor":"X","facet":"Sociability","reverse":false,"en_self":"I prefer jobs that involve active social interaction to those that involve working alone.","en_observer":"He/she prefers jobs that involve active social interaction to those that involve working alone.","ja_self":"一人でやるよりも，積極的な人との関わりを含む仕事の方が好きだ。"},{"number":65,"factor":"E","facet":"Dependence","reverse":false,"en_self":"Whenever I feel worried about something, I want to share my concern with another person.","en_observer":"Whenever he/she feels worried about something, he/she wants to share his/her concern with another person.","ja_self":"何か心配なことがあるときは，いつでも自分の問題を他の人と共有することを求める。"},{"number":66,"factor":"H","facet":"Greed-Avoidance","reverse":true,"en_self":"I would like to be seen driving around in a very expensive car.","en_observer":"He/she would like to be seen driving around in a very expensive car.","ja_self":"高級車でドライブしているところを人に見られたい。"},{"number":67,"factor":"O","facet":"Unconventionality","reverse":false,"en_self":"I think of myself as a somewhat eccentric person.","en_observer":"I think of him/her as a somewhat eccentric person.","ja_self":"自分のことを，ちょっと変わった人間だと思っている。"},{"number":68,"factor":"C","facet":"Prudence","reverse":false,"en_self":"I don’t allow my impulses to govern my behavior.","en_observer":"He/she doesn’t allow his/her impulses to govern his/her behavior.","ja_self":"自分の衝動のままに行動するようなことはない。"},{"number":69,"factor":"A","facet":"Patience","reverse":false,"en_self":"Most people tend to get angry more quickly than I do.","en_observer":"Most people tend to get angry more quickly than he/she does.","ja_self":"たいていの人は，私よりもすぐに怒り出す。"},{"number":70,"factor":"X","facet":"Liveliness","reverse":true,"en_self":"People often tell me that I should try to cheer up.","en_observer":"People often tell him/her that he/she should try to cheer up.","ja_self":"よく人から，もっと元気を出すように言われることがある。"},{"number":71,"factor":"E","facet":"Sentimentality","reverse":false,"en_self":"I feel strong emotions when someone close to me is going away for a long time.","en_observer":"He/she feels strong emotions when someone close to him/her is going away for a long time.","ja_self":"自分と親しい人が長い間遠くに行ってしまうときには，強い感情を感じる。"},{"number":72,"factor":"H","facet":"Modesty","reverse":true,"en_self":"I think that I am entitled to more respect than the average person is.","en_observer":"He/she thinks that he/she is entitled to more respect than the average person is.","ja_self":"私は，平均的な人間よりも，尊重される権利があると思う。"},{"number":73,"factor":"O","facet":"Aesthetic Appreciation","reverse":false,"en_self":"Sometimes I like to just watch the wind as it blows through the trees.","en_observer":"Sometimes he/she likes to just watch the wind as it blows through the trees.","ja_self":"ときには，木々の間を吹き抜ける風を見るだけでも楽しい。"},{"number":74,"factor":"C","facet":"Organization","reverse":true,"en_self":"When working, I sometimes have difficulties due to being disorganized.","en_observer":"When working, he/she sometimes has difficulties due to being disorganized.","ja_self":"仕事をしているとき，ときどき自分がだらしがないために困ってしまうことがある。"},{"number":75,"factor":"A","facet":"Forgiveness","reverse":true,"en_self":"I find it hard to fully forgive someone who has done something mean to me.","en_observer":"He/she finds it hard to fully forgive someone who has done something mean to him/her.","ja_self":"私にひどいことをした人のことを，完全に許すことはなかなかできない。"},{"number":76,"factor":"X","facet":"Social Self-Esteem","reverse":true,"en_self":"I sometimes feel that I am a worthless person.","en_observer":"He/she sometimes feels that he/she is a worthless person.","ja_self":"時々自分は価値のない人間だと感じる。"},{"number":77,"factor":"E","facet":"Fearfulness","reverse":true,"en_self":"Even in an emergency I wouldn't feel like panicking.","en_observer":"Even in an emergency he/she wouldn't feel like panicking.","ja_self":"たとえ非常(緊急)の場合でも，あわてふためいたりすることはない。"},{"number":78,"factor":"H","facet":"Sincerity","reverse":false,"en_self":"I wouldn't pretend to like someone just to get that person to do favors for me.","en_observer":"He/she wouldn't pretend to like someone just to get that person to do favors for him/her.","ja_self":"誰かに私のたのみを聞いてもらうために，その人を好きなふりをしようとは思わない。"},{"number":79,"factor":"O","facet":"Inquisitiveness","reverse":true,"en_self":"I’ve never really enjoyed looking through an encyclopedia.","en_observer":"He/she has never really enjoyed looking through an encyclopedia.","ja_self":"百科事典を読むことを楽しんだことはない。"},{"number":80,"factor":"C","facet":"Diligence","reverse":true,"en_self":"I do only the minimum amount of work needed to get by.","en_observer":"He/she does only the minimum amount of work needed to get by.","ja_self":"必要とされる最低限の仕事しかしない。"},{"number":81,"factor":"A","facet":"Gentleness","reverse":false,"en_self":"Even when people make a lot of mistakes, I rarely say anything negative.","en_observer":"Even when people make a lot of mistakes, he/she rarely says anything negative.","ja_self":"たとえ人がたくさん間違いを犯したときでも，私はめったに否定的なことは言わない。"},{"number":82,"factor":"X","facet":"Social Boldness","reverse":true,"en_self":"I tend to feel quite self-conscious when speaking in front of a group of people.","en_observer":"He/she tends to feel quite self-conscious when speaking in front of a group of people.","ja_self":"人々の前で話をするときには，とても恥ずかしさを感じてしまう傾向がある。"},{"number":83,"factor":"E","facet":"Anxiety","reverse":false,"en_self":"I get very anxious when waiting to hear about an important decision.","en_observer":"He/she gets very anxious when waiting to hear about an important decision.","ja_self":"重要な決定の結果を聞くのを待っているときには，とても不安になる。"},{"number":84,"factor":"H","facet":"Fairness","reverse":true,"en_self":"I’d be tempted to use counterfeit money, if I were sure I could get away with it.","en_observer":"He/she'd be tempted to use counterfeit money, if he/she were sure he/she could get away with it.","ja_self":"もし絶対に捕まらないなら，偽札を使ってみたい。"},{"number":85,"factor":"O","facet":"Creativity","reverse":true,"en_self":"I don't think of myself as the artistic or creative type.","en_observer":"I don't think of him/her as the artistic or creative type.","ja_self":"自分のことを，芸術家タイプとか，創造的なタイプであるとは思わない。"},{"number":86,"factor":"C","facet":"Perfectionism","reverse":false,"en_self":"People often call me a perfectionist.","en_observer":"People often call him/her a perfectionist.","ja_self":"人からしばしば完全主義者だと言われる。"},{"number":87,"factor":"A","facet":"Flexibility","reverse":true,"en_self":"I find it hard to compromise with people when I really think I’m right.","en_observer":"He/she finds it hard to compromise with people when he/she really thinks he/she is right.","ja_self":"私が本当に自分は正しいと思っているときには，人と妥協することは難しい。"},{"number":88,"factor":"X","facet":"Sociability","reverse":false,"en_self":"The first thing that I always do in a new place is to make friends.","en_observer":"The first thing that he/she always does in a new place is to make friends.","ja_self":"新しい場所に行っていつも最初にすることは，友達を作ることである。"},{"number":89,"factor":"E","facet":"Dependence","reverse":true,"en_self":"I rarely discuss my problems with other people.","en_observer":"He/she rarely discusses his/her problems with other people.","ja_self":"自分の問題を他の人と話し合ったりすることは，めったにない。"},{"number":90,"factor":"H","facet":"Greed-Avoidance","reverse":true,"en_self":"I would get a lot of pleasure from owning expensive luxury goods.","en_observer":"He/she would get a lot of pleasure from owning expensive luxury goods.","ja_self":"高価で贅沢なものを所有することで，多くの楽しみが得られる。"},{"number":91,"factor":"O","facet":"Unconventionality","reverse":true,"en_self":"I find it boring to discuss philosophy.","en_observer":"He/she finds it boring to discuss philosophy.","ja_self":"哲学について議論するのは，うんざりである。"},{"number":92,"factor":"C","facet":"Prudence","reverse":true,"en_self":"I prefer to do whatever comes to mind, rather than stick to a plan.","en_observer":"He/she prefers to do whatever comes to mind, rather than stick to a plan.","ja_self":"私は，何でも計画通りにするよりも，思いついたことをするのが好きである。"},{"number":93,"factor":"A","facet":"Patience","reverse":true,"en_self":"I find it hard to keep my temper when people insult me.","en_observer":"He/she finds it hard to keep his/her temper when people insult him/her.","ja_self":"人から侮辱されたときは，我慢することは難しい。"},{"number":94,"factor":"X","facet":"Liveliness","reverse":true,"en_self":"Most people are more upbeat and dynamic than I generally am.","en_observer":"Most people are more upbeat and dynamic than he/she generally is.","ja_self":"たいていの人は，私よりも陽気で活発である。"},{"number":95,"factor":"E","facet":"Sentimentality","reverse":true,"en_self":"I remain unemotional even in situations where most people get very sentimental.","en_observer":"He/she remains unemotional even in situations where most people get very sentimental.","ja_self":"たいていの人がとても感傷的になるような状況でも，私は冷静でいられる。"},{"number":96,"factor":"H","facet":"Modesty","reverse":true,"en_self":"I want people to know that I am an important person of high status.","en_observer":"He/she wants people to know that he/she is an important person of high status.","ja_self":"私が高い地位にいる重要な人間であることを他の人に知ってほしい。"},{"number":97,"factor":"Altruism","facet":"Altruism","reverse":false,"en_self":"I have sympathy for people who are less fortunate than I am.","en_observer":"He/she has sympathy for people who are less fortunate than he/she is.","ja_self":"自分よりも運が悪い人に対して，同情を感じる。"},{"number":98,"factor":"Altruism","facet":"Altruism","reverse":false,"en_self":"I try to give generously to those in need.","en_observer":"He/she tries to give generously to those in need.","ja_self":"必要としている人には，気前よく提供しようとする．"},{"number":99,"factor":"Altruism","facet":"Altruism","reverse":true,"en_self":"It wouldn’t bother me to harm someone I didn’t like.","en_observer":"It wouldn’t bother him/her to harm someone he/she didn’t like.","ja_self":"嫌いな人を傷つけても，自分が悩むことはない。"},{"number":100,"factor":"Altruism","facet":"Altruism","reverse":true,"en_self":"People see me as a hard-hearted person.","en_observer":"People see him/her as a hard-hearted person.","ja_self":"人からは，私は冷たい人間だと思われている。"}]},"priors_tipi":{"source":{"citation":"Kawamoto, T., Oshio, A., Abe, S., Tsubota, Y., Hirashima, T., Ito, H., & Tani, I. (2015). ビッグ・ファイブ・パーソナリティ特性の年齢差と性差：大規模横断調査による検討. 発達心理学研究, 26(2), 107-122.","doi":"n/a (J-Stage open access)","url":"https://www.jstage.jst.go.jp/article/jjdp/26/2/26_107/_pdf","instrument":"TIPI-J (Ten Item Personality Inventory, Japanese)","scale":"Sum of 2 items per domain, each on 1-7 Likert (range 2-14)","sample":{"total":4588,"men":2112,"women":2476,"age_range":"23-79","age_mean":53.5,"age_sd":12.9}},"factor_aliases_to_hexaco":{"Extraversion":"X (HEXACO eXtraversion) - approx","Agreeableness":"A (HEXACO Agreeableness) - approx (HEXACO A differs slightly)","Conscientiousness":"C (HEXACO Conscientiousness) - approx","Neuroticism":"E (HEXACO Emotionality) - rough proxy","Openness":"O (HEXACO Openness) - approx","_missing_":"Honesty-Humility (no Big Five equivalent; need separate source)"},"by_sex_age":{"M":{"20s":{"n":81,"Extraversion":[7.62,2.92],"Agreeableness":[9.3,2.21],"Conscientiousness":[6.98,2.32],"Neuroticism":[7.96,2.33],"Openness":[8.1,2.07]},"30s":{"n":222,"Extraversion":[7.97,2.55],"Agreeableness":[9.57,1.91],"Conscientiousness":[7.48,2.26],"Neuroticism":[8.08,2.18],"Openness":[8.11,2.15]},"40s":{"n":469,"Extraversion":[8.22,2.6],"Agreeableness":[9.62,1.94],"Conscientiousness":[7.93,2.1],"Neuroticism":[7.67,2.02],"Openness":[8.34,2.03]},"50s":{"n":506,"Extraversion":[7.72,2.58],"Agreeableness":[9.98,1.85],"Conscientiousness":[8.09,2.04],"Neuroticism":[7.88,2.04],"Openness":[8.0,2.07]},"60s":{"n":566,"Extraversion":[7.83,2.43],"Agreeableness":[10.21,1.83],"Conscientiousness":[8.51,1.96],"Neuroticism":[7.58,1.87],"Openness":[7.94,2.05]},"70s":{"n":268,"Extraversion":[7.79,2.3],"Agreeableness":[10.18,1.71],"Conscientiousness":[9.01,2.17],"Neuroticism":[7.57,1.89],"Openness":[8.15,1.92]}},"F":{"20s":{"n":95,"Extraversion":[8.29,2.68],"Agreeableness":[9.94,1.95],"Conscientiousness":[7.14,2.31],"Neuroticism":[8.66,2.22],"Openness":[7.7,2.0]},"30s":{"n":315,"Extraversion":[8.6,2.67],"Agreeableness":[9.73,1.88],"Conscientiousness":[7.38,2.21],"Neuroticism":[8.34,2.21],"Openness":[7.71,2.27]},"40s":{"n":598,"Extraversion":[8.49,2.58],"Agreeableness":[9.9,1.76],"Conscientiousness":[7.78,2.15],"Neuroticism":[8.32,2.07],"Openness":[7.66,2.04]},"50s":{"n":584,"Extraversion":[8.15,2.46],"Agreeableness":[10.18,1.72],"Conscientiousness":[7.96,1.99],"Neuroticism":[8.19,2.05],"Openness":[7.38,2.13]},"60s":{"n":625,"Extraversion":[8.44,2.54],"Agreeableness":[10.45,1.85],"Conscientiousness":[8.6,2.05],"Neuroticism":[7.88,2.01],"Openness":[7.49,2.18]},"70s":{"n":259,"Extraversion":[8.13,2.43],"Agreeableness":[10.46,1.69],"Conscientiousness":[8.86,1.98],"Neuroticism":[7.66,2.01],"Openness":[7.45,1.93]}}},"key_findings":{"age_effects":{"Agreeableness":{"direction":"↑","B":0.022,"p":"<.001","note":"linear age increase"},"Conscientiousness":{"direction":"↑","B":0.038,"p":"<.001","note":"linear age increase, largest effect"},"Neuroticism":{"direction":"↓","B":-0.011,"p":"<.01","note":"linear age decrease"},"Extraversion":{"direction":"NS","note":"no significant age effect overall"},"Openness":{"direction":"NS","note":"no significant age effect overall"}},"sex_effects":{"Extraversion":{"direction":"F>M","B":0.466,"p":"<.001","note":"women higher"},"Agreeableness":{"direction":"F>M","B":0.248,"p":"<.001","note":"women higher"},"Neuroticism":{"direction":"F>M","B":0.367,"p":"<.001","note":"women higher; significant Age×Sex (older women approach men's level)"},"Openness":{"direction":"M>F","B":-0.565,"p":"<.001","note":"men higher"},"Conscientiousness":{"direction":"NS","note":"no significant sex effect overall"}}}},"priors_dt":{"source":{"citation":"下司忠大・川本哲也・小塩真司 (2017). Dark Triadの年齢差—年齢横断的な発達軌跡の検討. 日本心理学会大会発表論文集 81, 3B-004.","doi":"10.4992/pacjpa.81.0_3B-004","url":"https://www.jstage.jst.go.jp/article/pacjpa/81/0/81_3B-004/_pdf","instrument":"SD3 (Short Dark Triad, Jones & Paulhus 2014) 邦訳版, 27項目 5件法","score_form":"T-score (M=50, SD=10) で報告","sample":{"total":1948,"men":967,"women":981,"age_range":"20-69","age_mean":44.82,"age_sd":12.74}},"note":"セル別の平均/SD表は提示されていない。下記は階層的重回帰のT-score単位係数。性別 (Gender) は男性=1, 女性=0 の符号化と推定 (本文の解釈と整合)。年齢は中心化 (mean age ≈ 44.82 を基準)。","regression_T_score":{"Machiavellianism":{"intercept_at_mean_age_female":49.086,"gender_main_male_vs_female":1.786,"age_linear_per_year":-0.223,"gender_x_age":0.09,"R2":0.061,"interpretation":"年齢↑で線形に低下。男性 > 女性 (約 0.18 SD)"},"Psychopathy":{"intercept_at_mean_age_female":48.647,"gender_main_male_vs_female":4.443,"age_linear_per_year":-0.16,"gender_x_age":0.086,"age_squared":-0.009,"gender_x_age_squared":0.007,"R2":0.108,"interpretation":"年齢↑で低下。女性は二次関数的に低下が加速。男性 > 女性 (約 0.44 SD, 大)","simple_slopes":{"male_linear":-0.075,"female_linear":-0.16,"male_age2":-0.002,"female_age2":-0.009}},"Narcissism":{"intercept_at_mean_age_female":48.138,"gender_main_male_vs_female":2.837,"age_linear_per_year":0.035,"gender_x_age":0.014,"age_squared":0.0,"gender_x_age_squared":0.006,"R2":0.044,"interpretation":"年齢主効果なし。男性 > 女性 (約 0.28 SD)。男性のみ二次曲線で中年期以降に上昇","simple_slopes":{"male_age2":0.006,"female_age2":-0.0}}},"predicted_T_by_cell_helper":{"formula":"T = intercept_female + (gender_male) * (1.786|4.443|2.837) + (age - 44.82) * age_linear + ((age - 44.82) ** 2) * age_squared + interactions","use":"実装時は年代中央値 (25, 35, 45, 55, 65) を age に代入してセル予測値を算出"},"qualitative_summary":{"Machiavellianism":"若年層 (20-30代) で高い。中高年で低下。男性わずかに高い (d≈0.18)","Psychopathy":"若年層で最大。年齢とともに大きく低下。男性で顕著に高い (d≈0.44)","Narcissism":"年齢では大きく変動しない。男性で中程度に高い (d≈0.28)。男性は中年期以降にやや上昇"},"missing_data_gaps":["セル別 mean/SD 表は提供されていない (回帰係数からの予測値で代替可)","後続論文 Kawamoto+2020 (P&A 35:91-96) は paywalled。Dirty Dozen 12項目版データを追加","30代以下のサンプル比率はBig Five研究より高め (N=1948中の年齢分布は均一寄り)"],"predicted_T_by_sex_age":{"M":{"20s":{"Machiavellianism_T":53.51,"Psychopathy_T":53.77,"Narcissism_T":52.36},"30s":{"Machiavellianism_T":52.18,"Psychopathy_T":53.62,"Narcissism_T":51.07},"40s":{"Machiavellianism_T":50.85,"Psychopathy_T":53.08,"Narcissism_T":50.98},"50s":{"Machiavellianism_T":49.52,"Psychopathy_T":52.13,"Narcissism_T":52.1},"60s":{"Machiavellianism_T":48.19,"Psychopathy_T":50.78,"Narcissism_T":54.41}},"F":{"20s":{"Machiavellianism_T":53.51,"Psychopathy_T":48.28,"Narcissism_T":47.44},"30s":{"Machiavellianism_T":51.28,"Psychopathy_T":49.35,"Narcissism_T":47.79},"40s":{"Machiavellianism_T":49.05,"Psychopathy_T":48.62,"Narcissism_T":48.14},"50s":{"Machiavellianism_T":46.82,"Psychopathy_T":46.09,"Narcissism_T":48.49},"60s":{"Machiavellianism_T":44.59,"Psychopathy_T":41.75,"Narcissism_T":48.84}}}},"layerA":{"version":"strategies-v1","layer":"A","clusters":{"Conscientious Introvert":{"share":0.173,"centers":{"H":3.82,"E":3.9,"X":2.06,"A":3.15,"C":3.72,"O":3.84},"essence":"内向・誠実・観察的・知的好奇心高い・自分のペース最優先","matrix":{"話題":{"推奨":["共趣味の知識深掘り","創作・二次元・歴史","作品・技術論","観察対象としての話題"],"回避":["容姿言及","私的詮索","ノリで決める話","流行り一般論","恋愛話"]},"言葉遣い":{"推奨":["退路文 (違ったらスルーで等)","Yes/Noで終われる質問","敬語ベース","推測形 (〜だったり?)"],"回避":["命令形","タメ口早期投入","大袈裟反応語","ノリ強要"]},"立ち振舞い":{"推奨":["距離1.2m以上保持","視線控えめ","ゆっくり動作","声量1段下げる","薄い笑顔"],"回避":["急接近","凝視","物理接触","テンション高い動作"]},"服装":{"推奨":["装飾控えめ","中性的","モノトーン地味色","清潔感最優先","無香〜微香"],"回避":["ブランド誇示","派手色露出","きつい香水","主張強いアクセサリ"]},"対話の進め方":{"推奨":["短いやり取り","3秒以上の沈黙OK","相手のペース尊重","退場のしやすさを残す"],"回避":["連続質問","即時返答強要","急展開","圧迫"]}},"tolerances":{"許容":["沈黙","距離が遠いこと","自分ペース","断られても引いてくれること","不完全な相手","オタク的深掘り"],"不許容":["急接近","容姿言及","私生活詮索","マウンティング","即時応答強要","ノリ強要","オタクコンテンツ揶揄"]},"character_sheet":{"外見":{"服装":"黒/白/グレートップス+落ち着いた色ボトム、ロゴほぼなし","髪":"整いすぎず中性的","装飾":"最小限","香り":"無香 or 石鹸系","目線":"ハードな視線回避","姿勢":"直立すぎず正面に立たない"},"声":{"音量":"ベースより1-2段下","速度":"ゆっくり (1.1秒/語)","トーン":"フラット","語尾":"〜かも、〜だったり?","反応":"そうなんですね、なるほど"},"会話":{"接続":"興味を断定せず推測で示す","深さ":"自分の得意趣味は深く、不得意は質問者役","終わり":"自分から先に退場、次回の含みを残し詰めない"},"背景設定":["共趣味歴 数年以上","知識はあるが目立たない","失敗しても余裕がある","内向的な友人との長期関係経験"],"NG":["容姿言及","連絡先即時要求","物理接触","俺/僕は〜できるアピール","趣味の上位概念を勝手に語る"],"失敗時":["拒否反応見えたら2歩引く","追わない","お邪魔しましたで完全撤退","再アプローチは別環境・別タイミング"],"成功シグナル":["相手から質問","趣味話題に乗ってくる","沈黙が苦痛そうでない","視線が数秒以上向く","実はと追加情報"],"phase":{"P1":"初回5分内: 害なしを示す+共通点ヒント1つ","P2":"次回再会: 共通話題1つ深め、連絡先出さない","P3":"3-5回目: SNS/コミュ経由で薄い接点","P4":"以降: 相手から距離を縮めるのを待つ"}},"env_modifiers":{"満員電車":0.1,"行列・待ち時間":0.5,"趣味イベント":3.0,"趣味コミュSNS":4.0,"職場・学校隣席":2.0,"友人紹介":3.5},"base_success_rate":[0.3,0.4]},"Reserved":{"share":0.138,"centers":{"H":3.3,"E":2.7,"X":2.44,"A":2.87,"C":2.41,"O":2.48},"essence":"全体的に控えめ・低エネルギー・撤退気味・関心は内向き","matrix":{"話題":{"推奨":["軽い日常話題","共通体験 (天気/場所等)","身近で具体的なもの","相手が答えなくてもよい話"],"回避":["抽象論","深い趣味話","プライベート","熱量を要求する話題","負荷の重い相談"]},"言葉遣い":{"推奨":["短文","平易な語彙","クッション言葉多用","選択肢提示","答えなくていい旨明示"],"回避":["長文","詰問","熱量高い表現","哲学的な問いかけ"]},"立ち振舞い":{"推奨":["距離1.5m以上","視線を頻繁にそらす","低エネルギー姿勢","ゆっくり"],"回避":["近接","活発な身振り","笑顔押し","大声"]},"服装":{"推奨":["地味","清潔","ベーシック","目立たない"],"回避":["派手","奇抜","主張強い","流行最先端"]},"対話の進め方":{"推奨":["極短いやり取り","沈黙を歓迎","相手起点を待つ","用件のみ伝えて引く"],"回避":["長居","盛り上げ","次の予定の提案","熱意プッシュ"]}},"tolerances":{"許容":["何もしないこと","距離","沈黙","関心の薄さ","曖昧な応答","断られること"],"不許容":["元気押しつけ","ノリの強要","『どうしたの?』詰め","ポジティブ強要","引きこもり批判"]},"character_sheet":{"外見":{"服装":"地味色ベーシック、清潔感","髪":"普通、整い度ほどほど","装飾":"なし","香り":"無香","目線":"ほぼ合わせない","姿勢":"力を抜いた直立"},"声":{"音量":"小さめ","速度":"ゆっくり","トーン":"フラット〜やや低い","語尾":"〜です/〜ます断定弱","反応":"うなずきのみ"},"会話":{"接続":"用件だけ簡潔に","深さ":"浅く保つ","終わり":"用件終わったら即離脱"},"背景設定":["相手に期待しない","自分も期待されたくない","関係性は薄くて構わない"],"NG":["相手を盛り上げようとする","励まし","深い話への誘導","お節介","個人情報を引き出す"],"失敗時":["即撤退、追わない","次回も同じ薄さで接する"],"成功シグナル":["最低限の応答が返る","拒絶反応がない","次回も会話を許される"],"phase":{"P1":"用件のみ完了","P2":"次回も淡白に接続","P3":"必要時のみ接触","P4":"無理に関係深めない、薄い継続"}},"env_modifiers":{"満員電車":0.05,"行列":0.3,"職場必須対話":1.5,"完全2人空間":0.5,"用件のある場":2.0,"完全非対面 (チャット)":1.8},"base_success_rate":[0.15,0.25]},"Emotionally Sensitive":{"share":0.17,"centers":{"H":3.0,"E":3.93,"X":2.16,"A":2.98,"C":2.41,"O":3.62},"essence":"感情豊か・敏感・反応大・予測不能・整理は苦手・創造性高め","matrix":{"話題":{"推奨":["感情・共感系","創作・表現","個人的体験","価値観・大切なもの"],"回避":["冷静論理批判","効率最優先論","数字で詰める話","他者下げ","客観性押しつけ"]},"言葉遣い":{"推奨":["共感表現多用","気持ちを言語化","柔らかい確認","感情を肯定するフレーズ","『〜ですよね、わかります』"],"回避":["冷静な指摘","『気にしすぎ』","『大丈夫だよ』軽い返し","ロジック先行"]},"立ち振舞い":{"推奨":["柔らかい表情","ゆっくり相槌","目線は穏やか","体は半身","急な動き避ける"],"回避":["無表情","早口","急展開","事務的"]},"服装":{"推奨":["柔らかい印象","暖色 or パステル可","素材柔らかめ","威圧感なし"],"回避":["硬質な印象","黒革・スーツ完全武装","威圧的","冷たい印象"]},"対話の進め方":{"推奨":["感情の波に寄り添う","急がない","共感を先","結論は最後","変化はpre-announce"],"回避":["急展開","予告なしの変化","議論で勝とうとする","『要するに』要約"]}},"tolerances":{"許容":["気分の波","予定変更","曖昧さ","非効率な対話","感情的な発言","散らかった環境"],"不許容":["『冷静になれ』","感情の否定","軽い扱い","予告なしの変化","批判口調","効率優先"]},"character_sheet":{"外見":{"服装":"柔らかい印象、淡色OK、素材も柔らかめ","髪":"自然体","装飾":"ささやかなアクセはOK","香り":"柔らかいフローラル系 or 無香","目線":"穏やか","姿勢":"半身、リラックス"},"声":{"音量":"中程度","速度":"ゆっくり","トーン":"温かい","語尾":"〜ですよね、〜だよね","反応":"わかります、つらいですね"},"会話":{"接続":"感情を最初に汲む","深さ":"相手が出した深さに合わせる","終わり":"次回への気遣いの言葉を残す"},"背景設定":["相手の感情を大切にする","自分も感情豊か","急がない","予測可能でいる"],"NG":["感情否定","軽くあしらう","急展開","『気にしすぎ』","数字で詰める"],"失敗時":["まず謝る (傷つけた可能性を認める)","距離を置く","次回はもっと丁寧に"],"成功シグナル":["感情を打ち明けてくる","頼みごとをしてくる","『○○さんなら』と言われる","目が潤む"],"phase":{"P1":"安全な存在と認知される","P2":"感情共有","P3":"頼られる存在に","P4":"重要な感情の受け皿"}},"env_modifiers":{"満員電車":0.1,"カフェ":2.0,"創作イベント":3.0,"カウンセリング的場":3.5,"オフィス事務的":0.6},"base_success_rate":[0.35,0.5]},"Extraverted Agreeable":{"share":0.155,"centers":{"H":3.36,"E":3.68,"X":3.67,"A":3.55,"C":3.06,"O":3.85},"essence":"社交的・温かい・反応良い・創造性高い・他者志向・万人ウケ型","matrix":{"話題":{"推奨":["共通の知人・コミュ","楽しい体験","新しいもの・場所","ポジティブな話題","軽い自己開示"],"回避":["他者の悪口","重い相談を一発目で","批判的議論","ネガティブ一辺倒"]},"言葉遣い":{"推奨":["明るいトーン","リアクション豊か","共感+提案セット","フランクな敬語","ユーモア軽め"],"回避":["重い口調","沈黙が長い","暗い話題","批判的"]},"立ち振舞い":{"推奨":["笑顔","適度な視線","オープンな姿勢","身振り豊か (やりすぎず)","タイミング合わせる"],"回避":["仏頂面","視線そらしすぎ","閉じた姿勢","重い空気"]},"服装":{"推奨":["明るめ色OK","清潔感+少しのアクセント","TPOに合った定番","適度なトレンド感"],"回避":["地味すぎ","汚れた感じ","派手すぎる主張","奇抜"]},"対話の進め方":{"推奨":["小さなYesを重ねる","共通点を増やす","軽い質問のリレー","次の約束を自然に"],"回避":["長すぎる沈黙","重い話一直線","興味なさそうな態度"]}},"tolerances":{"許容":["盛り上げ","軽い踏み込み","明るい誘い","適度な押し","共通の趣味の話"],"不許容":["陰口","ネガティブ一辺倒","空気を壊す行為","他者軽視","暗い独白"]},"character_sheet":{"外見":{"服装":"清潔感+ちょっとしたアクセント、明るい色も可","髪":"整っている","装飾":"控えめ〜中程度","香り":"爽やか","目線":"自然なアイコンタクト","姿勢":"オープン"},"声":{"音量":"中〜やや大","速度":"普通","トーン":"明るい","語尾":"〜ですよね、〜いいですね!","反応":"あー、わかります!"},"会話":{"接続":"明るく軽く","深さ":"序盤は浅く、徐々に","終わり":"次回への自然な誘い"},"背景設定":["共通の知人がいる体","ポジティブな立ち位置","他者を立てる"],"NG":["陰口同調","暗い独白","空気を読まない発言","他者軽視"],"失敗時":["明るく流す","『すいません、調子に乗りました』で軌道修正","次回再挑戦OK"],"成功シグナル":["笑顔","次回提案を受け入れる","他の知人を紹介してくれる","連絡先交換"],"phase":{"P1":"好印象残す","P2":"共通点拡大","P3":"軽い遊び・食事","P4":"信頼できる友人ポジション"}},"env_modifiers":{"満員電車":0.2,"パーティー":3.0,"職場":2.0,"飲み会":2.5,"SNS":1.8,"イベント":3.0},"base_success_rate":[0.5,0.65]},"Independent":{"share":0.119,"centers":{"H":2.79,"E":2.91,"X":3.09,"A":2.2,"C":3.78,"O":3.81},"essence":"自律的・批判的・知的・他者依存しない・群れない・低協調","matrix":{"話題":{"推奨":["論理・知識","専門分野","独自の見解","データ・事実","効率・最適化"],"回避":["共感ベタ","集団同調話","お世辞","平凡な意見","曖昧な感情論"]},"言葉遣い":{"推奨":["論理的","明確","データ引用","対等の口調","批判も論点として歓迎"],"回避":["お世辞","曖昧","感情訴え","『みんなそう言ってる』","空気読み"]},"立ち振舞い":{"推奨":["対等な視線","落ち着いた佇まい","媚びない","自分の意見を持つ姿勢"],"回避":["へつらい","過剰な笑顔","媚び","依存的態度"]},"服装":{"推奨":["シンプル知的","機能性重視","自分のスタイル確立","主張は内容で"],"回避":["流行追随","集団のドレスコードに完全合致","主張のない服"]},"対話の進め方":{"推奨":["論点提示","データで議論","結論先出し","時間を尊重","知的刺激"],"回避":["長い前置き","感情訴え","お世辞","集団論理での説得"]}},"tolerances":{"許容":["対等な批判","異論","時間制限","ドライな関係","距離","効率優先"],"不許容":["お世辞","集団同調強要","非論理","曖昧な感情論","時間の無駄","従属要求"]},"character_sheet":{"外見":{"服装":"シンプル知的、機能性重視","髪":"手入れされている","装飾":"主張少","香り":"無香 or クリーン","目線":"対等","姿勢":"自立的"},"声":{"音量":"普通","速度":"効率的","トーン":"フラット","語尾":"断定多め","反応":"なるほど、それは興味深い"},"会話":{"接続":"論点から入る","深さ":"知的に深く","終わり":"効率的に締める"},"背景設定":["自分の専門領域を持つ","対等な議論ができる","他者依存しない"],"NG":["お世辞","媚び","集団論理での説得","時間の無駄","曖昧な感情訴え"],"失敗時":["論点を整理し直す","データを示す","引き際を見極める"],"成功シグナル":["議論に乗ってくる","自分の意見を出す","知的な情報交換が始まる","時間の延長"],"phase":{"P1":"知的に対等と認知される","P2":"専門領域での情報交換","P3":"信頼できる議論相手","P4":"互いに利用しあえる関係"}},"env_modifiers":{"勉強会・専門会議":3.0,"職場":2.0,"カジュアル雑談":0.5,"SNS知的議論":2.5,"飲み会":0.7},"base_success_rate":[0.25,0.4]},"Extraverted Stable":{"share":0.116,"centers":{"H":2.36,"E":2.6,"X":3.94,"A":2.86,"C":2.32,"O":3.66},"essence":"外向・大胆・自信あり・低H・低A・自己中心傾向・場の中心型","matrix":{"話題":{"推奨":["相手の成功・地位","ステータス","成果","勝負・競争","派手な体験"],"回避":["相手を下げる","批判","集団内序列で下に置く","儀礼的な話","謙遜要求"]},"言葉遣い":{"推奨":["称賛","特別感","希少性","『〇〇さんだから』型","リーダー扱い","選ばれた人扱い"],"回避":["対等扱い","平凡な扱い","批判","正論押しつけ"]},"立ち振舞い":{"推奨":["相手を立てる","視線を合わせる","注目を渡す","自分は控える","承認する反応"],"回避":["注目を奪う","対抗心","訂正・修正","正論で詰める"]},"服装":{"推奨":["相手より一段控えめ","清潔感","派手すぎず","TPO遵守"],"回避":["相手より目立つ","派手すぎる","主張強すぎ","ラフすぎ"]},"対話の進め方":{"推奨":["相手の話を引き出す","成果を聞く","承認する","選択肢で相手にコントロール感"],"回避":["自分の話","正論","批判","主導権争い"]}},"tolerances":{"許容":["自慢","注目の集中","強気な発言","支配的振る舞い","派手な自己呈示"],"不許容":["注目を奪われる","軽視","批判","対等扱い","小さな扱い","負け","下に見られる感"],"警戒フラグ":["低H+低Aの組合せ→操作的アプローチが効きやすいが、長期信頼は築きにくい"]},"character_sheet":{"外見":{"服装":"相手より一段控えめ、清潔感最優先","髪":"整っているが目立たない","装飾":"控えめ","香り":"控えめ","目線":"相手を立てる","姿勢":"傾聴姿勢"},"声":{"音量":"相手より小さめ","速度":"相手のテンポに合わせる","トーン":"承認的","語尾":"〜ですよね、すごいですね","反応":"なるほど、それはさすが"},"会話":{"接続":"相手を立てる","深さ":"相手が出す範囲","終わり":"相手主導で"},"背景設定":["相手のファン的立ち位置","でも従属的すぎない (薄い意見は持つ)","時間を持っている感"],"NG":["注目を奪う","訂正","批判","対等争い","謙遜競争"],"失敗時":["即座に相手を立てる発言","『お見それしました』","スマートに退く"],"成功シグナル":["長く話してくる","気に入られる","名前を覚えてもらえる","次回も歓迎"],"phase":{"P1":"印象に残る","P2":"気に入られた存在になる","P3":"取り巻きポジション","P4":"利用しあえる関係 (短期的)"}},"env_modifiers":{"パーティー":2.5,"職場上下関係":2.0,"飲み会":2.5,"対等な議論場":0.5,"競争場":2.0},"base_success_rate":[0.3,0.45],"warning":"短期compliance は得やすいが、長期信頼関係は築きにくい。継続関係を望むなら別アプローチ推奨"},"Introverted Leader":{"share":0.13,"centers":{"H":3.79,"E":2.3,"X":2.68,"A":3.27,"C":2.91,"O":4.06},"essence":"高H・低E・高O・観察型・誠実・思慮深い・冷静・本質を見る","matrix":{"話題":{"推奨":["本質的な話","価値観","長期的視点","知的探求","哲学・倫理"],"回避":["噂話","表層的","派手","感情訴え一辺倒","ステータス自慢"]},"言葉遣い":{"推奨":["誠実・正直","曖昧さを避ける","熟慮した発言","対等","知的"],"回避":["お世辞","誇張","操作的","曖昧","ペラペラ早口"]},"立ち振舞い":{"推奨":["落ち着き","誠実な視線","思慮深い間","急がない","本気度を示す"],"回避":["軽い","派手な動き","せわしない","軽佻"]},"服装":{"推奨":["上質シンプル","知的な印象","清潔感","主張は最小限"],"回避":["派手","ロゴ誇示","流行追随","軽い印象"]},"対話の進め方":{"推奨":["本質的な問い","熟慮する時間を与える","深い議論を歓迎","誠実な姿勢"],"回避":["浅い雑談","操作","駆け引き","強引な誘導"]}},"tolerances":{"許容":["沈黙","長い熟慮時間","知的な異論","誠実な指摘","落ち着いたペース"],"不許容":["操作","誇張","お世辞","表層的","感情だけの訴え","派手なアピール"]},"character_sheet":{"外見":{"服装":"上質シンプル、知的印象","髪":"整っている","装飾":"最小限","香り":"無香 or 控えめウッディ","目線":"誠実","姿勢":"落ち着き"},"声":{"音量":"普通","速度":"ゆっくり","トーン":"落ち着き","語尾":"〜と思います、〜ですね","反応":"確かに、それは大切ですね"},"会話":{"接続":"本質的な話題から","深さ":"深く誠実に","終わり":"次に繋がる問いを残す"},"背景設定":["価値観を持っている","熟慮型","本物を見抜く目を持つ","軽い人を嫌う"],"NG":["お世辞","操作","表層的","誇張","駆け引き"],"失敗時":["誠実に詫びる","軽い言い訳をしない","時間を置く"],"成功シグナル":["深い議論に応じる","価値観を共有","『あなたとは話せる』","長期的な接点を望む"],"phase":{"P1":"知的に誠実な人と認知","P2":"価値観の共有","P3":"信頼関係","P4":"長期的なメンター/同志"}},"env_modifiers":{"知的な会話場":3.0,"カフェ静か":2.5,"オフィス":1.5,"パーティー":0.6,"オンライン議論":2.0},"base_success_rate":[0.35,0.5]}}},"layerB":{"version":"strategies-v1","layer":"B","modifiers":{"H_high":{"+話題":["公正な扱い","利得を隠さない","誠実な失敗談"],"-話題":["希少性煽り","特別扱い演出","操作感のあるオファー"],"+言葉遣い":["率直","誇張なし","利得を明示"],"-言葉遣い":["お世辞","操作的フレーズ","『あなただけ』"],"+許容":["平等な扱い","ストレートな指摘"],"-不許容":["マウンティング","地位アピール","差別的扱い"]},"H_low":{"+話題":["利益・見返り","社会的証明","希少性","ステータス","選ばれた感"],"-話題":["平等論","公正さ","利他要請","素朴な誠実訴え"],"+言葉遣い":["利得を明示","希少性を演出","『限られた人だけ』","『あなただから』"],"-言葉遣い":["道徳訴え","平等の話","素直すぎる相談"],"戦略":["利害を明文化","口約束に頼らず書面化","返報性を即時に作る"],"警戒":["長期信頼前提のアプローチは脆い","関係が壊れやすい"]},"H_mid":{},"E_high":{"+話題":["安心系","予測可能なもの","共感的体験","気遣いの話"],"-話題":["突発的な話","リスク強調","不確実性","批判口調"],"+言葉遣い":["安心保証","共感表明","変化のpre-announce","柔らかい語尾"],"-言葉遣い":["『冷静になれ』","感情の否定","ロジック先行で詰める"],"+許容":["感情の起伏に寄り添う","急がない","沈黙OK"],"-不許容":["『気にしすぎ』","急展開","批判口調","変化を予告なし"]},"E_low":{"+話題":["事実","ロジック","効率","データ","解決策"],"-話題":["感情訴え一辺倒","共感ベタ","『気持ちを汲んで』"],"+言葉遣い":["事実ベース","結論先","明確","効率的"],"-言葉遣い":["共感ベタ","『つらいよね』","曖昧な感情論"],"+許容":["率直な意見","ドライな関係","客観性"],"-不許容":["感情訴え","泣き","湿っぽい話"]},"E_mid":{},"X_high":{"+話題":["楽しい体験","共通の人脈","活動的なもの","パーティー・イベント"],"-話題":["孤独の話","内省一辺倒","沈黙を要求するもの"],"+言葉遣い":["明るく","リアクション豊か","誘いを含める","軽くユーモア"],"-言葉遣い":["重苦しい","暗いトーン","沈鬱"],"+許容":["明るい誘い","適度な押し","頻繁な接触"],"-不許容":["無視","暗い対応","頻繁な拒絶"]},"X_low":{"+話題":["静かな趣味","観察的なもの","深く狭く","非対面OK"],"-話題":["パーティー","大人数","軽い雑談一辺倒"],"+言葉遣い":["短い","控えめ","退路を残す","Yes/Noで終われる","沈黙OK"],"-言葉遣い":["連続質問","盛り上げ","熱意プッシュ","長居"],"+許容":["沈黙","距離","短い接触","非対面"],"-不許容":["長時間拘束","急な接触","大人数","電話","盛り上げ強要"]},"X_mid":{},"A_high":{"+話題":["調和","共通利益","協力","平和的解決"],"-話題":["他者の悪口","対立を煽る","ゼロサム","批判一辺倒"],"+言葉遣い":["柔らかい","共感的","頼みやすい","譲歩を含める"],"-言葉遣い":["攻撃的","強引","批判一辺倒","対立を煽る"],"+許容":["譲歩要求","共感要求","協力要請","お願い"],"-不許容":["強硬","対立","他者軽視","非協力的態度"]},"A_low":{"+話題":["直接的な利益","対等な議論","ドライな関係","効率"],"-話題":["協調圧","お願い系","泣き落とし","『みんなのため』"],"+言葉遣い":["率直","明確","対等","利害を明示"],"-言葉遣い":["協調訴え","泣き落とし","曖昧な依頼"],"+許容":["率直な意見の応酬","批判","対立","利害計算"],"-不許容":["泣き落とし","協調強要","曖昧","お願いベース"]},"A_mid":{},"C_high":{"+話題":["計画","効率","データ","具体的な見返り","スケジュール"],"-話題":["『とりあえず』","曖昧な計画","成り行き任せ"],"+言葉遣い":["明確","具体的","数値ベース","時間遵守","約束を守る"],"-言葉遣い":["曖昧","『なんとなく』","ドタキャン","ルーズ"],"+許容":["細かい確認","スケジューリング","厳密さ"],"-不許容":["遅刻","約束破り","曖昧","ルーズな対応"]},"C_low":{"+話題":["即興","直感","気分","成り行き","軽い話"],"-話題":["長期計画","細かいスケジュール","厳密な約束"],"+言葉遣い":["フレキシブル","『まあいいか』","気軽","変更歓迎"],"-言葉遣い":["厳密","計画詰め","細かい確認","しつこい確認"],"+許容":["遅刻","変更","曖昧","成り行き"],"-不許容":["厳密さ要求","細かい計画","『何時に何分』詰め"]},"C_mid":{},"O_high":{"+話題":["新規性","独自性","抽象論","芸術・創作","哲学","異文化"],"-話題":["定型的","流行り一般論","常識的","保守的"],"+言葉遣い":["知的","柔軟","新しい視点","『仮にだけど』"],"-言葉遣い":["定型","保守的","『普通は』","常識訴え"],"+許容":["新規アイデア","異論","独自視点","抽象議論"],"-不許容":["定型","『普通こうでしょ』","固定観念","保守強要"]},"O_low":{"+話題":["具体的","身近","定型的","実用的","常識的"],"-話題":["抽象論","哲学","新規すぎる","奇抜"],"+言葉遣い":["具体的","平易","身近な例","『普通の』"],"-言葉遣い":["抽象的","奇抜","『たぶん』『仮に』多用","哲学的"],"+許容":["定型","常識的","具体的指示","明確さ"],"-不許容":["抽象論一辺倒","奇抜なアイデア押しつけ","『普通ではない』提案"]},"O_mid":{}}},"layerC":{"version":"strategies-v1","layer":"C","overlays":{"Mach_high":{"warning_flags":["約束履行率が平均より低い可能性","二重交渉・隠れた利害","共通の敵を作って同盟を持ちかける戦法に注意","『あなただけに』『内緒で』を多用しがち"],"+戦略":["利害を明文化","口約束に頼らず書面化","期限と条件を具体化","第三者を立てる","早期に小さな約束で履行性をテスト"],"-戦略":["善意ベースの依頼","『信頼してます』アピール","曖昧な合意","感情訴え","長期前提の信頼構築"],"+話題":["対等な利害交渉","明確なメリット提示"],"-話題":["素朴な誠実さ訴え","『友情のため』","協調強要"]},"Mach_low":{"characteristics":["素直で透明性が高い","だまされやすい","直球の依頼が通りやすい","駆け引きを嫌う"],"+戦略":["率直に頼む","駆け引きしない","誠実に説明","利害をオープンに"],"-戦略":["回りくどい","複数の意図を持つ","駆け引き的アプローチ","隠した動機"]},"Psy_high":{"warning_flags":["共感期待は不可","突発的衝動行動の可能性","罪悪感が機能しない","暴力リスク (低だが平均より高)","スリル・刺激追求"],"+戦略":["直接的利益提示","ロジックベース","リスク・コストを明示","物理的・法的安全を確保","距離を取れる関係性に留める"],"-戦略":["罪悪感誘発","長期信頼ベース","『傷つけたよ』訴え","感情訴え","共感に賭ける"],"+話題":["利得","刺激的なもの","直接的な見返り"],"-話題":["『気持ちを考えて』","共感訴え","道徳訴え"]},"Psy_low":{"characteristics":["共感性が高い","罪悪感を感じやすい","暴力やリスクを避ける","他者の感情に敏感"],"+戦略":["共感ベース","『傷つけたかも』を素直に出してOK","感情の機微を扱える","長期信頼を築きやすい"],"-戦略":["突発的な強い要求","ロジックだけで詰める","感情を無視"]},"Narc_high":{"warning_flags":["称賛を強く求める","軽視への過敏な反応","注目を奪われると敵対化","自分が中心の物語を持つ"],"+戦略":["称賛","地位確認","特別感の演出","独占的接近 (『あなたとだけ』)","成功・成果を聞く","選ばれた人扱い"],"-戦略":["対等扱い","批判","注目を奪う","軽い扱い","影響力を削減する発言"],"+話題":["相手の成果","ステータス","特別感","選ばれた感","リーダー的扱い"],"-話題":["相手を平凡扱い","他者の成功","批判","謙遜要求"],"+許容":["自慢","独占欲","注目要求"],"-不許容":["軽視","対等扱い","批判","注目分散","下位扱い"]},"Narc_low":{"characteristics":["謙虚","注目を避ける","自慢しない","平等を好む"],"+戦略":["地味に評価","他者と並べて扱う","控えめなアプローチ"],"-戦略":["過度な称賛 (逆効果)","スポットライト","特別扱い演出"]}}},"cue_weights":{"version":"cue-weights-v1","scale_notes":{"HEXACO_factors":"Delta values are on the 1-5 raw-mean scale (HEXACO standard). Sum cue deltas to update prior mean.","Dark_Triad":"Delta values for Mach_T, Psy_T, Narc_T are on T-score scale (M=50, SD=10).","facet_keys":"Use facet-level keys (e.g. X-Sociability) for finer adjustment; factor-level (e.g. X) for coarse.","negation":"Most cues are presence-only. Their absence is not informative unless an opposite cue is explicitly listed.","confidence":"high=research-backed correlations; mid=plausible inference + literature; low=inference only, use with caution.","cap":"Recommend capping total absolute delta per factor at ±2.0 before clipping posterior to [1.0, 5.0]."},"categories":["物理外見","行動","文脈","聴覚/コンテンツ","SNS","対話"],"cues":[{"id":"clothing_flashy","category":"物理外見","label":"派手/カラフルな服装","type":"binary","deltas":{"X":0.2,"O":0.2,"H":-0.1,"C-Organization":0.1},"confidence":"mid","source":"Naumann 2009 thin-slice","note":""},{"id":"clothing_dark_modest","category":"物理外見","label":"黒/地味中心、体型を出さない服","type":"binary","deltas":{"X":-0.3,"X-Liveliness":-0.4,"O-Aesthetic":-0.1},"confidence":"mid","source":"thin-slice general","note":""},{"id":"clothing_branded_visible","category":"物理外見","label":"ブランドロゴが目立つ","type":"binary","deltas":{"H":-0.3,"Narc_T":3,"X":0.1},"confidence":"high","source":"Sedikides Narc, HEXACO H definition","note":""},{"id":"clothing_quirky_creative","category":"物理外見","label":"個性的・創作系・キャラもの (二次元コンテンツTシャツ等)","type":"binary","deltas":{"O":0.4,"O-Creativity":0.5,"O-Unconventionality":0.3,"X":-0.1},"confidence":"mid","source":"inference, HEXACO O","note":""},{"id":"clothing_neat_clean","category":"物理外見","label":"服装が整い清潔","type":"binary","deltas":{"C":0.2,"C-Organization":0.3,"H":0.1},"confidence":"high","source":"Gosling 2002","note":""},{"id":"clothing_messy_wrinkled","category":"物理外見","label":"服装が乱れ・しわ・汚れ","type":"binary","deltas":{"C":-0.4,"C-Organization":-0.5},"confidence":"high","source":"Gosling 2002, Naumann 2009","note":""},{"id":"makeup_full","category":"物理外見","label":"フルメイク (時間かけた印象)","type":"binary","deltas":{"X":0.2,"C-Organization":0.2,"Narc_T":2},"confidence":"mid","source":"inference","note":""},{"id":"makeup_none","category":"物理外見","label":"すっぴん","type":"binary","deltas":{"X-Social":-0.2,"C-Organization":-0.2,"O-Aesthetic":-0.1,"H":0.1},"confidence":"low","source":"inference","note":""},{"id":"nails_decorated","category":"物理外見","label":"ネイルアート/装飾あり","type":"binary","deltas":{"X":0.2,"C-Organization":0.3,"Narc_T":2},"confidence":"mid","source":"inference","note":""},{"id":"nails_none","category":"物理外見","label":"ネイルなし","type":"binary","deltas":{"C-Organization":-0.1},"confidence":"low","source":"inference","note":""},{"id":"glasses_functional","category":"物理外見","label":"メガネ着用 (コンタクトなく)","type":"binary","deltas":{"O-Aesthetic":-0.1,"C-Prudence":0.1},"confidence":"low","source":"inference","note":""},{"id":"hair_styled_long","category":"物理外見","label":"整えた長髪・凝った髪型","type":"binary","deltas":{"X":0.2,"C-Organization":0.2,"O-Aesthetic":0.1},"confidence":"mid","source":"inference","note":""},{"id":"hair_short_minimal","category":"物理外見","label":"短髪・最小限スタイリング","type":"binary","deltas":{"X-Liveliness":-0.1,"C":0.1},"confidence":"low","source":"inference","note":""},{"id":"perfume_strong","category":"物理外見","label":"強い香水/香り","type":"binary","deltas":{"X":0.2,"Narc_T":2,"O-Aesthetic":0.1},"confidence":"mid","source":"inference","note":""},{"id":"perfume_none","category":"物理外見","label":"無香 or ほぼ無香","type":"binary","deltas":{"H":0.1,"X-Social":-0.1},"confidence":"low","source":"inference","note":""},{"id":"bag_large_full","category":"物理外見","label":"大きく荷物の多い鞄","type":"binary","deltas":{"C":0.2,"E":0.2},"confidence":"low","source":"inference","note":""},{"id":"bag_small_minimal","category":"物理外見","label":"小さな鞄/手ぶら","type":"binary","deltas":{"C-Organization":0.1,"O":0.1},"confidence":"low","source":"inference","note":""},{"id":"luxury_visible","category":"物理外見","label":"高級時計・ジュエリー等のステータス品","type":"binary","deltas":{"H":-0.4,"Narc_T":5,"X":0.2},"confidence":"high","source":"HEXACO H definition (Greed-Avoidance)","note":""},{"id":"body_revealing","category":"物理外見","label":"露出度の高い服装","type":"binary","deltas":{"X":0.3,"X-Boldness":0.4,"Narc_T":3},"confidence":"mid","source":"inference","note":""},{"id":"posture_open","category":"物理外見","label":"オープンな姿勢 (胸を張る、両足広げる等)","type":"binary","deltas":{"X":0.3,"X-Boldness":0.4,"Narc_T":2},"confidence":"mid","source":"Carney power posing literature (effect debated)","note":""},{"id":"posture_closed","category":"物理外見","label":"閉じた姿勢 (腕組み、肩すぼめる、うつむき)","type":"binary","deltas":{"X":-0.3,"E":0.2,"X-SocialSelfEsteem":-0.3},"confidence":"mid","source":"thin-slice","note":""},{"id":"mask_constant","category":"物理外見","label":"マスク常用 (健康上の必要不明)","type":"binary","deltas":{"X-Social":-0.3,"X":-0.2,"E":0.1},"confidence":"low","source":"inference, post-pandemic JP behavior","note":""},{"id":"eye_contact_strong","category":"行動","label":"視線をしっかり合わせる","type":"binary","deltas":{"X":0.3,"X-Boldness":0.4,"H":-0.05,"Psy_T":1},"confidence":"mid","source":"Vazire SOKA, thin-slice","note":""},{"id":"eye_contact_avoid","category":"行動","label":"視線をほとんど合わせない/そらしがち","type":"binary","deltas":{"X":-0.4,"X-Boldness":-0.4,"E":0.2},"confidence":"high","source":"thin-slice general","note":""},{"id":"smile_frequent","category":"行動","label":"笑顔が頻繁","type":"binary","deltas":{"X":0.3,"A":0.2,"X-Liveliness":0.4},"confidence":"high","source":"Ambady 1992 thin-slice","note":""},{"id":"smile_rare","category":"行動","label":"ほぼ笑顔なし、無表情","type":"binary","deltas":{"X":-0.3,"X-Liveliness":-0.4,"E":0.1},"confidence":"mid","source":"thin-slice","note":""},{"id":"voice_loud","category":"行動","label":"声が大きい","type":"binary","deltas":{"X":0.3,"X-Liveliness":0.4,"X-Boldness":0.3},"confidence":"high","source":"Mehl EAR, Mairesse 2007","note":""},{"id":"voice_soft","category":"行動","label":"声が小さい/低音量","type":"binary","deltas":{"X":-0.3,"X-Boldness":-0.3,"E":0.1},"confidence":"high","source":"Mehl EAR","note":""},{"id":"speech_fast","category":"行動","label":"早口","type":"binary","deltas":{"X":0.2,"X-Liveliness":0.3,"E":0.1},"confidence":"mid","source":"Mairesse 2007","note":""},{"id":"speech_slow","category":"行動","label":"ゆっくり話す","type":"binary","deltas":{"X-Liveliness":-0.2,"C":0.2},"confidence":"mid","source":"inference","note":""},{"id":"gesture_animated","category":"行動","label":"身振り手振りが豊か","type":"binary","deltas":{"X":0.3,"X-Liveliness":0.4,"O":0.1},"confidence":"mid","source":"thin-slice","note":""},{"id":"gesture_minimal","category":"行動","label":"身振りがほぼない","type":"binary","deltas":{"X-Liveliness":-0.3,"E":0.1},"confidence":"mid","source":"inference","note":""},{"id":"laugh_loud","category":"行動","label":"笑い声が大きい","type":"binary","deltas":{"X":0.4,"X-Liveliness":0.5},"confidence":"mid","source":"Mehl EAR","note":""},{"id":"interrupts_others","category":"行動","label":"他者の発言を頻繁に遮る","type":"binary","deltas":{"X-Boldness":0.3,"A":-0.3,"A-Gentleness":-0.3,"Psy_T":2},"confidence":"mid","source":"inference, Dark Triad lit","note":""},{"id":"listens_attentive","category":"行動","label":"傾聴姿勢、相手を遮らない","type":"binary","deltas":{"A":0.3,"A-Gentleness":0.3,"H":0.1},"confidence":"mid","source":"inference","note":""},{"id":"looks_around_active","category":"行動","label":"頻繁に周囲を見回す","type":"binary","deltas":{"X":0.1,"E":0.2,"X-SocialSelfEsteem":-0.1},"confidence":"low","source":"inference","note":""},{"id":"stays_focused_phone","category":"行動","label":"周囲を見ず端末/活動に集中","type":"binary","deltas":{"X":-0.4,"X-Sociability":-0.4,"X-Liveliness":-0.2},"confidence":"mid","source":"inference","note":""},{"id":"phys_contact_initiator","category":"行動","label":"物理接触 (肩を叩く等) を自分から行う","type":"binary","deltas":{"X-Boldness":0.4,"A":-0.1,"H":-0.1,"Narc_T":2},"confidence":"mid","source":"thin-slice","note":""},{"id":"personal_space_preserves","category":"行動","label":"他者との距離を広めに保つ","type":"binary","deltas":{"X-Sociability":-0.3,"E":0.2},"confidence":"mid","source":"inference","note":""},{"id":"time_punctual","category":"行動","label":"時間を厳守する","type":"binary","deltas":{"C":0.3,"C-Diligence":0.3,"H":0.1},"confidence":"high","source":"HEXACO C definition","note":""},{"id":"time_late_recurrent","category":"行動","label":"繰り返し遅刻する","type":"binary","deltas":{"C":-0.4,"C-Diligence":-0.4,"A":-0.1},"confidence":"high","source":"HEXACO C definition","note":""},{"id":"brags_about_self","category":"行動","label":"自分の成果・地位を自慢する","type":"binary","deltas":{"H":-0.4,"H-Modesty":-0.5,"Narc_T":5},"confidence":"high","source":"HEXACO H, Narc lit","note":""},{"id":"complains_about_others","category":"行動","label":"他者を貶める・愚痴が多い","type":"binary","deltas":{"A":-0.3,"A-Gentleness":-0.3,"H":-0.1,"Psy_T":2},"confidence":"mid","source":"inference","note":""},{"id":"apologizes_easily","category":"行動","label":"謝罪・譲歩が多い","type":"binary","deltas":{"A":0.2,"A-Forgiveness":0.3,"H":0.1},"confidence":"mid","source":"inference","note":""},{"id":"aggressive_disputes","category":"行動","label":"些細な点でも譲らず議論","type":"binary","deltas":{"A":-0.3,"A-Flexibility":-0.4,"X-Boldness":0.2},"confidence":"mid","source":"HEXACO A definition","note":""},{"id":"seeks_thrill_risk","category":"行動","label":"スリル・危険を好むエピソード","type":"binary","deltas":{"X-Boldness":0.3,"C-Prudence":-0.3,"Psy_T":3},"confidence":"mid","source":"Dark Triad lit","note":""},{"id":"appears_anxious","category":"行動","label":"落ち着きがない、緊張","type":"binary","deltas":{"E":0.3,"E-Anxiety":0.4,"X":-0.1},"confidence":"mid","source":"HEXACO E definition","note":""},{"id":"appears_calm","category":"行動","label":"明らかに落ち着いている","type":"binary","deltas":{"E":-0.3,"E-Anxiety":-0.3,"X-Boldness":0.2},"confidence":"mid","source":"inference","note":""},{"id":"alone_public","category":"文脈","label":"公共空間で一人 (同伴者なし)","type":"binary","deltas":{"X":-0.2},"confidence":"low","source":"inference","note":""},{"id":"with_group","category":"文脈","label":"複数人で行動","type":"binary","deltas":{"X":0.2,"X-Sociability":0.3},"confidence":"low","source":"inference","note":""},{"id":"alone_at_event","category":"文脈","label":"趣味イベント等で単独参加","type":"binary","deltas":{"O":0.2,"X-Sociability":-0.1},"confidence":"low","source":"inference","note":""},{"id":"center_of_group","category":"文脈","label":"集団の中で会話の中心","type":"binary","deltas":{"X":0.4,"X-Boldness":0.4,"Narc_T":2},"confidence":"mid","source":"thin-slice","note":""},{"id":"periphery_of_group","category":"文脈","label":"集団の端で受動的","type":"binary","deltas":{"X":-0.3,"X-Sociability":-0.3},"confidence":"mid","source":"thin-slice","note":""},{"id":"staff_polite","category":"文脈","label":"店員等への態度が丁寧","type":"binary","deltas":{"H":0.2,"A":0.2},"confidence":"mid","source":"inference","note":""},{"id":"staff_rude","category":"文脈","label":"店員等への態度が横柄/不遜","type":"binary","deltas":{"H":-0.3,"A":-0.3,"Narc_T":3,"Psy_T":2},"confidence":"mid","source":"Dark Triad lit","note":""},{"id":"queue_polite","category":"文脈","label":"順番待ち等のマナーが整っている","type":"binary","deltas":{"A":0.2,"H":0.1,"C-Prudence":0.1},"confidence":"low","source":"inference","note":""},{"id":"crowded_environment","category":"文脈","label":"観察環境が満員/混雑","type":"binary","deltas":{},"confidence":"high","source":"env_modifier flag","note":"本人特性ではなく、観察精度↓+接触成功率↓のフラグ"},{"id":"quiet_environment","category":"文脈","label":"静かな個別空間","type":"binary","deltas":{},"confidence":"high","source":"env_modifier flag","note":"観察精度↑+接触成功率↑"},{"id":"morning_commute","category":"文脈","label":"平日朝の通勤時間","type":"binary","deltas":{},"confidence":"high","source":"env_modifier","note":"接触適性低い時間帯"},{"id":"evening_leisure","category":"文脈","label":"夜・休日のレジャー時間","type":"binary","deltas":{},"confidence":"mid","source":"env_modifier","note":"接触適性中〜高"},{"id":"music_pop_mainstream","category":"聴覚/コンテンツ","label":"主流ポップ音楽","type":"binary","deltas":{"O":-0.1,"X":0.1},"confidence":"low","source":"inference","note":""},{"id":"music_classical","category":"聴覚/コンテンツ","label":"クラシック/ジャズ等","type":"binary","deltas":{"O":0.3,"O-Aesthetic":0.4},"confidence":"mid","source":"Rentfrow & Gosling 2003","note":""},{"id":"music_otaku_anime","category":"聴覚/コンテンツ","label":"アニソン/二次元コンテンツ系","type":"binary","deltas":{"O":0.3,"O-Unconventionality":0.3,"X":-0.1},"confidence":"mid","source":"inference","note":""},{"id":"music_rap_hiphop","category":"聴覚/コンテンツ","label":"ラップ/ヒップホップ","type":"binary","deltas":{"O":0.2,"X-Boldness":0.1},"confidence":"mid","source":"Rentfrow & Gosling 2003","note":""},{"id":"music_metal_punk","category":"聴覚/コンテンツ","label":"メタル/パンク/激しい系","type":"binary","deltas":{"O":0.2,"X-Boldness":0.2,"A":-0.1},"confidence":"mid","source":"Rentfrow & Gosling 2003","note":""},{"id":"content_2d_immersion","category":"聴覚/コンテンツ","label":"二次元コンテンツ深耕 (ヒプマイ/刀剣乱舞/二次元アイドル等)","type":"binary","deltas":{"O":0.4,"O-Creativity":0.4,"O-Unconventionality":0.3,"X":-0.2},"confidence":"mid","source":"inference, JP cultural pattern","note":""},{"id":"game_competitive","category":"聴覚/コンテンツ","label":"競技性の高いゲーム (FPS/格ゲー等)","type":"binary","deltas":{"X-Boldness":0.2,"C-Diligence":0.1,"Psy_T":1},"confidence":"low","source":"inference","note":""},{"id":"game_collection_idol","category":"聴覚/コンテンツ","label":"育成・キャラ収集系ゲーム","type":"binary","deltas":{"O":0.2,"C-Diligence":0.2,"X":-0.1},"confidence":"low","source":"inference","note":""},{"id":"reads_books_visible","category":"聴覚/コンテンツ","label":"読書中 (紙の本)","type":"binary","deltas":{"O":0.3,"C":0.1},"confidence":"mid","source":"inference","note":""},{"id":"reads_business_self_help","category":"聴覚/コンテンツ","label":"ビジネス書・自己啓発本","type":"binary","deltas":{"C":0.2,"Narc_T":1,"O":-0.1},"confidence":"low","source":"inference","note":""},{"id":"reads_literary_fiction","category":"聴覚/コンテンツ","label":"文学・小説","type":"binary","deltas":{"O":0.3,"O-Aesthetic":0.3},"confidence":"mid","source":"Mar & Oatley 2008","note":""},{"id":"sns_active_x_high","category":"SNS","label":"X (Twitter) で高頻度発信","type":"binary","deltas":{"X":0.2,"O":0.1,"Narc_T":1},"confidence":"mid","source":"Park 2015","note":""},{"id":"sns_anonymous_attack","category":"SNS","label":"匿名アカで攻撃的・批判的発信","type":"binary","deltas":{"H":-0.4,"A":-0.3,"Psy_T":3,"Mach_T":2},"confidence":"mid","source":"Dark Triad SNS lit","note":""},{"id":"sns_selfie_high","category":"SNS","label":"自撮り頻度が高い (Insta等)","type":"binary","deltas":{"Narc_T":5,"X":0.2},"confidence":"high","source":"Kachur 2020, Fox & Rooney 2015","note":""},{"id":"sns_instagram_active","category":"SNS","label":"Instagram 高頻度投稿 (生活シェア)","type":"binary","deltas":{"X":0.2,"Narc_T":3,"O-Aesthetic":0.1},"confidence":"high","source":"Tanaka 2022 JP","note":""},{"id":"sns_twitter_low_self_esteem","category":"SNS","label":"X 中心、自虐/愚痴多い","type":"binary","deltas":{"E":0.2,"X-SocialSelfEsteem":-0.3},"confidence":"mid","source":"Tanaka 2022 JP","note":""},{"id":"sns_linkedin_active","category":"SNS","label":"LinkedIn 等プロフェッショナルSNS活発","type":"binary","deltas":{"C":0.3,"X":0.1,"Narc_T":2},"confidence":"mid","source":"inference","note":""},{"id":"sns_none_or_minimal","category":"SNS","label":"SNS をほぼ使わない/非公開","type":"binary","deltas":{"X":-0.2,"X-Sociability":-0.2,"H":0.1},"confidence":"low","source":"inference","note":""},{"id":"sns_luxury_lifestyle_post","category":"SNS","label":"ブランド/旅行/食事の派手投稿","type":"binary","deltas":{"H":-0.3,"Narc_T":4},"confidence":"high","source":"Sedikides Narc lit","note":""},{"id":"sns_creative_output_post","category":"SNS","label":"創作・知識共有投稿が中心","type":"binary","deltas":{"O":0.4,"O-Creativity":0.4},"confidence":"mid","source":"Park 2015 Facebook language","note":""},{"id":"sns_pet_or_food_focus","category":"SNS","label":"ペット/料理/小物投稿が中心","type":"binary","deltas":{"A":0.1,"E":0.1},"confidence":"low","source":"inference","note":""},{"id":"sns_strong_opinion_political","category":"SNS","label":"政治・社会問題の強い意見発信","type":"binary","deltas":{"O":0.2,"A":-0.1},"confidence":"low","source":"inference","note":""},{"id":"conv_initiates_topics","category":"対話","label":"自分から話題を提供する","type":"binary","deltas":{"X":0.3,"X-Sociability":0.4},"confidence":"high","source":"thin-slice","note":""},{"id":"conv_waits_silently","category":"対話","label":"話題提供を相手任せ","type":"binary","deltas":{"X":-0.3,"X-Sociability":-0.3},"confidence":"high","source":"thin-slice","note":""},{"id":"conv_silence_tolerant","category":"対話","label":"沈黙を苦にしない","type":"binary","deltas":{"X":-0.2,"E":-0.1,"C":0.1},"confidence":"mid","source":"inference","note":""},{"id":"conv_silence_fills","category":"対話","label":"沈黙を急いで埋めようとする","type":"binary","deltas":{"X":0.2,"E":0.2},"confidence":"mid","source":"inference","note":""},{"id":"conv_self_disclosure_high","category":"対話","label":"自己開示が早い・多い","type":"binary","deltas":{"X":0.2,"A":0.2,"Narc_T":1},"confidence":"mid","source":"inference","note":""},{"id":"conv_self_disclosure_low","category":"対話","label":"自己開示が乏しい","type":"binary","deltas":{"X":-0.2,"E":0.1},"confidence":"mid","source":"inference","note":""},{"id":"conv_keeps_promises","category":"対話","label":"約束を確実に履行する","type":"binary","deltas":{"C":0.3,"C-Diligence":0.4,"H":0.2,"Mach_T":-2},"confidence":"high","source":"HEXACO C/H","note":""},{"id":"conv_breaks_promises","category":"対話","label":"約束を破る/ドタキャン多い","type":"binary","deltas":{"C":-0.4,"H":-0.2,"Mach_T":3},"confidence":"high","source":"HEXACO C/H","note":""},{"id":"conv_money_obsessed","category":"対話","label":"金銭・損得への食いつきが強い","type":"binary","deltas":{"H":-0.3,"H-GreedAvoidance":-0.4,"Mach_T":3},"confidence":"high","source":"HEXACO H definition","note":""},{"id":"conv_money_indifferent","category":"対話","label":"金銭への執着が薄い","type":"binary","deltas":{"H":0.2,"H-GreedAvoidance":0.3},"confidence":"mid","source":"HEXACO H","note":""},{"id":"conv_emotional_volatility","category":"対話","label":"感情の起伏が大きい","type":"binary","deltas":{"E":0.3,"E-Anxiety":0.3,"C":-0.1},"confidence":"mid","source":"inference","note":""},{"id":"conv_steady_emotion","category":"対話","label":"感情が安定している","type":"binary","deltas":{"E":-0.3,"C":0.1},"confidence":"mid","source":"inference","note":""},{"id":"conv_helps_others","category":"対話","label":"頼まれてないことも手伝う","type":"binary","deltas":{"A":0.3,"A-Gentleness":0.2,"H":0.1},"confidence":"mid","source":"HEXACO A/H","note":""},{"id":"conv_competitive_one_up","category":"対話","label":"自慢/マウント・常に一段上を取りに行く","type":"binary","deltas":{"H":-0.4,"H-Modesty":-0.5,"Narc_T":5,"A":-0.2},"confidence":"high","source":"Dark Triad lit","note":""},{"id":"conv_lies_detected","category":"対話","label":"事実と異なる発言が確認された","type":"binary","deltas":{"H":-0.5,"H-Sincerity":-0.5,"Mach_T":4},"confidence":"high","source":"HEXACO H definition","note":""},{"id":"conv_abstract_topics_engage","category":"対話","label":"抽象論・哲学的話題に乗ってくる","type":"binary","deltas":{"O":0.3,"O-Creativity":0.2,"O-Unconventionality":0.2},"confidence":"mid","source":"HEXACO O","note":""},{"id":"conv_concrete_only","category":"対話","label":"具体的・身近な話題以外は反応薄い","type":"binary","deltas":{"O":-0.3,"O-Unconventionality":-0.3},"confidence":"mid","source":"HEXACO O","note":""},{"id":"conv_authority_deferential","category":"対話","label":"権威/年長者に対して従順","type":"binary","deltas":{"A-Flexibility":0.2,"H-Modesty":0.1},"confidence":"low","source":"inference, Hofstede PDI JP","note":""},{"id":"conv_authority_challenging","category":"対話","label":"権威に対して挑戦的","type":"binary","deltas":{"A-Flexibility":-0.3,"X-Boldness":0.2,"H-Modesty":-0.1},"confidence":"low","source":"inference","note":""}]}};
+
+// =============== UTILITIES ===============
+function $(sel) { return document.querySelector(sel); }
+function $$(sel) { return Array.from(document.querySelectorAll(sel)); }
+function el(tag, attrs={}, ...children) {
+  const e = document.createElement(tag);
+  for (const [k,v] of Object.entries(attrs)) {
+    if (k === 'className') e.className = v;
+    else if (k.startsWith('on')) e.addEventListener(k.slice(2).toLowerCase(), v);
+    else e.setAttribute(k, v);
+  }
+  for (const c of children) {
+    if (c == null) continue;
+    if (typeof c === 'string') e.appendChild(document.createTextNode(c));
+    else e.appendChild(c);
+  }
+  return e;
+}
+function clamp(v, lo, hi) { return Math.max(lo, Math.min(hi, v)); }
+
+// =============== PRIOR LOOKUP ===============
+// TIPI-J sum (2-14) → HEXACO-like 1-5 estimate
+function tipiToHexaco(tipi_sum) {
+  const mean_item = tipi_sum / 2;  // 1-7 per item
+  return ((mean_item - 1) / 6) * 4 + 1;  // map to 1-5
+}
+// Approx mapping: TIPI Big Five ↔ HEXACO factors
+const TIPI_TO_HEXACO = {
+  "Extraversion": "X",
+  "Agreeableness": "A",
+  "Conscientiousness": "C",
+  "Neuroticism": "E",  // closest, not identical
+  "Openness": "O"
+};
+
+function getPrior(sex, age_band) {
+  // Returns HEXACO 6-factor prior with H as flat default (no JP age/sex data)
+  const out = {
+    H: {mean: 3.50, sd: 0.60, src: "flat (no JP age/sex norms for H)"},
+    E: {mean: 3.00, sd: 0.55, src: ""},
+    X: {mean: 3.00, sd: 0.55, src: ""},
+    A: {mean: 3.00, sd: 0.55, src: ""},
+    C: {mean: 3.00, sd: 0.55, src: ""},
+    O: {mean: 3.00, sd: 0.55, src: ""}
+  };
+  const cell = DATA.priors_tipi.by_sex_age?.[sex]?.[age_band];
+  if (!cell) return out;
+  for (const [tipiName, hxKey] of Object.entries(TIPI_TO_HEXACO)) {
+    const [mean, sd] = cell[tipiName];
+    out[hxKey].mean = tipiToHexaco(mean);
+    out[hxKey].sd = sd * (4/12);  // rough sd scaling
+    out[hxKey].src = `Kawamoto 2015 TIPI-J (${sex}/${age_band}, n=${cell.n})`;
+  }
+  return out;
+}
+
+function getDtPrior(sex, age_band) {
+  const ageMid = {"10s":17,"20s":25,"30s":35,"40s":45,"50s":55,"60s":65,"70s":75}[age_band] || 45;
+  const sex_male = sex === "M" ? 1 : 0;
+  const reg = DATA.priors_dt.regression_T_score;
+  const out = {};
+  for (const trait of ["Machiavellianism","Psychopathy","Narcissism"]) {
+    const r = reg[trait];
+    const ageC = ageMid - 44.82;
+    let T = r.intercept_at_mean_age_female + r.gender_main_male_vs_female * sex_male
+          + r.age_linear_per_year * ageC + (r.gender_x_age || 0) * sex_male * ageC;
+    if (r.age_squared !== undefined) {
+      T += r.age_squared * ageC * ageC + (r.gender_x_age_squared || 0) * sex_male * ageC * ageC;
+    }
+    const key = {"Machiavellianism":"Mach","Psychopathy":"Psy","Narcissism":"Narc"}[trait];
+    out[key+"_T"] = {mean: T, sd: 10, src: `${trait}: Shimotsukasa 2017 regression`};
+  }
+  return out;
+}
+
+// =============== POSTERIOR COMPUTATION ===============
+function computePosterior(status, checkedCueIds) {
+  const prior = getPrior(status.sex, status.age_band);
+  const dt_prior = getDtPrior(status.sex, status.age_band);
+
+  // Sum cue deltas
+  const deltas = {};
+  const contributing = [];
+  for (const cid of checkedCueIds) {
+    const cue = DATA.cue_weights.cues.find(c => c.id === cid);
+    if (!cue) continue;
+    contributing.push(cue);
+    for (const [k,v] of Object.entries(cue.deltas)) {
+      deltas[k] = (deltas[k] || 0) + v;
+    }
+  }
+
+  // Apply caps + map facet-level deltas onto factor as fallback
+  const factors = ["H","E","X","A","C","O"];
+  const hexaco = {};
+  for (const f of factors) {
+    let d = deltas[f] || 0;
+    // Add facet-level deltas (X-Sociability, etc.) - each facet contributes 0.5 weight to factor
+    for (const [k,v] of Object.entries(deltas)) {
+      if (k.startsWith(f+"-")) d += v * 0.5;
+    }
+    d = clamp(d, -2.0, 2.0);
+    const post_mean = clamp(prior[f].mean + d, 1.0, 5.0);
+    // Confidence shrinkage: SD reduces with more contributing cues
+    const n_cues = contributing.filter(c => Object.keys(c.deltas).some(k => k === f || k.startsWith(f+"-"))).length;
+    const post_sd = prior[f].sd * Math.max(0.6, 1.0 - n_cues * 0.05);
+    hexaco[f] = {mean: post_mean, sd: post_sd, delta: d, n_cues, src: prior[f].src};
+  }
+
+  // Dark Triad
+  const dt = {};
+  for (const trait of ["Mach","Psy","Narc"]) {
+    const key = trait+"_T";
+    const d = clamp(deltas[key] || 0, -15, 15);
+    dt[key] = {
+      mean: clamp(dt_prior[key].mean + d, 20, 80),
+      sd: dt_prior[key].sd,
+      delta: d
+    };
+  }
+
+  return {hexaco, dt, contributing_cues: contributing.length};
+}
+
+// =============== CLUSTER SELECTION ===============
+function selectCluster(hexaco) {
+  const profile = {};
+  for (const f of ["H","E","X","A","C","O"]) profile[f] = hexaco[f].mean;
+  const results = [];
+  for (const [name, info] of Object.entries(DATA.layerA.clusters)) {
+    let d2 = 0;
+    for (const f of ["H","E","X","A","C","O"]) {
+      d2 += Math.pow(profile[f] - info.centers[f], 2);
+    }
+    results.push({name, distance: Math.sqrt(d2), share: info.share, centers: info.centers});
+  }
+  results.sort((a,b) => a.distance - b.distance);
+  return results;
+}
+
+// =============== STRATEGY COMPOSITION ===============
+function deepCopy(obj) { return JSON.parse(JSON.stringify(obj)); }
+
+function composeStrategy(profile, clusterRank) {
+  const top = clusterRank[0];
+  const base = deepCopy(DATA.layerA.clusters[top.name]);
+  base._cluster_name = top.name;
+  base._distance = top.distance;
+
+  const applied_modifiers = [];
+  const applied_overlays = [];
+
+  // Layer B: factor modifiers
+  for (const f of ["H","E","X","A","C","O"]) {
+    const dev = profile.hexaco[f].mean - DATA.layerA.clusters[top.name].centers[f];
+    let mod_key = null;
+    if (dev > 0.5) mod_key = f + "_high";
+    else if (dev < -0.5) mod_key = f + "_low";
+    if (mod_key && DATA.layerB.modifiers[mod_key]) {
+      mergeModifier(base, DATA.layerB.modifiers[mod_key], mod_key);
+      applied_modifiers.push({key: mod_key, deviation: dev.toFixed(2)});
+    }
+  }
+
+  // Layer C: DT overlays
+  for (const trait of ["Mach","Psy","Narc"]) {
+    const t = profile.dt[trait+"_T"].mean;
+    let ov_key = null;
+    if (t > 60) ov_key = trait + "_high";
+    else if (t < 40) ov_key = trait + "_low";
+    if (ov_key && DATA.layerC.overlays[ov_key]) {
+      mergeOverlay(base, DATA.layerC.overlays[ov_key], ov_key);
+      applied_overlays.push({key: ov_key, t_score: t.toFixed(1)});
+    }
+  }
+
+  base._applied_modifiers = applied_modifiers;
+  base._applied_overlays = applied_overlays;
+  return base;
+}
+
+function mergeModifier(base, mod, key) {
+  // mod has keys like "+話題", "-話題", "+言葉遣い", "-言葉遣い", "+許容", "-不許容", "戦略", "警戒"
+  if (!base.matrix) base.matrix = {};
+  if (!base.tolerances) base.tolerances = {許容: [], 不許容: []};
+  if (!base._warnings) base._warnings = [];
+
+  for (const [k,v] of Object.entries(mod)) {
+    if (k === "+話題") pushAll(base.matrix["話題"]?.推奨 || [], v);
+    else if (k === "-話題") pushAll(base.matrix["話題"]?.回避 || [], v);
+    else if (k === "+言葉遣い") pushAll(base.matrix["言葉遣い"]?.推奨 || [], v);
+    else if (k === "-言葉遣い") pushAll(base.matrix["言葉遣い"]?.回避 || [], v);
+    else if (k === "+許容") pushAll(base.tolerances.許容, v);
+    else if (k === "-不許容") pushAll(base.tolerances.不許容, v);
+    else if (k === "戦略") {
+      if (!base._extra_strategy) base._extra_strategy = [];
+      pushAll(base._extra_strategy, v);
+    }
+    else if (k === "警戒") pushAll(base._warnings, v);
+  }
+}
+
+function mergeOverlay(base, ov, key) {
+  if (!base._warnings) base._warnings = [];
+  if (!base._extra_strategy) base._extra_strategy = [];
+  if (!base._dt_characteristics) base._dt_characteristics = [];
+
+  if (ov.warning_flags) pushAll(base._warnings, ov.warning_flags.map(w => `[${key}] ${w}`));
+  if (ov["+戦略"]) pushAll(base._extra_strategy, ov["+戦略"]);
+  if (ov["-戦略"]) {
+    if (!base._avoid_strategies) base._avoid_strategies = [];
+    pushAll(base._avoid_strategies, ov["-戦略"]);
+  }
+  if (ov["+話題"]) pushAll(base.matrix?.["話題"]?.推奨 || [], ov["+話題"]);
+  if (ov["-話題"]) pushAll(base.matrix?.["話題"]?.回避 || [], ov["-話題"]);
+  if (ov["+許容"]) pushAll(base.tolerances?.許容 || [], ov["+許容"]);
+  if (ov["-不許容"]) pushAll(base.tolerances?.不許容 || [], ov["-不許容"]);
+  if (ov.characteristics) pushAll(base._dt_characteristics, ov.characteristics.map(c => `[${key}] ${c}`));
+}
+
+function pushAll(target, items) {
+  for (const item of items) if (!target.includes(item)) target.push(item);
+}
+
+// =============== ENV SUCCESS RATE ===============
+function computeSuccessRate(base_range, env_modifiers, env_tags) {
+  let mult = 1.0;
+  const applied = [];
+  for (const tag of env_tags) {
+    for (const [envKey, m] of Object.entries(env_modifiers)) {
+      if (tag === envKey || tag.includes(envKey) || envKey.includes(tag)) {
+        mult *= m;
+        applied.push(`${envKey} ×${m}`);
+        break;
+      }
+    }
+  }
+  return {
+    low: clamp(base_range[0] * mult, 0, 1),
+    high: clamp(base_range[1] * mult, 0, 1),
+    mult, applied
+  };
+}
+
+// =============== RENDERING ===============
+function renderProfile(profile) {
+  const root = $("#output");
+  root.innerHTML = "";
+
+  // HEXACO bars
+  const hexBox = el("section", {}, el("h2", {}, "推定プロファイル"));
+  hexBox.appendChild(el("h3", {}, "HEXACO 6因子"));
+  for (const f of ["H","E","X","A","C","O"]) {
+    const p = profile.hexaco[f];
+    const pct = (p.mean - 1) / 4 * 100;
+    hexBox.appendChild(el("div", {className:"profile-row"},
+      el("span", {className:"label"}, f),
+      el("span", {className:"value"}, p.mean.toFixed(2)),
+      el("span", {className:"bar-bg"},
+        el("span", {className:"bar", style: `width:${pct}%`}),
+        el("span", {className:"marker", style: `left:${pct}%`})
+      ),
+      el("span", {className:"ci"}, `±${(p.sd).toFixed(2)} / ${p.n_cues}cue / Δ${p.delta>=0?'+':''}${p.delta.toFixed(2)}`)
+    ));
+  }
+
+  hexBox.appendChild(el("h3", {}, "Dark Triad (T-score: 50±10)"));
+  for (const trait of ["Mach","Psy","Narc"]) {
+    const p = profile.dt[trait+"_T"];
+    const pct = clamp((p.mean - 20) / 60 * 100, 0, 100);
+    hexBox.appendChild(el("div", {className:"profile-row"},
+      el("span", {className:"label"}, trait),
+      el("span", {className:"value"}, p.mean.toFixed(1)),
+      el("span", {className:"bar-bg"},
+        el("span", {className:"bar", style: `width:${pct}%`}),
+        el("span", {className:"marker", style: `left:50%`})
+      ),
+      el("span", {className:"ci"}, `Δ${p.delta>=0?'+':''}${p.delta.toFixed(1)}`)
+    ));
+  }
+  root.appendChild(hexBox);
+
+  return root;
+}
+
+function renderClusters(rank, root) {
+  const cBox = el("section", {}, el("h2", {}, "クラスタ判定"));
+  cBox.appendChild(el("p", {className:"note"}, "Tokiwa 2024 (N=13,668) の7クラスタとの距離。距離が小さいほど該当。"));
+  const cardRow = el("div", {className:"cluster-rank"});
+  rank.slice(0, 3).forEach((c, i) => {
+    const card = el("div", {className: "cluster-card" + (i === 0 ? " top" : "")},
+      el("h4", {}, `#${i+1}: ${c.name}`),
+      el("div", {}, `母集団 ${(c.share*100).toFixed(1)}%`),
+      el("div", {className:"dist"}, `距離 ${c.distance.toFixed(2)}`)
+    );
+    cardRow.appendChild(card);
+  });
+  cBox.appendChild(cardRow);
+  root.appendChild(cBox);
+}
+
+function renderStrategy(strategy, root) {
+  // Warnings first
+  if (strategy._warnings && strategy._warnings.length) {
+    const w = el("section", {className:"warning"},
+      el("h3", {}, "⚠ 警戒フラグ"),
+      el("ul", {}, ...strategy._warnings.map(x => el("li", {}, x)))
+    );
+    root.appendChild(w);
+  }
+
+  // Matrix
+  const mxBox = el("section", {}, el("h2", {}, "対応マトリクス (5領域)"));
+  const tbl = el("table", {}, el("thead", {}, el("tr", {},
+    el("th", {}, "領域"), el("th", {style:"width:45%"}, "推奨"), el("th", {style:"width:45%"}, "回避")
+  )));
+  const tb = el("tbody");
+  for (const area of ["話題","言葉遣い","立ち振舞い","服装","対話の進め方"]) {
+    const m = strategy.matrix?.[area] || {推奨:[],回避:[]};
+    tb.appendChild(el("tr", {},
+      el("td", {}, area),
+      el("td", {className:"recommend"}, el("ul", {}, ...m.推奨.map(x => el("li", {}, x)))),
+      el("td", {className:"avoid"}, el("ul", {}, ...m.回避.map(x => el("li", {}, x))))
+    ));
+  }
+  tbl.appendChild(tb);
+  mxBox.appendChild(tbl);
+  root.appendChild(mxBox);
+
+  // Tolerances
+  const tBox = el("section", {}, el("h2", {}, "許容/不許容"),
+    el("div", {className:"row"},
+      el("div", {style:"flex:1"},
+        el("h4", {className:"recommend"}, "許容できること"),
+        el("ul", {}, ...(strategy.tolerances?.許容||[]).map(x => el("li", {}, x)))
+      ),
+      el("div", {style:"flex:1"},
+        el("h4", {className:"avoid"}, "不許容/即離脱トリガー"),
+        el("ul", {}, ...(strategy.tolerances?.不許容||[]).map(x => el("li", {}, x)))
+      )
+    )
+  );
+  root.appendChild(tBox);
+
+  // Character sheet
+  const cs = strategy.character_sheet || {};
+  const csBox = el("section", {className:"char-sheet"},
+    el("h2", {}, "憑依推奨キャラクターシート"));
+  for (const [k,v] of Object.entries(cs)) {
+    csBox.appendChild(el("h4", {}, k));
+    if (Array.isArray(v)) {
+      csBox.appendChild(el("ul", {}, ...v.map(x => el("li", {}, x))));
+    } else if (typeof v === "object") {
+      const ul = el("ul");
+      for (const [k2,v2] of Object.entries(v)) {
+        ul.appendChild(el("li", {}, el("strong", {}, k2+": "), String(v2)));
+      }
+      csBox.appendChild(ul);
+    } else {
+      csBox.appendChild(el("p", {}, String(v)));
+    }
+  }
+  root.appendChild(csBox);
+
+  // Extra strategy / avoid
+  if (strategy._extra_strategy?.length || strategy._avoid_strategies?.length) {
+    const exBox = el("section", {}, el("h2", {}, "追加戦略 (モディファイア/オーバーレイ由来)"));
+    if (strategy._extra_strategy?.length) {
+      exBox.appendChild(el("h4", {className:"recommend"}, "追加で効く"));
+      exBox.appendChild(el("ul", {}, ...strategy._extra_strategy.map(x => el("li", {}, x))));
+    }
+    if (strategy._avoid_strategies?.length) {
+      exBox.appendChild(el("h4", {className:"avoid"}, "追加で避けるべき"));
+      exBox.appendChild(el("ul", {}, ...strategy._avoid_strategies.map(x => el("li", {}, x))));
+    }
+    if (strategy._dt_characteristics?.length) {
+      exBox.appendChild(el("h4", {}, "Dark Triad 特性メモ"));
+      exBox.appendChild(el("ul", {}, ...strategy._dt_characteristics.map(x => el("li", {}, x))));
+    }
+    root.appendChild(exBox);
+  }
+
+  // Env success
+  const envTags = getEnvTags();
+  const sr = computeSuccessRate(strategy.base_success_rate, strategy.env_modifiers || {}, envTags);
+  const sBox = el("section", {}, el("h2", {}, "成功率推定"),
+    el("p", {}, `base: ${(strategy.base_success_rate[0]*100).toFixed(0)}〜${(strategy.base_success_rate[1]*100).toFixed(0)}% → 環境補正後: `,
+      el("strong", {}, `${(sr.low*100).toFixed(0)}〜${(sr.high*100).toFixed(0)}%`),
+      el("span", {className:"note"}, ` (×${sr.mult.toFixed(2)})`))
+  );
+  if (sr.applied.length) {
+    sBox.appendChild(el("h4", {}, "適用された環境補正"));
+    sBox.appendChild(el("ul", {}, ...sr.applied.map(x => el("li", {}, x))));
+  }
+  // Show all available env modifiers for reference
+  sBox.appendChild(el("h4", {}, "このクラスタの環境別係数 (参考)"));
+  const envUl = el("ul");
+  for (const [k,v] of Object.entries(strategy.env_modifiers || {})) {
+    envUl.appendChild(el("li", {}, `${k}: ×${v}`));
+  }
+  sBox.appendChild(envUl);
+  root.appendChild(sBox);
+
+  // Applied layers debug
+  const dbg = el("section", {className:"note"}, el("h3", {}, "適用レイヤー (debug)"),
+    el("p", {}, `クラスタ: ${strategy._cluster_name} (距離=${strategy._distance.toFixed(2)})`),
+    el("p", {}, `Layer B モディファイア: ${strategy._applied_modifiers.map(m => m.key+" ("+m.deviation+")").join(", ") || "なし"}`),
+    el("p", {}, `Layer C オーバーレイ: ${strategy._applied_overlays.map(o => o.key+" (T="+o.t_score+")").join(", ") || "なし"}`)
+  );
+  root.appendChild(dbg);
+}
+
+// =============== INPUT HELPERS ===============
+function getStatus() {
+  return {
+    sex: $("#sex").value,
+    age_band: $("#age_band").value,
+    relation: $("#relation").value,
+    mode: document.querySelector("input[name='mode']:checked").value,
+    notes: $("#notes").value
+  };
+}
+function getEnvTags() {
+  return $$(".env-tag:checked").map(cb => cb.value);
+}
+function getCheckedCues() {
+  return $$(".cue-checkbox:checked").map(cb => cb.value);
+}
+
+// =============== RUN ===============
+function run() {
+  const status = getStatus();
+  const cues = getCheckedCues();
+  if (cues.length === 0 && !confirm("cueが1つも選択されていません。priorのみで戦略を出しますか?")) return;
+
+  const profile = computePosterior(status, cues);
+  const rank = selectCluster(profile.hexaco);
+  const strategy = composeStrategy(profile, rank);
+
+  const root = renderProfile(profile);
+  renderClusters(rank, root);
+  renderStrategy(strategy, root);
+
+  // Store latest result for export
+  window._lastResult = {timestamp: new Date().toISOString(), status, cues, profile, rank, strategy, env_tags: getEnvTags()};
+  $("#output").scrollIntoView({behavior:"smooth"});
+}
+
+// =============== EXPORT/IMPORT ===============
+function exportJSON() {
+  if (!window._lastResult) { alert("先に[計算]を実行してください"); return; }
+  const blob = new Blob([JSON.stringify(window._lastResult, null, 2)], {type:"application/json"});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  const id = $("#subject_id").value || "anon";
+  a.href = url;
+  a.download = `analysis_${id}_${Date.now()}.json`;
+  a.click();
+  setTimeout(()=>URL.revokeObjectURL(url), 1000);
+}
+function importJSON(file) {
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    try {
+      const obj = JSON.parse(e.target.result);
+      if (obj.status) {
+        $("#sex").value = obj.status.sex || "F";
+        $("#age_band").value = obj.status.age_band || "20s";
+        $("#relation").value = obj.status.relation || "none";
+        $("#notes").value = obj.status.notes || "";
+        document.querySelector(`input[name='mode'][value='${obj.status.mode||'pre'}']`).checked = true;
+      }
+      if (obj.env_tags) {
+        $$(".env-tag").forEach(cb => cb.checked = obj.env_tags.includes(cb.value));
+      }
+      if (obj.cues) {
+        $$(".cue-checkbox").forEach(cb => cb.checked = obj.cues.includes(cb.value));
+      }
+      alert("読込完了。[計算]を実行してください。");
+    } catch(err) { alert("JSON読込エラー: "+err.message); }
+  };
+  reader.readAsText(file);
+}
+
+function saveLocal() {
+  if (!window._lastResult) { alert("先に[計算]を実行してください"); return; }
+  const key = "hexaco_" + ($("#subject_id").value || "anon") + "_" + Date.now();
+  localStorage.setItem(key, JSON.stringify(window._lastResult));
+  alert("保存: " + key);
+  refreshSavedList();
+}
+function loadLocal(key) {
+  const v = localStorage.getItem(key);
+  if (!v) return;
+  const obj = JSON.parse(v);
+  const blob = new Blob([JSON.stringify(obj)], {type:"application/json"});
+  importJSON(new File([blob], key));
+}
+function refreshSavedList() {
+  const list = $("#saved-list");
+  list.innerHTML = "";
+  const keys = Object.keys(localStorage).filter(k => k.startsWith("hexaco_")).sort().reverse();
+  if (keys.length === 0) { list.appendChild(el("li", {className:"note"}, "なし")); return; }
+  for (const k of keys) {
+    list.appendChild(el("li", {},
+      el("button", {onClick: () => loadLocal(k)}, "読込"),
+      " ", k.slice(7),
+      " ",
+      el("button", {onClick: () => { if(confirm("削除?")){localStorage.removeItem(k); refreshSavedList();}}}, "✕")
+    ));
+  }
+}
+
+function clearAll() {
+  if (!confirm("入力を全クリア?")) return;
+  $$(".cue-checkbox").forEach(cb => cb.checked = false);
+  $$(".env-tag").forEach(cb => cb.checked = false);
+  $("#notes").value = "";
+  $("#subject_id").value = "";
+}
+
+// =============== INIT ===============
+function initCues() {
+  const container = $("#cue-container");
+  const byCategory = {};
+  for (const cue of DATA.cue_weights.cues) {
+    if (!byCategory[cue.category]) byCategory[cue.category] = [];
+    byCategory[cue.category].push(cue);
+  }
+  for (const cat of DATA.cue_weights.categories) {
+    const cues = byCategory[cat] || [];
+    const det = el("details", {},
+      el("summary", {}, `${cat} (${cues.length}項目)`),
+      el("div", {className:"cue-grid"})
+    );
+    const grid = det.querySelector(".cue-grid");
+    for (const cue of cues) {
+      const deltasStr = Object.entries(cue.deltas).map(([k,v]) =>
+        `${k}${v>=0?'+':''}${v}`).join(" ");
+      grid.appendChild(el("div", {className:"cue-item"},
+        el("input", {type:"checkbox", className:"cue-checkbox", value:cue.id, id:`cue_${cue.id}`}),
+        el("label", {for:`cue_${cue.id}`},
+          cue.label,
+          el("span", {className:`conf ${cue.confidence}`}, ` [${cue.confidence}]`),
+          el("span", {className:"deltas"}, " "+deltasStr)
+        )
+      ));
+    }
+    container.appendChild(det);
+  }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  initCues();
+  refreshSavedList();
+  $("#run").addEventListener("click", run);
+  $("#export").addEventListener("click", exportJSON);
+  $("#import-btn").addEventListener("click", () => $("#import-file").click());
+  $("#import-file").addEventListener("change", (e) => { if (e.target.files[0]) importJSON(e.target.files[0]); });
+  $("#save-local").addEventListener("click", saveLocal);
+  $("#clear").addEventListener("click", clearAll);
+
+  // PWA: register service worker (silently noop if unsupported, e.g. file://)
+  if ("serviceWorker" in navigator) {
+    window.addEventListener("load", () => {
+      navigator.serviceWorker.register("./sw.js").catch((err) => {
+        // Most common reason: opened via file:// — SW requires https or localhost
+        console.info("SW not registered (likely file:// context):", err.message);
+      });
+    });
+  }
+});
+
+</script>
+</body>
+</html>

@@ -1,0 +1,50 @@
+ Kibeom Lee, Ph.D., & Michael C. Ashton, Ph.D.
+Translation: Akio Wakabayashi, Ph.D.
+1 = 
+                2 = 
+                 3 = 
+4 = 
+                            5 = 
+PAGE  
+PAGE  
+HEXACO-PI-R
+(self - Report Form)
+			       1 = 
+			       2 = 
+			       3 = 
+			       4 = 
+			       5 = 
+_____________
+       
+___    
+Normal
+	Heading 1
+	Heading 2
+Default Paragraph Font
+Table Normal
+No List
+Footer
+	Body Text
+Page Number
+Header
+Unknown
+Times New Roman
+Symbol
+Arial
+MS Mincho
+Malgun Gothic
+MS Mincho
+Copperplate Gothic Bold
+Courier New
+Batang
+Arial Black
+Cambria Math
+The University of Calgary
+kibeom
+Root Entry
+Data
+1Table
+WordDocument
+SummaryInformation
+DocumentSummaryInformation
+CompObj

@@ -1,0 +1,287 @@
+{
+  "_meta": {
+    "compiled_date": "2026-05-11",
+    "scope": "Cultural personality dimensions supplementing HEXACO for Japanese norms",
+    "scale_note": "RSES means converted to 5-point per-item by Oshio meta-analysis; original RSES is 10 items, 4-point (range 10-40)"
+  },
+
+  "collectivism": {
+    "summary": "Common view (Japanese=collectivistic) NOT supported empirically. Hofstede placed Japan mid-range. Takano & Osaka series strongly refute the stereotype. Takada series shows Japanese DO score higher on 相互協調性 than 相互独立性 on self-report, but cross-cultural behavioral comparisons fail to find Japanese > American collectivism.",
+    "papers": [
+      {
+        "id": "Takano_Osaka_1999",
+        "citation": "Takano, Y., & Osaka, E. (1999). An unsupported common view: Comparing Japan and the U.S. on individualism/collectivism. Asian Journal of Social Psychology, 2(3), 311-341.",
+        "file": "not_accessible (paywall, abstract via WebSearch)",
+        "key_numbers": {
+          "studies_reviewed": 15,
+          "supporting_common_view": 1,
+          "not_supporting": 14,
+          "experimental_cooperation_studies_showing_Japanese_MORE_individualistic": 2,
+          "questionnaire_studies_same_direction": 1
+        }
+      },
+      {
+        "id": "Takano_Sogon_2008",
+        "citation": "Takano, Y., & Sogon, S. (2008). Are Japanese more collectivistic than Americans? Examining conformity in in-groups and the reference-group effect. Journal of Cross-Cultural Psychology, 39(3), 237-250.",
+        "file": "not_accessible (sage paywall)",
+        "key_numbers": {
+          "n_japanese_groups": 40,
+          "n_participants": 140,
+          "in_group_conformity_rate_percent": 25.2,
+          "us_asch_comparable_rate_percent_approx": 25,
+          "conclusion": "Japanese conform NO MORE than Americans even within their own university club in-groups"
+        }
+      },
+      {
+        "id": "Takano_2018_followup",
+        "citation": "Takano, Y., & Osaka, E. (2018). Comparing Japan and the United States on individualism/collectivism: A follow-up review. Asian Journal of Social Psychology, 21(4), 301-316.",
+        "file": "not_accessible (wiley paywall, abstract via WebSearch)",
+        "key_numbers": {
+          "studies_reviewed_total": 43,
+          "questionnaire_studies": 23,
+          "behavioral_studies": 12,
+          "value_surveys": 8,
+          "no_significant_difference_percent": 56,
+          "japanese_MORE_individualistic_percent": 30,
+          "supporting_common_view_percent": 14
+        }
+      },
+      {
+        "id": "Takada_1999_devself",
+        "citation": "高田利武 (1999). 日本文化における相互独立性・相互協調性の発達過程―比較文化的・横断的資料による実証的検討. 教育心理学研究, 47(4), 480-489.",
+        "file": "Takada1999_SelfConstrualDev.pdf",
+        "key_numbers": {
+          "scale": "Takada 1996 相互独立的-相互協調的自己観尺度 (each 10 items, 7-point Likert)",
+          "japanese_university_students_n": 597,
+          "n_male": 279,
+          "n_female": 318,
+          "alpha_independence": "0.72-0.83 (across groups)",
+          "alpha_interdependence": "0.70-0.81",
+          "key_finding_text": "Japanese students: 相互協調性 > 相互独立性 (t(596)=8.61, p<.001). Australian and Canadian students: 相互独立性 > 相互協調性 (t(309)=5.16, t(160)=4.63). Asian-Canadian: no significant difference. Means displayed in Table 6 as image — exact numbers not extractable.",
+          "comparison_samples": {
+            "australian_students_n": 310,
+            "canadian_students_n": 161,
+            "asian_canadian_students_n": 182
+          }
+        }
+      },
+      {
+        "id": "Matsumoto_1999_critique",
+        "citation": "Matsumoto, D. (1999). Culture and self: An empirical assessment of Markus and Kitayama's theory of independent and interdependent self-construals. Asian Journal of Social Psychology, 2(3), 289-310.",
+        "file": "Matsumoto1999_SelfConstrual.pdf",
+        "key_numbers": {
+          "type": "narrative review/critique",
+          "main_claim": "No study in Markus & Kitayama's cited corpus directly tests their theoretical chain (Culture→Self-construal→Cognition). Studies they cite merely show country-level differences, which can only be interpreted as supporting the theory IF you accept two unverified assumptions about country-self-construal linkage.",
+          "supporting_evidence_note": "Kleinknecht et al. 1997 finding cited: Americans actually had significantly HIGHER interdependent self-construal scores than Japanese (opposite of theory)."
+        }
+      },
+      {
+        "id": "Hofstede_Japan_official",
+        "citation": "Hofstede Insights / The Culture Factor — country comparison tool (latest revision)",
+        "file": "not_accessible (web only, no PDF)",
+        "key_numbers": {
+          "power_distance": 54,
+          "individualism": 46,
+          "motivation_masculinity": 95,
+          "uncertainty_avoidance": 92,
+          "long_term_orientation": 88,
+          "indulgence": 42,
+          "note": "Individualism=46 places Japan mid-range, not strongly collectivist. Hofstede's own data thus modestly supports Takano's critique."
+        }
+      },
+      {
+        "id": "Yamawaki_2012_JCS",
+        "citation": "Yamawaki, N. (2012). Within-culture variations of collectivism in Japan. Journal of Cross-Cultural Psychology, 43(8), 1191-1204.",
+        "file": "not_accessible (sage paywall)",
+        "key_numbers": "abstract only - validated Japanese Collectivism Scale (JCS), showed prefecture-level variation. Specific M/SD not retrieved."
+      },
+      {
+        "id": "Yanagida_2024_AICS_JP",
+        "citation": "Yanagida et al. (2024). Development and validation of the Japanese version of the Auckland Individualism and Collectivism Scale. Frontiers in Psychology, 15:1448461.",
+        "file": "not_accessible (open access but PDF fetch returned binary, abstract via WebFetch)",
+        "key_numbers": {
+          "n": 476,
+          "mean_age_years": 45.59,
+          "sd_age": 13.55,
+          "n_male": 235,
+          "n_female": 241,
+          "alpha_individualism": 0.85,
+          "alpha_collectivism": 0.84,
+          "subscale_means_SD": "not_accessible (not reported in main text per WebFetch summary)"
+        }
+      }
+    ]
+  },
+
+  "self_esteem": {
+    "summary": "Strong, consistent evidence that Japanese score LOWER on RSES than international samples. Schmitt & Allik 2005 (53 nations) ranks Japan lowest. Oshio meta-analyses provide robust Japanese age/gender norms.",
+    "papers": [
+      {
+        "id": "Schmitt_Allik_2005",
+        "citation": "Schmitt, D. P., & Allik, J. (2005). Simultaneous administration of the Rosenberg Self-Esteem Scale in 53 nations. JPSP, 89(4), 623-642.",
+        "file": "not_accessible (APA paywall, secondary sources only)",
+        "key_numbers": {
+          "total_n": 16998,
+          "n_nations": 53,
+          "japan_rank": "lowest of 53 nations on overall RSES",
+          "japan_mean": "not_accessible_exact (need full paper; secondary sources confirm Japan = lowest but no exact M)",
+          "lowest_5_nations": ["Japan", "Hong Kong", "Bangladesh", "Czech Republic", "Taiwan"],
+          "note": "Schmitt & Allik also flag a neutral response bias more prevalent in collectivist cultures, partially explaining low Japan scores."
+        }
+      },
+      {
+        "id": "Mimura_Griffiths_2007",
+        "citation": "Mimura, C., & Griffiths, P. (2007). A Japanese version of the Rosenberg Self-Esteem Scale: Translation and equivalence assessment. Journal of Psychosomatic Research, 62(5), 589-594.",
+        "file": "not_accessible (ScienceDirect paywall)",
+        "key_numbers": {
+          "n_english_speakers": 222,
+          "n_japanese_speakers": 1320,
+          "factor_structure": "nearly identical between English and Japanese versions; target rotation confirmed factorial agreement",
+          "cronbach_alpha": "reported as high for both versions (exact value not_accessible)",
+          "mean_SD": "not_accessible"
+        }
+      },
+      {
+        "id": "Oshio2014_meta",
+        "citation": "小塩真司・岡田涼・茂垣まどか・並川努・脇田貴文 (2014). 自尊感情平均値に及ぼす年齢と調査年の影響―Rosenbergの自尊感情尺度日本語版のメタ分析―. 教育心理学研究, 62(4), 273-282.",
+        "file": "Oshio2014_SelfEsteem_meta.pdf",
+        "key_numbers": {
+          "studies_included": 256,
+          "total_n": 48927,
+          "year_range_published": "1980-2013",
+          "scale_unit": "per-item mean on 5-point scale (range 1-5)",
+          "regression_intercept_baseline_university_students": 3.06,
+          "age_effects_on_per_item_mean": {
+            "junior_high_high_school": "B = -0.23 (95%CI -0.29 to -0.17), β = -.40, lower than uni students",
+            "adult_18-60": "B = +0.30 (95%CI 0.24 to 0.37), β = +.44, higher than uni students",
+            "elderly_60plus": "B = +0.27 (95%CI 0.15 to 0.39), β = +.21, higher than uni students"
+          },
+          "estimated_per_item_means_5pt": {
+            "junior_high_and_high_school": "~2.83",
+            "university_students": "~3.06-3.08",
+            "adults_18-60": "~3.28-3.36",
+            "elderly_60plus": "~3.33-3.37"
+          },
+          "year_effect": "B = -0.01 per year (β = -.22, p<.001), self-esteem declining over time",
+          "response_format_effect": "5-point format yields ~0.10 higher per-item mean than 4-point",
+          "subsample_n_by_age": {
+            "junior_high_high_school_studies": 39,
+            "university_studies": 131,
+            "adult_studies": 67,
+            "elderly_studies": 19
+          }
+        }
+      },
+      {
+        "id": "Oshio2014_dev_review",
+        "citation": "小塩真司・脇田貴文・岡田涼・並川努・茂垣まどか (2014). 日本における自尊感情の時間横断的メタ分析: 得られた知見とそこから示唆されること. 発達心理学研究, 27(4), 299-311.",
+        "file": "Oshio2014_SelfEsteem_dev.pdf",
+        "key_numbers": {
+          "gender_meta_n_studies": 50,
+          "gender_meta_total_n": 18603,
+          "n_male": 8594,
+          "n_female": 10009,
+          "gender_effect_Hedges_g": 0.17,
+          "gender_effect_direction": "Males slightly higher than females",
+          "developmental_pattern": "Decline through 10s, rise during university years, continued rise in middle/older adulthood; gender gap narrows from adolescence into adulthood",
+          "note": "Aligns with Robins et al. 2002 and Orth et al. 2010 international longitudinal findings"
+        }
+      }
+    ]
+  },
+
+  "authority": {
+    "summary": "Hofstede places Japan PDI=54 (mid-range, not high). Empirical RWA norm now exists for Japan (Takano et al. 2021).",
+    "papers": [
+      {
+        "id": "Takano_RWA_2021",
+        "citation": "高野了太・高史明・野村理朗 (2021). 日本語版右翼権威主義尺度の作成. 心理学研究, 91(6), 398-408.",
+        "file": "Tanabe2020_RWA.pdf",
+        "key_numbers": {
+          "n_analyzed": 585,
+          "n_initial": 607,
+          "n_male": 297,
+          "n_female": 286,
+          "mean_age_years": 40.03,
+          "sd_age": 10.62,
+          "age_range": "20-75",
+          "sample_method": "CrowdWorks panel, Oct 2018",
+          "factor_structure": "2-factor + method factor (Authoritarianism + Conventionalism)",
+          "alpha_authoritarianism": 0.87,
+          "alpha_conventionalism": 0.82,
+          "factor_intercorrelation_r": 0.25,
+          "response_format": "9-point (-4 to +4, rescored 1-9)",
+          "item_means_range_authoritarianism": "3.79 to 5.96 (per item, 1-9 scale)",
+          "high_authoritarianism_items_examples": {
+            "item30_law_order_against_deviants": {"M": 5.96, "SD": 1.70},
+            "item1_strong_leader_against_radicals": {"M": 5.63, "SD": 1.77},
+            "item14_proper_grooming_for_men_especially_women": {"M": 5.54, "SD": 1.71}
+          },
+          "association_with_political_party": "LDP supporters score higher RWA than opposition; aligns with Cambridge Japanese Journal of Political Science finding that authoritarian values predict LDP voting 2003-2019"
+        }
+      },
+      {
+        "id": "Hofstede_PDI_Japan",
+        "citation": "Hofstede Insights — Japan Power Distance Index = 54",
+        "file": "not_accessible",
+        "key_numbers": {
+          "PDI": 54,
+          "interpretation": "Mid-range. Despite stereotypes of strict hierarchy, Japan's PDI is intermediate. Western standard sees it as moderate; Asian standard (e.g., Malaysia 100) sees Japan as not particularly hierarchical."
+        }
+      }
+    ]
+  },
+
+  "honne_tatemae": {
+    "summary": "No widely-used standardized 'honne/tatemae' Likert scale exists. The Japanese psychology literature treats honne-tatemae as a cultural-conceptual construct rather than a measured personality trait. Adjacent measured constructs: 愛想 (aisou/amiability), social desirability bias, self-monitoring. Mostly discussed qualitatively.",
+    "papers": [
+      {
+        "id": "Ito_Navarro_Takai_2023_Aisou",
+        "citation": "Ito, R., Navarro, A., & Takai, J. (2023). The Relationship between Mental Processes and Japan's Unique Communication Style of Aisou. Intercultural Communication Studies, 32(2), 38-?.",
+        "file": "ItoNavarro2023_HonneTatemae.pdf",
+        "key_numbers": {
+          "n_total": 204,
+          "n_male": 120,
+          "n_female": 83,
+          "n_unknown": 1,
+          "mean_age_years": 39.30,
+          "sd_age": 9.67,
+          "sampling": "Lancers crowdsourcing, paid 100yen",
+          "scale": "Aisounoyosa scale (愛想の良さ) — 22 items, 5-point Likert (Ito 2020)",
+          "factors_3": ["positive verbal and non-verbal behavior", "consideration and kindness to others", "interest and approach to others"],
+          "alpha_positive_verbal_nonverbal": 0.87,
+          "alpha_consideration_kindness": 0.74,
+          "alpha_interest_approach": 0.75,
+          "key_correlate": "Compassion is the strongest internal-process driver of amiability; passive shyness reduces it; narcissism partially positive (self-presentation strategy).",
+          "honne_tatemae_link": "Authors frame aisou as the tatemae side of self-presentation — closest existing scale capturing the tatemae construct empirically."
+        }
+      },
+      {
+        "id": "tatemae_scale_search_result",
+        "citation": "Search for dedicated 'honne/tatemae' scale (二面性/建前 measurement)",
+        "file": "not_applicable",
+        "key_numbers": {
+          "outcome": "no_standardized_scale_found",
+          "alternatives_used_in_literature": [
+            "Social desirability scales (Marlowe-Crowne) — Japanese 'honne/tatemae' linked to higher SD bias",
+            "Self-monitoring scale (Snyder) — Japanese adaptations exist",
+            "高田 自己の二面性 (Takada 1989, JJEP 37(4), 302-311) — referenced but PDF text extraction failed, specific data not_accessible",
+            "Aisou scale (Ito 2020) — newest measured proxy"
+          ],
+          "recommendation": "Use aisou subscales or self-monitoring as proxy; flag in checklist that honne-tatemae itself is conceptual, not directly measured."
+        }
+      }
+    ]
+  },
+
+  "_overall_notes": {
+    "data_quality_caveats": [
+      "RSES means above are converted to per-item 5-point scale by Oshio; multiply by 10 for total-score approximations on the original 4-point RSES would not be valid — use per-item.",
+      "Schmitt & Allik 2005 exact Japan mean remains not_accessible (paywall); only ranking confirmed.",
+      "Takada 1999 means are visible only in Table 6 as embedded image; full text indicates Japanese students score 相互協調性 > 相互独立性 but exact M values not extractable from the J-Stage PDF.",
+      "Mimura & Griffiths 2007 raw means could not be retrieved from any open source.",
+      "No honne/tatemae personality scale exists; the construct is treated culturally not psychometrically. Aisou scale (Ito 2020) is the closest empirical proxy."
+    ],
+    "two_sided_view_on_collectivism": "Required by user spec: this file records BOTH the 'Japan=collectivistic' tradition (Hofstede IDV=46, Markus & Kitayama 1991 theory, Schmitt & Allik finding low self-esteem consistent with self-criticism in interdependent cultures) AND the strong refutation (Takano & Osaka 1999/2018, Takano & Sogon 2008 — only ~14% of 43 studies support the common view)."
+  }
+}

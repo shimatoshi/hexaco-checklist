@@ -1,0 +1,167 @@
+{
+  "primary_paper": {
+    "citation": "Tokiwa, E. (2024). Cultural Influences on Personality Types: A Cluster Analysis of HEXACO Traits in Japan. Research Square preprint. DOI: 10.21203/rs.3.rs-5323735/v1. Posted 2024-10-31.",
+    "url": "https://www.researchsquare.com/article/rs-5323735/v1",
+    "pdf_local": "/home/kobayashi-takeru/work/hexaco-checklist/research/C_clusters/ResearchSquare2024_HEXACO_clusters_Japan.pdf",
+    "sample": {
+      "n_valid": 13668,
+      "instrument": "Japanese HEXACO-PI-R (Wakabayashi, 2014), 60 items, 5-point Likert",
+      "collection_period": "2024-07-01 to 2024-09-30, online survey",
+      "demographics": "NOT COLLECTED. Author explicitly notes gender, age, and region were not obtained. Demographic stratification is therefore impossible from this paper."
+    },
+    "method": "Ward's method + k-means (selected), compared against LPA (GMM) and spectral clustering. 7-cluster solution selected by elbow, AIC/BIC, S_Dbw, C-index, Generalized Dunn, Baker-Hubert Gamma, G(+), Silhouette, Cohen's kappa (.9388), Adjusted Rand Index (.8829).",
+    "n_clusters": 7,
+    "scale_note": "Centers reported as RAW mean on the 1-5 Likert scale (NOT z-scores). Sample-wide reference means (from descriptive stats): H~3.30, E~3.30, X=2.80, A~(approx 3.0), C~(approx 2.9), O=3.62. Use these to convert to z-scores if needed. SDs reported: H=.79, E=.89, X=.91; other domain SDs not explicitly stated in the excerpted text.",
+    "clusters": [
+      {
+        "id": 1,
+        "label": "Reserved Type",
+        "label_ja": "控えめ型",
+        "share": 0.1381,
+        "centers_raw_1to5": {"H": 3.30, "E": 2.70, "X": 2.44, "A": 2.87, "C": 2.41, "O": 2.48},
+        "description": "Introverted, agreeable, slightly lower self-management. Modest, prioritizes social harmony but struggles with self-management. Author maps this onto the classic Overcontrolled prototype with Japanese-cultural emphasis on introversion and harmony.",
+        "sex_distribution": null,
+        "age_distribution": null
+      },
+      {
+        "id": 2,
+        "label": "Emotionally Sensitive Type",
+        "label_ja": "情緒感受性型",
+        "share": 0.1696,
+        "centers_raw_1to5": {"H": 3.00, "E": 3.93, "X": 2.16, "A": 2.98, "C": 2.41, "O": 3.62},
+        "description": "High emotional sensitivity, low extraversion, but high openness. Expresses emotions openly, strong creativity. Largest single cluster.",
+        "sex_distribution": null,
+        "age_distribution": null
+      },
+      {
+        "id": 3,
+        "label": "Conscientious Introvert Type",
+        "label_ja": "誠実な内向型",
+        "share": 0.1730,
+        "centers_raw_1to5": {"H": 3.82, "E": 3.90, "X": 2.06, "A": 3.15, "C": 3.72, "O": 3.84},
+        "description": "Highly conscientious, introverted, intellectually curious. High honesty and responsibility; prefers solitary, reflective activities. Author maps onto Resilient prototype with Japanese cultural overlay.",
+        "sex_distribution": null,
+        "age_distribution": null
+      },
+      {
+        "id": 4,
+        "label": "Extraverted Agreeable Type",
+        "label_ja": "外向協調型",
+        "share": 0.1547,
+        "centers_raw_1to5": {"H": 3.36, "E": 3.68, "X": 3.67, "A": 3.55, "C": 3.06, "O": 3.85},
+        "description": "Sociable, agreeable, excels in social interactions. Outgoing, cooperative, socially engaged. Flat profile, broadly above-average across factors.",
+        "sex_distribution": null,
+        "age_distribution": null
+      },
+      {
+        "id": 5,
+        "label": "Independent Type",
+        "label_ja": "独立型",
+        "share": 0.1185,
+        "centers_raw_1to5": {"H": 2.79, "E": 2.91, "X": 3.09, "A": 2.20, "C": 3.78, "O": 3.81},
+        "description": "High self-management, low agreeableness, lower honesty-humility. Self-disciplined and independent; may struggle with harmonious relationships. Closest to Undercontrolled but with high C; reflects modern individualistic shift in Japan.",
+        "sex_distribution": null,
+        "age_distribution": null
+      },
+      {
+        "id": 6,
+        "label": "Extraverted Stable Type",
+        "label_ja": "外向安定型",
+        "share": 0.1164,
+        "centers_raw_1to5": {"H": 2.36, "E": 2.60, "X": 3.94, "A": 2.86, "C": 2.32, "O": 3.66},
+        "description": "Sociable, emotionally stable, lower self-management. Confident, high social energy, but lower H and C. Resembles Gerlach et al. (2018) 'Self-Centered/Egocentric'.",
+        "sex_distribution": null,
+        "age_distribution": null
+      },
+      {
+        "id": 7,
+        "label": "Introverted Leader Type",
+        "label_ja": "内向リーダー型",
+        "share": 0.1297,
+        "centers_raw_1to5": {"H": 3.79, "E": 2.30, "X": 2.68, "A": 3.27, "C": 2.91, "O": 4.06},
+        "description": "Introverted but highly honest, agreeable, and open; leadership potential. Honest, flexible thinkers. Highest Openness in the sample.",
+        "sex_distribution": null,
+        "age_distribution": null
+      }
+    ],
+    "share_sum_check": 0.9999,
+    "reliability": {
+      "cronbach_alpha_overall": 0.64,
+      "by_domain": {"H": 0.57, "E": 0.79, "X": 0.79, "A": 0.68, "C": 0.76, "O": 0.72},
+      "note": "Honesty-Humility alpha=.57 is low; author flags this as a limitation."
+    },
+    "key_correlations": {"H_X": -0.2313, "H_C": 0.1835},
+    "limitations": [
+      "No demographics collected — cannot give sex- or age-conditioned cluster shares.",
+      "Online sample, possible digital-platform bias.",
+      "Cluster centers reported as raw Likert means, not z-scores; convert using sample means/SDs.",
+      "H-domain reliability low (alpha=.57).",
+      "Preprint, not peer-reviewed.",
+      "Single-author study from a private company (SUNBLAZE Co., Ltd.); not university-affiliated."
+    ]
+  },
+  "supplementary_papers": [
+    {
+      "citation": "Kase, T., Ueno, Y., Kaziuchi, D., & Shimamoto, K. (2018). Characteristics of Resilients, Overcontrollers, Undercontrollers, and the Other Type in Personality Prototypes: Based on Comparison of the Levels of Life Skills. Japanese Journal of Personality, 27(1), 79-81. DOI: 10.2132/personality.27.2.8",
+      "url": "https://www.jstage.jst.go.jp/article/personality/advpub/0/advpub_27.2.8/_article/-char/en",
+      "relevance": "Japanese sample (university students). Big Five (NOT HEXACO). Hierarchical cluster analysis produced 4 clusters: Resilients, Overcontrollers, Undercontrollers, and 'Not Identifiables' (proposed as Japan-specific, low Extraversion + high Agreeableness). Resilients and Not Identifiables had better mental health than Overcontrollers and Undercontrollers. Cluster shares and centroid z-scores not retrieved in this search; would require article download.",
+      "n_clusters": 4,
+      "model": "Big Five",
+      "country": "Japan"
+    },
+    {
+      "citation": "Daljeet, K. N., Bremner, N. L., Giammarco, E. A., Meyer, J. P., & Paunonen, S. V. (2017). Taking a person-centered approach to personality: A latent-profile analysis of the HEXACO model of personality. Journal of Research in Personality, 70, 241-251.",
+      "url": "https://www.sciencedirect.com/science/article/abs/pii/S0092656617300028",
+      "relevance": "North American university sample (NOT Japan). HEXACO LPA gave 5 profiles: socially considerate, self-confident, goal-oriented, withdrawn, maladjusted. Replicated across two samples. Used as the comparison anchor in Tokiwa (2024).",
+      "n_clusters": 5,
+      "model": "HEXACO",
+      "country": "North America (Canada/US)"
+    },
+    {
+      "citation": "Espinoza, J. A., Daljeet, K. N., & Meyer, J. P. (2020). Establishing the structure and replicability of personality profiles using the HEXACO-PI-R. Nature Human Behaviour, 4(7), 713-724.",
+      "url": "https://www.nature.com/articles/s41562-020-0853-6",
+      "relevance": "Largest HEXACO profile replication to date (>270,000 participants, mostly Western). Found 5 robust profiles: egocentric, flexible, disciplined, sociable, role model. International but Japan share unknown.",
+      "n_clusters": 5,
+      "model": "HEXACO",
+      "country": "International (Western-dominated)"
+    },
+    {
+      "citation": "Gerlach, M., Farb, B., Revelle, W., & Amaral, L. A. N. (2018). A robust data-driven approach identifies four personality types across four large data sets. Nature Human Behaviour, 2(10), 735-742.",
+      "url": "https://www.nature.com/articles/s41562-018-0419-z",
+      "relevance": "N>1.5M, Big Five (not HEXACO), four types: Average, Reserved, Self-Centered (Egocentric), Role Model. Females more likely Average; Role Model probability rises sharply with age; Self-Centered more common in young males. Datasets are Western-centric; Japan-specific shares not reported.",
+      "n_clusters": 4,
+      "model": "Big Five",
+      "country": "International (Western-dominated)",
+      "demographic_findings": {
+        "Average": "females > males",
+        "RoleModel": "share increases with age",
+        "SelfCentered": "young males > older adults; declines sharply after adolescence",
+        "Reserved": "stable across age/sex"
+      }
+    },
+    {
+      "citation": "Kerber, A., Roth, M., & Herzberg, P. Y. (2021). Personality types revisited - a literature-informed and data-driven approach to an integration of prototypical and dimensional constructs of personality description. PLoS ONE, 16(1), e0244849.",
+      "url": "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0244849",
+      "relevance": "German representative + longitudinal dataset (N=22,820). Big Five (not HEXACO). 5 types: Resilient, Overcontroller, Undercontroller, Reserved, Vulnerable-Resilient. Methodology directly adopted by Tokiwa (2024). Not Japan, but provides the procedural template and the 'vulnerable-resilient' addition.",
+      "n_clusters": 5,
+      "model": "Big Five",
+      "country": "Germany"
+    },
+    {
+      "citation": "Robins, R. W., John, O. P., Caspi, A., Moffitt, T. E., & Stouthamer-Loeber, M. (1996). Resilient, overcontrolled, and undercontrolled boys: Three replicable personality types. Journal of Personality and Social Psychology, 70(1), 157-171.",
+      "relevance": "Foundational ARC (Asendorpf-Robins-Caspi) typology. Western adolescents. Provides the canonical 3-type baseline that Kase (2018) replicated in Japan as 4 types (adding 'Not Identifiables').",
+      "n_clusters": 3,
+      "model": "Big Five",
+      "country": "USA"
+    }
+  ],
+  "usage_notes_for_checklist": {
+    "recommended_prior": "Use Tokiwa (2024) 7-cluster shares as the unconditional prior P(cluster) for a Japanese adult. The author did NOT collect demographics, so sex- and age-conditioned priors must be borrowed from Gerlach (2018) on a per-cluster basis (e.g., Extraverted Stable / Egocentric skews young male; Conscientious Introvert / Role-Model-like skews older).",
+    "z_score_conversion": "centers_raw_1to5 are 5-point Likert means. To convert to z: z = (raw - sample_mean) / sample_sd. Sample means reported: H~3.30, E~3.30, X=2.80, O=3.62. SDs partially reported: H=.79, E=.89, X=.91. For A and C, SDs were not extracted from the available text — treat z-scores for those domains as approximate.",
+    "cultural_calibration_warnings": [
+      "Tokiwa sample is online/self-selected; may over-represent digital-comfortable cohort.",
+      "Schmitt et al. (2008) cross-cultural baseline finds Japanese score high N (E in HEXACO), low C/X/A/O vs other nations — the absolute means here already reflect that and should NOT be re-shifted when comparing within-Japan individuals.",
+      "Honesty-Humility alpha=.57 — treat H-based cluster discrimination with caution."
+    ]
+  }
+}

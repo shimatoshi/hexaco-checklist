@@ -1,0 +1,1394 @@
+{
+  "version": "cue-weights-v1",
+  "scale_notes": {
+    "HEXACO_factors": "Delta values are on the 1-5 raw-mean scale (HEXACO standard). Sum cue deltas to update prior mean.",
+    "Dark_Triad": "Delta values for Mach_T, Psy_T, Narc_T are on T-score scale (M=50, SD=10).",
+    "facet_keys": "Use facet-level keys (e.g. X-Sociability) for finer adjustment; factor-level (e.g. X) for coarse.",
+    "negation": "Most cues are presence-only. Their absence is not informative unless an opposite cue is explicitly listed.",
+    "confidence": "high=research-backed correlations; mid=plausible inference + literature; low=inference only, use with caution.",
+    "cap": "Recommend capping total absolute delta per factor at ±2.0 before clipping posterior to [1.0, 5.0]."
+  },
+  "categories": [
+    "物理外見",
+    "行動",
+    "文脈",
+    "聴覚/コンテンツ",
+    "SNS",
+    "対話"
+  ],
+  "cues": [
+    {
+      "id": "clothing_flashy",
+      "category": "物理外見",
+      "label": "派手/カラフルな服装",
+      "type": "binary",
+      "deltas": {
+        "X": 0.2,
+        "O": 0.2,
+        "H": -0.1,
+        "C-Organization": 0.1
+      },
+      "confidence": "mid",
+      "source": "Naumann 2009 thin-slice",
+      "note": ""
+    },
+    {
+      "id": "clothing_dark_modest",
+      "category": "物理外見",
+      "label": "黒/地味中心、体型を出さない服",
+      "type": "binary",
+      "deltas": {
+        "X": -0.3,
+        "X-Liveliness": -0.4,
+        "O-Aesthetic": -0.1
+      },
+      "confidence": "mid",
+      "source": "thin-slice general",
+      "note": ""
+    },
+    {
+      "id": "clothing_branded_visible",
+      "category": "物理外見",
+      "label": "ブランドロゴが目立つ",
+      "type": "binary",
+      "deltas": {
+        "H": -0.3,
+        "Narc_T": 3,
+        "X": 0.1
+      },
+      "confidence": "high",
+      "source": "Sedikides Narc, HEXACO H definition",
+      "note": ""
+    },
+    {
+      "id": "clothing_quirky_creative",
+      "category": "物理外見",
+      "label": "個性的・創作系・キャラもの (二次元コンテンツTシャツ等)",
+      "type": "binary",
+      "deltas": {
+        "O": 0.4,
+        "O-Creativity": 0.5,
+        "O-Unconventionality": 0.3,
+        "X": -0.1
+      },
+      "confidence": "mid",
+      "source": "inference, HEXACO O",
+      "note": ""
+    },
+    {
+      "id": "clothing_neat_clean",
+      "category": "物理外見",
+      "label": "服装が整い清潔",
+      "type": "binary",
+      "deltas": {
+        "C": 0.2,
+        "C-Organization": 0.3,
+        "H": 0.1
+      },
+      "confidence": "high",
+      "source": "Gosling 2002",
+      "note": ""
+    },
+    {
+      "id": "clothing_messy_wrinkled",
+      "category": "物理外見",
+      "label": "服装が乱れ・しわ・汚れ",
+      "type": "binary",
+      "deltas": {
+        "C": -0.4,
+        "C-Organization": -0.5
+      },
+      "confidence": "high",
+      "source": "Gosling 2002, Naumann 2009",
+      "note": ""
+    },
+    {
+      "id": "makeup_full",
+      "category": "物理外見",
+      "label": "フルメイク (時間かけた印象)",
+      "type": "binary",
+      "deltas": {
+        "X": 0.2,
+        "C-Organization": 0.2,
+        "Narc_T": 2
+      },
+      "confidence": "mid",
+      "source": "inference",
+      "note": ""
+    },
+    {
+      "id": "makeup_none",
+      "category": "物理外見",
+      "label": "すっぴん",
+      "type": "binary",
+      "deltas": {
+        "X-Social": -0.2,
+        "C-Organization": -0.2,
+        "O-Aesthetic": -0.1,
+        "H": 0.1
+      },
+      "confidence": "low",
+      "source": "inference",
+      "note": ""
+    },
+    {
+      "id": "nails_decorated",
+      "category": "物理外見",
+      "label": "ネイルアート/装飾あり",
+      "type": "binary",
+      "deltas": {
+        "X": 0.2,
+        "C-Organization": 0.3,
+        "Narc_T": 2
+      },
+      "confidence": "mid",
+      "source": "inference",
+      "note": ""
+    },
+    {
+      "id": "nails_none",
+      "category": "物理外見",
+      "label": "ネイルなし",
+      "type": "binary",
+      "deltas": {
+        "C-Organization": -0.1
+      },
+      "confidence": "low",
+      "source": "inference",
+      "note": ""
+    },
+    {
+      "id": "glasses_functional",
+      "category": "物理外見",
+      "label": "メガネ着用 (コンタクトなく)",
+      "type": "binary",
+      "deltas": {
+        "O-Aesthetic": -0.1,
+        "C-Prudence": 0.1
+      },
+      "confidence": "low",
+      "source": "inference",
+      "note": ""
+    },
+    {
+      "id": "hair_styled_long",
+      "category": "物理外見",
+      "label": "整えた長髪・凝った髪型",
+      "type": "binary",
+      "deltas": {
+        "X": 0.2,
+        "C-Organization": 0.2,
+        "O-Aesthetic": 0.1
+      },
+      "confidence": "mid",
+      "source": "inference",
+      "note": ""
+    },
+    {
+      "id": "hair_short_minimal",
+      "category": "物理外見",
+      "label": "短髪・最小限スタイリング",
+      "type": "binary",
+      "deltas": {
+        "X-Liveliness": -0.1,
+        "C": 0.1
+      },
+      "confidence": "low",
+      "source": "inference",
+      "note": ""
+    },
+    {
+      "id": "perfume_strong",
+      "category": "物理外見",
+      "label": "強い香水/香り",
+      "type": "binary",
+      "deltas": {
+        "X": 0.2,
+        "Narc_T": 2,
+        "O-Aesthetic": 0.1
+      },
+      "confidence": "mid",
+      "source": "inference",
+      "note": ""
+    },
+    {
+      "id": "perfume_none",
+      "category": "物理外見",
+      "label": "無香 or ほぼ無香",
+      "type": "binary",
+      "deltas": {
+        "H": 0.1,
+        "X-Social": -0.1
+      },
+      "confidence": "low",
+      "source": "inference",
+      "note": ""
+    },
+    {
+      "id": "bag_large_full",
+      "category": "物理外見",
+      "label": "大きく荷物の多い鞄",
+      "type": "binary",
+      "deltas": {
+        "C": 0.2,
+        "E": 0.2
+      },
+      "confidence": "low",
+      "source": "inference",
+      "note": ""
+    },
+    {
+      "id": "bag_small_minimal",
+      "category": "物理外見",
+      "label": "小さな鞄/手ぶら",
+      "type": "binary",
+      "deltas": {
+        "C-Organization": 0.1,
+        "O": 0.1
+      },
+      "confidence": "low",
+      "source": "inference",
+      "note": ""
+    },
+    {
+      "id": "luxury_visible",
+      "category": "物理外見",
+      "label": "高級時計・ジュエリー等のステータス品",
+      "type": "binary",
+      "deltas": {
+        "H": -0.4,
+        "Narc_T": 5,
+        "X": 0.2
+      },
+      "confidence": "high",
+      "source": "HEXACO H definition (Greed-Avoidance)",
+      "note": ""
+    },
+    {
+      "id": "body_revealing",
+      "category": "物理外見",
+      "label": "露出度の高い服装",
+      "type": "binary",
+      "deltas": {
+        "X": 0.3,
+        "X-Boldness": 0.4,
+        "Narc_T": 3
+      },
+      "confidence": "mid",
+      "source": "inference",
+      "note": ""
+    },
+    {
+      "id": "posture_open",
+      "category": "物理外見",
+      "label": "オープンな姿勢 (胸を張る、両足広げる等)",
+      "type": "binary",
+      "deltas": {
+        "X": 0.3,
+        "X-Boldness": 0.4,
+        "Narc_T": 2
+      },
+      "confidence": "mid",
+      "source": "Carney power posing literature (effect debated)",
+      "note": ""
+    },
+    {
+      "id": "posture_closed",
+      "category": "物理外見",
+      "label": "閉じた姿勢 (腕組み、肩すぼめる、うつむき)",
+      "type": "binary",
+      "deltas": {
+        "X": -0.3,
+        "E": 0.2,
+        "X-SocialSelfEsteem": -0.3
+      },
+      "confidence": "mid",
+      "source": "thin-slice",
+      "note": ""
+    },
+    {
+      "id": "mask_constant",
+      "category": "物理外見",
+      "label": "マスク常用 (健康上の必要不明)",
+      "type": "binary",
+      "deltas": {
+        "X-Social": -0.3,
+        "X": -0.2,
+        "E": 0.1
+      },
+      "confidence": "low",
+      "source": "inference, post-pandemic JP behavior",
+      "note": ""
+    },
+    {
+      "id": "eye_contact_strong",
+      "category": "行動",
+      "label": "視線をしっかり合わせる",
+      "type": "binary",
+      "deltas": {
+        "X": 0.3,
+        "X-Boldness": 0.4,
+        "H": -0.05,
+        "Psy_T": 1
+      },
+      "confidence": "mid",
+      "source": "Vazire SOKA, thin-slice",
+      "note": ""
+    },
+    {
+      "id": "eye_contact_avoid",
+      "category": "行動",
+      "label": "視線をほとんど合わせない/そらしがち",
+      "type": "binary",
+      "deltas": {
+        "X": -0.4,
+        "X-Boldness": -0.4,
+        "E": 0.2
+      },
+      "confidence": "high",
+      "source": "thin-slice general",
+      "note": ""
+    },
+    {
+      "id": "smile_frequent",
+      "category": "行動",
+      "label": "笑顔が頻繁",
+      "type": "binary",
+      "deltas": {
+        "X": 0.3,
+        "A": 0.2,
+        "X-Liveliness": 0.4
+      },
+      "confidence": "high",
+      "source": "Ambady 1992 thin-slice",
+      "note": ""
+    },
+    {
+      "id": "smile_rare",
+      "category": "行動",
+      "label": "ほぼ笑顔なし、無表情",
+      "type": "binary",
+      "deltas": {
+        "X": -0.3,
+        "X-Liveliness": -0.4,
+        "E": 0.1
+      },
+      "confidence": "mid",
+      "source": "thin-slice",
+      "note": ""
+    },
+    {
+      "id": "voice_loud",
+      "category": "行動",
+      "label": "声が大きい",
+      "type": "binary",
+      "deltas": {
+        "X": 0.3,
+        "X-Liveliness": 0.4,
+        "X-Boldness": 0.3
+      },
+      "confidence": "high",
+      "source": "Mehl EAR, Mairesse 2007",
+      "note": ""
+    },
+    {
+      "id": "voice_soft",
+      "category": "行動",
+      "label": "声が小さい/低音量",
+      "type": "binary",
+      "deltas": {
+        "X": -0.3,
+        "X-Boldness": -0.3,
+        "E": 0.1
+      },
+      "confidence": "high",
+      "source": "Mehl EAR",
+      "note": ""
+    },
+    {
+      "id": "speech_fast",
+      "category": "行動",
+      "label": "早口",
+      "type": "binary",
+      "deltas": {
+        "X": 0.2,
+        "X-Liveliness": 0.3,
+        "E": 0.1
+      },
+      "confidence": "mid",
+      "source": "Mairesse 2007",
+      "note": ""
+    },
+    {
+      "id": "speech_slow",
+      "category": "行動",
+      "label": "ゆっくり話す",
+      "type": "binary",
+      "deltas": {
+        "X-Liveliness": -0.2,
+        "C": 0.2
+      },
+      "confidence": "mid",
+      "source": "inference",
+      "note": ""
+    },
+    {
+      "id": "gesture_animated",
+      "category": "行動",
+      "label": "身振り手振りが豊か",
+      "type": "binary",
+      "deltas": {
+        "X": 0.3,
+        "X-Liveliness": 0.4,
+        "O": 0.1
+      },
+      "confidence": "mid",
+      "source": "thin-slice",
+      "note": ""
+    },
+    {
+      "id": "gesture_minimal",
+      "category": "行動",
+      "label": "身振りがほぼない",
+      "type": "binary",
+      "deltas": {
+        "X-Liveliness": -0.3,
+        "E": 0.1
+      },
+      "confidence": "mid",
+      "source": "inference",
+      "note": ""
+    },
+    {
+      "id": "laugh_loud",
+      "category": "行動",
+      "label": "笑い声が大きい",
+      "type": "binary",
+      "deltas": {
+        "X": 0.4,
+        "X-Liveliness": 0.5
+      },
+      "confidence": "mid",
+      "source": "Mehl EAR",
+      "note": ""
+    },
+    {
+      "id": "interrupts_others",
+      "category": "行動",
+      "label": "他者の発言を頻繁に遮る",
+      "type": "binary",
+      "deltas": {
+        "X-Boldness": 0.3,
+        "A": -0.3,
+        "A-Gentleness": -0.3,
+        "Psy_T": 2
+      },
+      "confidence": "mid",
+      "source": "inference, Dark Triad lit",
+      "note": ""
+    },
+    {
+      "id": "listens_attentive",
+      "category": "行動",
+      "label": "傾聴姿勢、相手を遮らない",
+      "type": "binary",
+      "deltas": {
+        "A": 0.3,
+        "A-Gentleness": 0.3,
+        "H": 0.1
+      },
+      "confidence": "mid",
+      "source": "inference",
+      "note": ""
+    },
+    {
+      "id": "looks_around_active",
+      "category": "行動",
+      "label": "頻繁に周囲を見回す",
+      "type": "binary",
+      "deltas": {
+        "X": 0.1,
+        "E": 0.2,
+        "X-SocialSelfEsteem": -0.1
+      },
+      "confidence": "low",
+      "source": "inference",
+      "note": ""
+    },
+    {
+      "id": "stays_focused_phone",
+      "category": "行動",
+      "label": "周囲を見ず端末/活動に集中",
+      "type": "binary",
+      "deltas": {
+        "X": -0.4,
+        "X-Sociability": -0.4,
+        "X-Liveliness": -0.2
+      },
+      "confidence": "mid",
+      "source": "inference",
+      "note": ""
+    },
+    {
+      "id": "phys_contact_initiator",
+      "category": "行動",
+      "label": "物理接触 (肩を叩く等) を自分から行う",
+      "type": "binary",
+      "deltas": {
+        "X-Boldness": 0.4,
+        "A": -0.1,
+        "H": -0.1,
+        "Narc_T": 2
+      },
+      "confidence": "mid",
+      "source": "thin-slice",
+      "note": ""
+    },
+    {
+      "id": "personal_space_preserves",
+      "category": "行動",
+      "label": "他者との距離を広めに保つ",
+      "type": "binary",
+      "deltas": {
+        "X-Sociability": -0.3,
+        "E": 0.2
+      },
+      "confidence": "mid",
+      "source": "inference",
+      "note": ""
+    },
+    {
+      "id": "time_punctual",
+      "category": "行動",
+      "label": "時間を厳守する",
+      "type": "binary",
+      "deltas": {
+        "C": 0.3,
+        "C-Diligence": 0.3,
+        "H": 0.1
+      },
+      "confidence": "high",
+      "source": "HEXACO C definition",
+      "note": ""
+    },
+    {
+      "id": "time_late_recurrent",
+      "category": "行動",
+      "label": "繰り返し遅刻する",
+      "type": "binary",
+      "deltas": {
+        "C": -0.4,
+        "C-Diligence": -0.4,
+        "A": -0.1
+      },
+      "confidence": "high",
+      "source": "HEXACO C definition",
+      "note": ""
+    },
+    {
+      "id": "brags_about_self",
+      "category": "行動",
+      "label": "自分の成果・地位を自慢する",
+      "type": "binary",
+      "deltas": {
+        "H": -0.4,
+        "H-Modesty": -0.5,
+        "Narc_T": 5
+      },
+      "confidence": "high",
+      "source": "HEXACO H, Narc lit",
+      "note": ""
+    },
+    {
+      "id": "complains_about_others",
+      "category": "行動",
+      "label": "他者を貶める・愚痴が多い",
+      "type": "binary",
+      "deltas": {
+        "A": -0.3,
+        "A-Gentleness": -0.3,
+        "H": -0.1,
+        "Psy_T": 2
+      },
+      "confidence": "mid",
+      "source": "inference",
+      "note": ""
+    },
+    {
+      "id": "apologizes_easily",
+      "category": "行動",
+      "label": "謝罪・譲歩が多い",
+      "type": "binary",
+      "deltas": {
+        "A": 0.2,
+        "A-Forgiveness": 0.3,
+        "H": 0.1
+      },
+      "confidence": "mid",
+      "source": "inference",
+      "note": ""
+    },
+    {
+      "id": "aggressive_disputes",
+      "category": "行動",
+      "label": "些細な点でも譲らず議論",
+      "type": "binary",
+      "deltas": {
+        "A": -0.3,
+        "A-Flexibility": -0.4,
+        "X-Boldness": 0.2
+      },
+      "confidence": "mid",
+      "source": "HEXACO A definition",
+      "note": ""
+    },
+    {
+      "id": "seeks_thrill_risk",
+      "category": "行動",
+      "label": "スリル・危険を好むエピソード",
+      "type": "binary",
+      "deltas": {
+        "X-Boldness": 0.3,
+        "C-Prudence": -0.3,
+        "Psy_T": 3
+      },
+      "confidence": "mid",
+      "source": "Dark Triad lit",
+      "note": ""
+    },
+    {
+      "id": "appears_anxious",
+      "category": "行動",
+      "label": "落ち着きがない、緊張",
+      "type": "binary",
+      "deltas": {
+        "E": 0.3,
+        "E-Anxiety": 0.4,
+        "X": -0.1
+      },
+      "confidence": "mid",
+      "source": "HEXACO E definition",
+      "note": ""
+    },
+    {
+      "id": "appears_calm",
+      "category": "行動",
+      "label": "明らかに落ち着いている",
+      "type": "binary",
+      "deltas": {
+        "E": -0.3,
+        "E-Anxiety": -0.3,
+        "X-Boldness": 0.2
+      },
+      "confidence": "mid",
+      "source": "inference",
+      "note": ""
+    },
+    {
+      "id": "alone_public",
+      "category": "文脈",
+      "label": "公共空間で一人 (同伴者なし)",
+      "type": "binary",
+      "deltas": {
+        "X": -0.2
+      },
+      "confidence": "low",
+      "source": "inference",
+      "note": ""
+    },
+    {
+      "id": "with_group",
+      "category": "文脈",
+      "label": "複数人で行動",
+      "type": "binary",
+      "deltas": {
+        "X": 0.2,
+        "X-Sociability": 0.3
+      },
+      "confidence": "low",
+      "source": "inference",
+      "note": ""
+    },
+    {
+      "id": "alone_at_event",
+      "category": "文脈",
+      "label": "趣味イベント等で単独参加",
+      "type": "binary",
+      "deltas": {
+        "O": 0.2,
+        "X-Sociability": -0.1
+      },
+      "confidence": "low",
+      "source": "inference",
+      "note": ""
+    },
+    {
+      "id": "center_of_group",
+      "category": "文脈",
+      "label": "集団の中で会話の中心",
+      "type": "binary",
+      "deltas": {
+        "X": 0.4,
+        "X-Boldness": 0.4,
+        "Narc_T": 2
+      },
+      "confidence": "mid",
+      "source": "thin-slice",
+      "note": ""
+    },
+    {
+      "id": "periphery_of_group",
+      "category": "文脈",
+      "label": "集団の端で受動的",
+      "type": "binary",
+      "deltas": {
+        "X": -0.3,
+        "X-Sociability": -0.3
+      },
+      "confidence": "mid",
+      "source": "thin-slice",
+      "note": ""
+    },
+    {
+      "id": "staff_polite",
+      "category": "文脈",
+      "label": "店員等への態度が丁寧",
+      "type": "binary",
+      "deltas": {
+        "H": 0.2,
+        "A": 0.2
+      },
+      "confidence": "mid",
+      "source": "inference",
+      "note": ""
+    },
+    {
+      "id": "staff_rude",
+      "category": "文脈",
+      "label": "店員等への態度が横柄/不遜",
+      "type": "binary",
+      "deltas": {
+        "H": -0.3,
+        "A": -0.3,
+        "Narc_T": 3,
+        "Psy_T": 2
+      },
+      "confidence": "mid",
+      "source": "Dark Triad lit",
+      "note": ""
+    },
+    {
+      "id": "queue_polite",
+      "category": "文脈",
+      "label": "順番待ち等のマナーが整っている",
+      "type": "binary",
+      "deltas": {
+        "A": 0.2,
+        "H": 0.1,
+        "C-Prudence": 0.1
+      },
+      "confidence": "low",
+      "source": "inference",
+      "note": ""
+    },
+    {
+      "id": "crowded_environment",
+      "category": "文脈",
+      "label": "観察環境が満員/混雑",
+      "type": "binary",
+      "deltas": {},
+      "confidence": "high",
+      "source": "env_modifier flag",
+      "note": "本人特性ではなく、観察精度↓+接触成功率↓のフラグ"
+    },
+    {
+      "id": "quiet_environment",
+      "category": "文脈",
+      "label": "静かな個別空間",
+      "type": "binary",
+      "deltas": {},
+      "confidence": "high",
+      "source": "env_modifier flag",
+      "note": "観察精度↑+接触成功率↑"
+    },
+    {
+      "id": "morning_commute",
+      "category": "文脈",
+      "label": "平日朝の通勤時間",
+      "type": "binary",
+      "deltas": {},
+      "confidence": "high",
+      "source": "env_modifier",
+      "note": "接触適性低い時間帯"
+    },
+    {
+      "id": "evening_leisure",
+      "category": "文脈",
+      "label": "夜・休日のレジャー時間",
+      "type": "binary",
+      "deltas": {},
+      "confidence": "mid",
+      "source": "env_modifier",
+      "note": "接触適性中〜高"
+    },
+    {
+      "id": "music_pop_mainstream",
+      "category": "聴覚/コンテンツ",
+      "label": "主流ポップ音楽",
+      "type": "binary",
+      "deltas": {
+        "O": -0.1,
+        "X": 0.1
+      },
+      "confidence": "low",
+      "source": "inference",
+      "note": ""
+    },
+    {
+      "id": "music_classical",
+      "category": "聴覚/コンテンツ",
+      "label": "クラシック/ジャズ等",
+      "type": "binary",
+      "deltas": {
+        "O": 0.3,
+        "O-Aesthetic": 0.4
+      },
+      "confidence": "mid",
+      "source": "Rentfrow & Gosling 2003",
+      "note": ""
+    },
+    {
+      "id": "music_otaku_anime",
+      "category": "聴覚/コンテンツ",
+      "label": "アニソン/二次元コンテンツ系",
+      "type": "binary",
+      "deltas": {
+        "O": 0.3,
+        "O-Unconventionality": 0.3,
+        "X": -0.1
+      },
+      "confidence": "mid",
+      "source": "inference",
+      "note": ""
+    },
+    {
+      "id": "music_rap_hiphop",
+      "category": "聴覚/コンテンツ",
+      "label": "ラップ/ヒップホップ",
+      "type": "binary",
+      "deltas": {
+        "O": 0.2,
+        "X-Boldness": 0.1
+      },
+      "confidence": "mid",
+      "source": "Rentfrow & Gosling 2003",
+      "note": ""
+    },
+    {
+      "id": "music_metal_punk",
+      "category": "聴覚/コンテンツ",
+      "label": "メタル/パンク/激しい系",
+      "type": "binary",
+      "deltas": {
+        "O": 0.2,
+        "X-Boldness": 0.2,
+        "A": -0.1
+      },
+      "confidence": "mid",
+      "source": "Rentfrow & Gosling 2003",
+      "note": ""
+    },
+    {
+      "id": "content_2d_immersion",
+      "category": "聴覚/コンテンツ",
+      "label": "二次元コンテンツ深耕 (ヒプマイ/刀剣乱舞/二次元アイドル等)",
+      "type": "binary",
+      "deltas": {
+        "O": 0.4,
+        "O-Creativity": 0.4,
+        "O-Unconventionality": 0.3,
+        "X": -0.2
+      },
+      "confidence": "mid",
+      "source": "inference, JP cultural pattern",
+      "note": ""
+    },
+    {
+      "id": "game_competitive",
+      "category": "聴覚/コンテンツ",
+      "label": "競技性の高いゲーム (FPS/格ゲー等)",
+      "type": "binary",
+      "deltas": {
+        "X-Boldness": 0.2,
+        "C-Diligence": 0.1,
+        "Psy_T": 1
+      },
+      "confidence": "low",
+      "source": "inference",
+      "note": ""
+    },
+    {
+      "id": "game_collection_idol",
+      "category": "聴覚/コンテンツ",
+      "label": "育成・キャラ収集系ゲーム",
+      "type": "binary",
+      "deltas": {
+        "O": 0.2,
+        "C-Diligence": 0.2,
+        "X": -0.1
+      },
+      "confidence": "low",
+      "source": "inference",
+      "note": ""
+    },
+    {
+      "id": "reads_books_visible",
+      "category": "聴覚/コンテンツ",
+      "label": "読書中 (紙の本)",
+      "type": "binary",
+      "deltas": {
+        "O": 0.3,
+        "C": 0.1
+      },
+      "confidence": "mid",
+      "source": "inference",
+      "note": ""
+    },
+    {
+      "id": "reads_business_self_help",
+      "category": "聴覚/コンテンツ",
+      "label": "ビジネス書・自己啓発本",
+      "type": "binary",
+      "deltas": {
+        "C": 0.2,
+        "Narc_T": 1,
+        "O": -0.1
+      },
+      "confidence": "low",
+      "source": "inference",
+      "note": ""
+    },
+    {
+      "id": "reads_literary_fiction",
+      "category": "聴覚/コンテンツ",
+      "label": "文学・小説",
+      "type": "binary",
+      "deltas": {
+        "O": 0.3,
+        "O-Aesthetic": 0.3
+      },
+      "confidence": "mid",
+      "source": "Mar & Oatley 2008",
+      "note": ""
+    },
+    {
+      "id": "sns_active_x_high",
+      "category": "SNS",
+      "label": "X (Twitter) で高頻度発信",
+      "type": "binary",
+      "deltas": {
+        "X": 0.2,
+        "O": 0.1,
+        "Narc_T": 1
+      },
+      "confidence": "mid",
+      "source": "Park 2015",
+      "note": ""
+    },
+    {
+      "id": "sns_anonymous_attack",
+      "category": "SNS",
+      "label": "匿名アカで攻撃的・批判的発信",
+      "type": "binary",
+      "deltas": {
+        "H": -0.4,
+        "A": -0.3,
+        "Psy_T": 3,
+        "Mach_T": 2
+      },
+      "confidence": "mid",
+      "source": "Dark Triad SNS lit",
+      "note": ""
+    },
+    {
+      "id": "sns_selfie_high",
+      "category": "SNS",
+      "label": "自撮り頻度が高い (Insta等)",
+      "type": "binary",
+      "deltas": {
+        "Narc_T": 5,
+        "X": 0.2
+      },
+      "confidence": "high",
+      "source": "Kachur 2020, Fox & Rooney 2015",
+      "note": ""
+    },
+    {
+      "id": "sns_instagram_active",
+      "category": "SNS",
+      "label": "Instagram 高頻度投稿 (生活シェア)",
+      "type": "binary",
+      "deltas": {
+        "X": 0.2,
+        "Narc_T": 3,
+        "O-Aesthetic": 0.1
+      },
+      "confidence": "high",
+      "source": "Tanaka 2022 JP",
+      "note": ""
+    },
+    {
+      "id": "sns_twitter_low_self_esteem",
+      "category": "SNS",
+      "label": "X 中心、自虐/愚痴多い",
+      "type": "binary",
+      "deltas": {
+        "E": 0.2,
+        "X-SocialSelfEsteem": -0.3
+      },
+      "confidence": "mid",
+      "source": "Tanaka 2022 JP",
+      "note": ""
+    },
+    {
+      "id": "sns_linkedin_active",
+      "category": "SNS",
+      "label": "LinkedIn 等プロフェッショナルSNS活発",
+      "type": "binary",
+      "deltas": {
+        "C": 0.3,
+        "X": 0.1,
+        "Narc_T": 2
+      },
+      "confidence": "mid",
+      "source": "inference",
+      "note": ""
+    },
+    {
+      "id": "sns_none_or_minimal",
+      "category": "SNS",
+      "label": "SNS をほぼ使わない/非公開",
+      "type": "binary",
+      "deltas": {
+        "X": -0.2,
+        "X-Sociability": -0.2,
+        "H": 0.1
+      },
+      "confidence": "low",
+      "source": "inference",
+      "note": ""
+    },
+    {
+      "id": "sns_luxury_lifestyle_post",
+      "category": "SNS",
+      "label": "ブランド/旅行/食事の派手投稿",
+      "type": "binary",
+      "deltas": {
+        "H": -0.3,
+        "Narc_T": 4
+      },
+      "confidence": "high",
+      "source": "Sedikides Narc lit",
+      "note": ""
+    },
+    {
+      "id": "sns_creative_output_post",
+      "category": "SNS",
+      "label": "創作・知識共有投稿が中心",
+      "type": "binary",
+      "deltas": {
+        "O": 0.4,
+        "O-Creativity": 0.4
+      },
+      "confidence": "mid",
+      "source": "Park 2015 Facebook language",
+      "note": ""
+    },
+    {
+      "id": "sns_pet_or_food_focus",
+      "category": "SNS",
+      "label": "ペット/料理/小物投稿が中心",
+      "type": "binary",
+      "deltas": {
+        "A": 0.1,
+        "E": 0.1
+      },
+      "confidence": "low",
+      "source": "inference",
+      "note": ""
+    },
+    {
+      "id": "sns_strong_opinion_political",
+      "category": "SNS",
+      "label": "政治・社会問題の強い意見発信",
+      "type": "binary",
+      "deltas": {
+        "O": 0.2,
+        "A": -0.1
+      },
+      "confidence": "low",
+      "source": "inference",
+      "note": ""
+    },
+    {
+      "id": "conv_initiates_topics",
+      "category": "対話",
+      "label": "自分から話題を提供する",
+      "type": "binary",
+      "deltas": {
+        "X": 0.3,
+        "X-Sociability": 0.4
+      },
+      "confidence": "high",
+      "source": "thin-slice",
+      "note": ""
+    },
+    {
+      "id": "conv_waits_silently",
+      "category": "対話",
+      "label": "話題提供を相手任せ",
+      "type": "binary",
+      "deltas": {
+        "X": -0.3,
+        "X-Sociability": -0.3
+      },
+      "confidence": "high",
+      "source": "thin-slice",
+      "note": ""
+    },
+    {
+      "id": "conv_silence_tolerant",
+      "category": "対話",
+      "label": "沈黙を苦にしない",
+      "type": "binary",
+      "deltas": {
+        "X": -0.2,
+        "E": -0.1,
+        "C": 0.1
+      },
+      "confidence": "mid",
+      "source": "inference",
+      "note": ""
+    },
+    {
+      "id": "conv_silence_fills",
+      "category": "対話",
+      "label": "沈黙を急いで埋めようとする",
+      "type": "binary",
+      "deltas": {
+        "X": 0.2,
+        "E": 0.2
+      },
+      "confidence": "mid",
+      "source": "inference",
+      "note": ""
+    },
+    {
+      "id": "conv_self_disclosure_high",
+      "category": "対話",
+      "label": "自己開示が早い・多い",
+      "type": "binary",
+      "deltas": {
+        "X": 0.2,
+        "A": 0.2,
+        "Narc_T": 1
+      },
+      "confidence": "mid",
+      "source": "inference",
+      "note": ""
+    },
+    {
+      "id": "conv_self_disclosure_low",
+      "category": "対話",
+      "label": "自己開示が乏しい",
+      "type": "binary",
+      "deltas": {
+        "X": -0.2,
+        "E": 0.1
+      },
+      "confidence": "mid",
+      "source": "inference",
+      "note": ""
+    },
+    {
+      "id": "conv_keeps_promises",
+      "category": "対話",
+      "label": "約束を確実に履行する",
+      "type": "binary",
+      "deltas": {
+        "C": 0.3,
+        "C-Diligence": 0.4,
+        "H": 0.2,
+        "Mach_T": -2
+      },
+      "confidence": "high",
+      "source": "HEXACO C/H",
+      "note": ""
+    },
+    {
+      "id": "conv_breaks_promises",
+      "category": "対話",
+      "label": "約束を破る/ドタキャン多い",
+      "type": "binary",
+      "deltas": {
+        "C": -0.4,
+        "H": -0.2,
+        "Mach_T": 3
+      },
+      "confidence": "high",
+      "source": "HEXACO C/H",
+      "note": ""
+    },
+    {
+      "id": "conv_money_obsessed",
+      "category": "対話",
+      "label": "金銭・損得への食いつきが強い",
+      "type": "binary",
+      "deltas": {
+        "H": -0.3,
+        "H-GreedAvoidance": -0.4,
+        "Mach_T": 3
+      },
+      "confidence": "high",
+      "source": "HEXACO H definition",
+      "note": ""
+    },
+    {
+      "id": "conv_money_indifferent",
+      "category": "対話",
+      "label": "金銭への執着が薄い",
+      "type": "binary",
+      "deltas": {
+        "H": 0.2,
+        "H-GreedAvoidance": 0.3
+      },
+      "confidence": "mid",
+      "source": "HEXACO H",
+      "note": ""
+    },
+    {
+      "id": "conv_emotional_volatility",
+      "category": "対話",
+      "label": "感情の起伏が大きい",
+      "type": "binary",
+      "deltas": {
+        "E": 0.3,
+        "E-Anxiety": 0.3,
+        "C": -0.1
+      },
+      "confidence": "mid",
+      "source": "inference",
+      "note": ""
+    },
+    {
+      "id": "conv_steady_emotion",
+      "category": "対話",
+      "label": "感情が安定している",
+      "type": "binary",
+      "deltas": {
+        "E": -0.3,
+        "C": 0.1
+      },
+      "confidence": "mid",
+      "source": "inference",
+      "note": ""
+    },
+    {
+      "id": "conv_helps_others",
+      "category": "対話",
+      "label": "頼まれてないことも手伝う",
+      "type": "binary",
+      "deltas": {
+        "A": 0.3,
+        "A-Gentleness": 0.2,
+        "H": 0.1
+      },
+      "confidence": "mid",
+      "source": "HEXACO A/H",
+      "note": ""
+    },
+    {
+      "id": "conv_competitive_one_up",
+      "category": "対話",
+      "label": "自慢/マウント・常に一段上を取りに行く",
+      "type": "binary",
+      "deltas": {
+        "H": -0.4,
+        "H-Modesty": -0.5,
+        "Narc_T": 5,
+        "A": -0.2
+      },
+      "confidence": "high",
+      "source": "Dark Triad lit",
+      "note": ""
+    },
+    {
+      "id": "conv_lies_detected",
+      "category": "対話",
+      "label": "事実と異なる発言が確認された",
+      "type": "binary",
+      "deltas": {
+        "H": -0.5,
+        "H-Sincerity": -0.5,
+        "Mach_T": 4
+      },
+      "confidence": "high",
+      "source": "HEXACO H definition",
+      "note": ""
+    },
+    {
+      "id": "conv_abstract_topics_engage",
+      "category": "対話",
+      "label": "抽象論・哲学的話題に乗ってくる",
+      "type": "binary",
+      "deltas": {
+        "O": 0.3,
+        "O-Creativity": 0.2,
+        "O-Unconventionality": 0.2
+      },
+      "confidence": "mid",
+      "source": "HEXACO O",
+      "note": ""
+    },
+    {
+      "id": "conv_concrete_only",
+      "category": "対話",
+      "label": "具体的・身近な話題以外は反応薄い",
+      "type": "binary",
+      "deltas": {
+        "O": -0.3,
+        "O-Unconventionality": -0.3
+      },
+      "confidence": "mid",
+      "source": "HEXACO O",
+      "note": ""
+    },
+    {
+      "id": "conv_authority_deferential",
+      "category": "対話",
+      "label": "権威/年長者に対して従順",
+      "type": "binary",
+      "deltas": {
+        "A-Flexibility": 0.2,
+        "H-Modesty": 0.1
+      },
+      "confidence": "low",
+      "source": "inference, Hofstede PDI JP",
+      "note": ""
+    },
+    {
+      "id": "conv_authority_challenging",
+      "category": "対話",
+      "label": "権威に対して挑戦的",
+      "type": "binary",
+      "deltas": {
+        "A-Flexibility": -0.3,
+        "X-Boldness": 0.2,
+        "H-Modesty": -0.1
+      },
+      "confidence": "low",
+      "source": "inference",
+      "note": ""
+    }
+  ]
+}
