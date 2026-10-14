@@ -1,0 +1,11 @@
+{
+  "id": "hexaco-checklist",
+  "type": "pwa",
+  "app": {
+    "name": "HEXACOチェックリスト",
+    "icon": "https://raw.githubusercontent.com/shimatoshi/app-store-releases/main/icons/hexaco-checklist.png",
+    "description": "HEXACO-PI-Rベースの対人分析チェックリスト、オフラインPWA",
+    "category": "情報",
+    "url": "https://shimatoshi.github.io/hexaco-checklist/"
+  }
+}
